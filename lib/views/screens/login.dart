@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
+import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
 import '../widgets/loginwidgets/textfieldwidget.dart';
 
-class ScreenSignUp extends StatefulWidget {
-  const ScreenSignUp({super.key});
+class ScreenLogin extends StatefulWidget {
+  const ScreenLogin({super.key});
 
   @override
-  State<ScreenSignUp> createState() => _ScreenSignUpState();
+  State<ScreenLogin> createState() => _ScreenLoginState();
 }
 
-class _ScreenSignUpState extends State<ScreenSignUp> {
+class _ScreenLoginState extends State<ScreenLogin> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-
         decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
@@ -31,7 +30,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
           backgroundColor: Colors.transparent,
           resizeToAvoidBottomInset:false,
           body: Container(
-              
               margin: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,29 +60,23 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                       //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         const HeadingMessage(
-                          heading: "Hello There!\n",
-                          subheading: "Let\'s get you onboarded.",
+                          heading: "Welcome Back!\n",
+                          subheading: "Woo Hoo!\nIt's time to check back in",
                         ),
-                    
+      
                         const SizedBox(
                           height: 50,
                         ),
-                    
+      
                         Form(
                           key: _formKey,
-                    
+      
                           //child: Expanded(
                           child: Column(
                             //crossAxisAlignment: CrossAxisAlignment.start,
                             //mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const TextFieldWidget(
-                                hint: "Enter User Name",
-                                label: "User Name",
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
+                              
                               const TextFieldWidget(
                                   hint: "Enter Email Address",
                                   label: "Email Address"),
@@ -104,10 +96,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                               builder: (context) =>
                                                   const ScreenSignUp()));
                                     } else {
-                                      print('Empty fields found');
+                                      print('Empty field found');
                                     }
                                   },
-                                  textVal: "Sign Up",
+                                  textVal: "Log In",
                                   textColor: const Color(0xff011638),
                                 ),
                               )
@@ -120,13 +112,11 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                   ),
                    Align(
                       alignment: Alignment.bottomCenter,
-                      child: BottomTextButton(
-                        linkText: 'Log In',
-                        function: ()=>Navigator.of(context).push(
+                      child:BottomTextButton(linkText: 'Sign Up', function: ()=>Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const ScreenLogin())),
-                      ))
+                                                   ScreenSignUp())))
+                       )
                 ],
               )),
         ),

@@ -4,15 +4,13 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 class BottomTextButton extends StatelessWidget {
   final String linkText;
-  const BottomTextButton(
-    
-    {super.key,
-    required this.linkText});
+  final VoidCallback function;
+  const BottomTextButton({super.key, required this.linkText,required this.function});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: function,
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
       ),
@@ -26,6 +24,5 @@ class BottomTextButton extends StatelessWidget {
         ),
       ),
     );
-    
   }
 }

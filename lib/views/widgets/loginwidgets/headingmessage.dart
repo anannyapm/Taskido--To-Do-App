@@ -14,7 +14,7 @@ class HeadingMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-        text: const TextSpan(
+        text:  TextSpan(
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w500,
@@ -22,9 +22,9 @@ class HeadingMessage extends StatelessWidget {
               color: Color(0xff011638),
             ),
             children: [
-          TextSpan(text: 'Hello There!\n'),
+          TextSpan(text:heading),
           TextSpan(
-            text: 'Let\'s get you onboarded.',
+            text: subheading,
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w300,

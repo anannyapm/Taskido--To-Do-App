@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
@@ -17,6 +18,7 @@ class OnboardingHome extends StatelessWidget {
                   image: AssetImage('assets/images/screentwobg.png'),
                   scale: 0.9)),
           child: Scaffold(
+            resizeToAvoidBottomInset:false,
             backgroundColor: Colors.transparent,
             //set background
             body: Column(
@@ -101,7 +103,8 @@ class OnboardingHome extends StatelessWidget {
                   // alreadyhaveanaccountloginSbh (8:45)
                   margin: const EdgeInsets.fromLTRB(1, 0, 0, 0),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () =>Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ScreenLogin())),
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
