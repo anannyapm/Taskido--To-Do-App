@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todoapp/views/screens/signup.dart';
+import 'package:todoapp/views/widgets/gradientbox.dart';
 
 class OnboardingHome extends StatelessWidget {
   const OnboardingHome({super.key});
@@ -24,10 +26,11 @@ class OnboardingHome extends StatelessWidget {
                 ),
                 Stack(
                   children: [
+                    
                     Positioned(
                       child: Align(
                         child: SizedBox(
-                          width: 300,
+                          width: 280,
                           height: 100,
                           child: RichText(
                             textAlign: TextAlign.center,
@@ -58,9 +61,12 @@ class OnboardingHome extends StatelessWidget {
                         ),
                       ),
                     ),
+
+                    
+
                     Positioned(
-                      left: 20,
-                      top: -30,
+                      left: 18,
+                      top: -25,
                       width: 49,
                       height: 80,
                       child: SizedBox(
@@ -70,49 +76,26 @@ class OnboardingHome extends StatelessWidget {
                             fontFamily: GoogleFonts.poly().fontFamily,
                             fontSize: 130,
                             fontWeight: FontWeight.w500,
-                            color: const Color(0x1e000000),
+                            color: Color(0x11000000),
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
+                /* SizedBox(
+                  height: 30,
+                ), */
                 Align(
-                  child: Container(
-                    width: 286,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.5),
-                      gradient: const LinearGradient(
-                        begin: Alignment(-2.084, -18.136),
-                        end: Alignment(1.392, 4.273),
-                        colors: <Color>[
-                          Color.fromARGB(255, 255, 255, 255),
-                          Color.fromARGB(255, 4, 209, 206)
-                        ],
-                        stops: <double>[0, 1],
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const OnboardingHome()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        //shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.5)),
-                      ),
-                      child: const Text(
-                        "Sign Up",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 22,
-                            color: Color(0xff011638)),
-                      ),
-                    ),
-                  ),
+                  child: GradientBox(
+                    colorStart: Color.fromARGB(255, 255, 255, 255),
+                    colorEnd: Color.fromARGB(255, 4, 209, 206),
+                    gradFunction: () =>  Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const ScreenSignUp())) ,
+                            textVal: "Sign Up",
+                            textColor: Color(0xff011638),)
+                  
+                  
                 ),
                 Container(
                   // alreadyhaveanaccountloginSbh (8:45)

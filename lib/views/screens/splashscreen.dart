@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
+import 'package:todoapp/views/widgets/gradientbox.dart';
 import 'package:todoapp/views/widgets/gradienttext.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -18,7 +19,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         decoration: const BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
-                image: AssetImage('assets/images/lineart.png'), scale: 0.8)),
+                image: AssetImage('assets/images/lineart.png'), scale: 0.8, fit: BoxFit.cover)),
 
         //Scaffold area
         child: Scaffold(
@@ -80,36 +81,15 @@ class _ScreenSplashState extends State<ScreenSplash> {
                 //elevatted button is addded inside the  container to give color gradient to button
 
                 child: Align(
-                  child: Container(
-                    width: 286,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.5),
-                      gradient: const LinearGradient(
-                        begin: Alignment(-1.692, 3.409),
-                        end: Alignment(-0.545, -3.5),
-                        colors: <Color>[Color(0xff00a9a5), Color(0xff011638)],
-                        stops: <double>[0, 1],
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OnboardingHome()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.5)),
-                      ),
-                      child: const Text(
-                        "Let's Start",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w900, fontSize: 20),
-                      ),
-                    ),
-                  ),
+                  child: GradientBox(
+                    colorStart:Color(0xff011638) ,
+                    colorEnd: Color(0xff00A9A5),
+                    gradFunction: ()=>Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => OnboardingHome())),
+                             textVal: "Let's Start",
+                    textColor: Colors.white,)
+                  
+                
                 ),
               ),
             ],
