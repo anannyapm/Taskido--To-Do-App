@@ -19,7 +19,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         decoration: const BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
-                image: AssetImage('assets/images/lineart.png'), scale: 0.8, fit: BoxFit.cover)),
+                image: AssetImage('assets/images/lineart.png'), scale:2,fit: BoxFit.cover)),
 
         //Scaffold area
         child: Scaffold(

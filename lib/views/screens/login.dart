@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
@@ -94,7 +95,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const ScreenSignUp()));
+                                                  const ScreenHome()));
                                     } else {
                                       print('Empty field found');
                                     }
