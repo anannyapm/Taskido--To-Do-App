@@ -39,6 +39,8 @@ dependencies:
   font_awesome: ^5.10.1
   fluttericon: ^2.0.0
   syncfusion_flutter_gauges: ^20.4.52
+  
+  flutter_speed_dial: ^6.2.0
 
 dev_dependencies:
   flutter_test:

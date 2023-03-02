@@ -103,7 +103,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const ScreenHome()));
+                                                   ScreenHome()));
                                     } else {
                                       print('Empty fields found');
                                     }
