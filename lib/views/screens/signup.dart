@@ -64,7 +64,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                       children: [
                         const HeadingMessage(
                           heading: "Hello There!\n",
-                          subheading: "Let\'s get you onboarded.",
+                          subheading: "Let's get you onboarded.",
                         ),
                     
                         const SizedBox(

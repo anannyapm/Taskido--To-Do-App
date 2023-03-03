@@ -78,7 +78,7 @@ class OnboardingHome extends StatelessWidget {
                             fontFamily: GoogleFonts.poly().fontFamily,
                             fontSize: 130,
                             fontWeight: FontWeight.w500,
-                            color: Color(0x11000000),
+                            color: const Color(0x11000000),
                           ),
                         ),
                       ),
@@ -90,12 +90,12 @@ class OnboardingHome extends StatelessWidget {
                 ), */
                 Align(
                   child: GradientBox(
-                    colorStart: Color.fromARGB(255, 255, 255, 255),
-                    colorEnd: Color.fromARGB(255, 4, 209, 206),
+                    colorStart: const Color.fromARGB(255, 255, 255, 255),
+                    colorEnd: const Color.fromARGB(255, 4, 209, 206),
                     gradFunction: () =>  Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const ScreenSignUp())) ,
                             textVal: "Sign Up",
-                            textColor: Color(0xff011638),)
+                            textColor: const Color(0xff011638),)
                   
                   
                 ),

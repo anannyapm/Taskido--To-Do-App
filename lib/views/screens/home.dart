@@ -5,6 +5,9 @@ import 'package:todoapp/views/screens/profilehome.dart';
 import 'package:todoapp/views/screens/taskdetails.dart';
 import 'package:todoapp/views/widgets/bottomnavigationwidget.dart';
 
+import '../widgets/bottomsheets/categorysheet.dart';
+import '../widgets/bottomsheets/tasksheet.dart';
+
 class ScreenHome extends StatefulWidget {
   ScreenHome({super.key});
   static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
@@ -15,7 +18,7 @@ class ScreenHome extends StatefulWidget {
 
 class _ScreenHomeState extends State<ScreenHome> {
   final isDialOpen = ValueNotifier(false);
-  final _pages = [ScreenProfileHome(), ScreenTasks()];
+  final _pages = [const ScreenProfileHome(), const ScreenTasks()];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class _ScreenHomeState extends State<ScreenHome> {
         }
       },
       child: Scaffold(
-          bottomNavigationBar: BottomNavWidget(),
+          bottomNavigationBar: const BottomNavWidget(),
           body: SafeArea(
             child: ValueListenableBuilder(
               valueListenable: ScreenHome.selectedIndexNotifier,
@@ -42,24 +45,43 @@ class _ScreenHomeState extends State<ScreenHome> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: SpeedDial(
+            elevation: 8,
             icon: Icons.add,
             activeIcon: Icons.close,
             openCloseDial: isDialOpen,
-            backgroundColor: Color(0xff011638),
+            backgroundColor: const Color(0xff011638),
             //animatedIcon: AnimatedIcons.menu_close,
             children: [
               SpeedDialChild(
-                  backgroundColor: Color(0xff011638),
-                  onTap: () {},
-                  child: Icon(
+                  backgroundColor: const Color(0xff011638),
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return const CategorySheetWidget();
+                      },
+                    );
+                  },
+                  
+                  child: const Icon(
                     Icons.add_task,
                     color: Colors.white,
                   ),
                   label: 'Add Tasks'),
+
+
               SpeedDialChild(
-                  backgroundColor: Color(0xff011638),
-                  onTap: () {},
-                  child: Icon(
+                  backgroundColor: const Color(0xff011638),
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return const TaskSheetWidget();
+                      },
+                    );
+                    
+                  },
+                  child: const Icon(
                     Icons.category,
                     color: Colors.white,
                   ),

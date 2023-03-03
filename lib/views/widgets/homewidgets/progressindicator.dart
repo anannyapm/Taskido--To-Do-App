@@ -19,7 +19,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
   Widget build(BuildContext context) {
     double progressValue = widget.progressVal;
     return Container(
-      margin: const EdgeInsets.only(left: 10, right: 10, top: 15),
+      margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

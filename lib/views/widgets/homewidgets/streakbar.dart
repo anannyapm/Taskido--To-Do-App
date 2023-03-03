@@ -19,7 +19,7 @@ class StreakBarWidget extends StatelessWidget {
                               bottomRight: Radius.circular(25)),
                           color: Color(0xff011638)),
                       child: Container(
-                        margin: const EdgeInsets.only(left: 30),
+                        margin: const EdgeInsets.only(left: 25),
                         child: Row(
                           
                           children: [

@@ -116,7 +116,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                       child:BottomTextButton(linkText: 'Sign Up', function: ()=>Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                   ScreenSignUp())))
+                                                   const ScreenSignUp())))
                        )
                 ],
               )),

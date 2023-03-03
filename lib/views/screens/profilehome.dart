@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../widgets/bottomnavigationwidget.dart';
 import '../widgets/drawerwidget.dart';
+import '../widgets/homewidgets/categoryviewlist.dart';
 import '../widgets/homewidgets/progressindicator.dart';
 import '../widgets/homewidgets/streakbar.dart';
 import '../widgets/homewidgets/toppannel.dart';
@@ -11,7 +9,7 @@ import '../widgets/homewidgets/toppannel.dart';
 final GlobalKey<ScaffoldState> drawerkey = GlobalKey();
 
 class ScreenProfileHome extends StatefulWidget {
-   ScreenProfileHome({super.key});
+  const ScreenProfileHome({super.key});
 
   @override
   State<ScreenProfileHome> createState() => _ScreenProfileHomeState();
@@ -33,15 +31,27 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
               key: drawerkey,
               backgroundColor: Colors.transparent,
               endDrawer: const DrawerWidget(),
-              
               body: SingleChildScrollView(
-                  child: Column(
-                children: [
-                  TopPanelWidget(),
-                  StreakBarWidget(),
-                  ProgressIndicatorWidget(progressVal: 56),
-                ],
-              )),
+                child: Column(
+                  children: [
+                    const TopPanelWidget(),
+                    const StreakBarWidget(),
+                    const ProgressIndicatorWidget(progressVal: 56),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
+                        child: const Text(
+                          'My Tasks',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 24),
+                        ),
+                      ),
+                    ),
+                    const CategoryViewWidget(),
+                  ],
+                ),
+              ),
             )));
   }
 }
