@@ -95,9 +95,9 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                   ScreenHome()));
+                                                   const ScreenHome()));
                                     } else {
-                                      print('Empty field found');
+                                      //print('Empty field found');
                                     }
                                   },
                                   textVal: "Log In",

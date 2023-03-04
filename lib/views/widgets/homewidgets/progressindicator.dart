@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ProgressIndicatorWidget extends StatefulWidget {
@@ -42,7 +41,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                       startAngle: 270,
                       endAngle: 270,
                       //radiusFactor: 0.4,
-                      axisLineStyle: AxisLineStyle(
+                      axisLineStyle: const AxisLineStyle(
                         thickness: 0.1,
                         cornerStyle: CornerStyle.bothFlat,
                         color: Color(0xFFDCDEE2),
@@ -79,17 +78,16 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                                 children: [
                                   TextSpan(
                                     text:
-                                        ((progressValue / widget.maxVal) * 100)
-                                                .toStringAsFixed(0) +
-                                            '%\n',
-                                    style: TextStyle(
+                                        '${((widget.maxVal==0?0:(progressValue / widget.maxVal) * 100))
+                                                .toStringAsFixed(0)}%\n',
+                                    style: const TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.w600,
                                       height: 1.5,
                                       color: Color(0xff011638),
                                     ),
                                   ),
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Efficieny',
                                     style: TextStyle(
                                       fontSize: 15,
@@ -112,16 +110,16 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: '14 ',
-                  style: TextStyle(
+                  text: '${widget.maxVal.toInt()-widget.progressVal.toInt()} ',
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     height: 1.5,
                     color: Color(0xff011638),
                   ),
                 ),
-                TextSpan(
-                  text: 'Live Tasks awaiting',
+                const TextSpan(
+                  text: 'Live Task(s) awaiting',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w300,

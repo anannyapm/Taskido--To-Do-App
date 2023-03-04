@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class GradientTextWidget extends StatelessWidget {
   final String textValue;
   final double textSize;
   final FontWeight weight;
 
-  GradientTextWidget({super.key, required this.textValue, required this.textSize,required this.weight});
+  const GradientTextWidget({super.key, required this.textValue, required this.textSize,required this.weight});
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +15,12 @@ class GradientTextWidget extends StatelessWidget {
       end: Alignment.bottomRight,
     ).createShader(const Rect.fromLTWH(0.0, 0.0, 550.0, 80.0));
 
-    return Container(
-      child: Text(
-        textValue,
-        style: TextStyle(
-            fontSize: textSize,
-            fontWeight: weight,
-            foreground: Paint()..shader = _linearGradient),
-      ),
+    return Text(
+      textValue,
+      style: TextStyle(
+          fontSize: textSize,
+          fontWeight: weight,
+          foreground: Paint()..shader = _linearGradient),
     );
   }
 }

@@ -30,7 +30,7 @@ class DrawerWidget extends StatelessWidget {
         currentAccountPicture: CircleAvatar(backgroundImage: AssetImage('assets/images/profileImage.jpg'),),
       ),
       ListTile(
-        leading: Icon(
+        leading: const Icon(
           Icons.share,
         ),
         title: const Text('Share To Do App'),
@@ -39,7 +39,7 @@ class DrawerWidget extends StatelessWidget {
         },
       ),
       ListTile(
-        leading: Icon(
+        leading: const Icon(
           Icons.privacy_tip,
         ),
         title: const Text('Privacy Policy'),
@@ -50,7 +50,7 @@ class DrawerWidget extends StatelessWidget {
 
       
       ListTile(
-        leading: Icon(
+        leading: const Icon(
           Icons.star,
         ),
         title: const Text('Rate Us'),
@@ -58,7 +58,7 @@ class DrawerWidget extends StatelessWidget {
           Navigator.pop(context);
         },
       ),ListTile(
-        leading: Icon(
+        leading: const Icon(
           Icons.mail,
         ),
         title: const Text('Contact Us'),
@@ -67,11 +67,10 @@ class DrawerWidget extends StatelessWidget {
         },
       ),
 
-      AboutListTile( // <-- SEE HERE
+      const AboutListTile( // <-- SEE HERE
         icon: Icon(
           Icons.info,
         ),
-        child: Text('About app'),
         applicationIcon: Icon(
           Icons.local_play,
         ),
@@ -81,10 +80,11 @@ class DrawerWidget extends StatelessWidget {
         aboutBoxChildren: [
           ///Content goes here...
         ],
+        child: Text('About app'),
       ),
 
       ListTile(
-        leading: Icon(
+        leading: const Icon(
           Icons.logout_outlined,
         ),
         title: const Text('Sign Out'),

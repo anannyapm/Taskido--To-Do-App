@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class GradientBox extends StatelessWidget {
   final Color colorStart;
@@ -25,14 +23,14 @@ class GradientBox extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.5),
         gradient:  LinearGradient(
-          begin: Alignment(1.392, 4.273),
-          end: Alignment(-2.084, -18.136),
+          begin: const Alignment(1.392, 4.273),
+          end: const Alignment(-2.084, -18.136),
           colors: <Color>[
             colorStart,
             colorEnd,
             // Color.fromARGB(255, 178, 246, 244),
           ],
-          stops: <double>[0, 1],
+          stops: const <double>[0, 1],
         ),
       ),
       child: ElevatedButton(
