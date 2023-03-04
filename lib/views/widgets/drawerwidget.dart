@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/views/screens/onboardinghome.dart';
 
 
 class DrawerWidget extends StatelessWidget {
@@ -89,7 +90,7 @@ class DrawerWidget extends StatelessWidget {
         ),
         title: const Text('Sign Out'),
         onTap: () {
-          Navigator.pop(context);
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>OnboardingHome()));
         },
       ),
     ],

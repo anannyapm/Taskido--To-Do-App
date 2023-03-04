@@ -34,6 +34,7 @@ class AppViewModel extends ChangeNotifier {
   }
 
   bool getTaskValue(int taskIndex) {
+  
     return taskList[taskIndex].isCompleted;
   }
 
@@ -44,6 +45,9 @@ class AppViewModel extends ChangeNotifier {
 
   String getTaskTitle(int taskIndex) {
     return taskList[taskIndex].title;
+  }
+   String getCategory(int taskIndex) {
+    return taskList[taskIndex].categoryname;
   }
 
   void bottomSheetBuilder(Widget bottomSheetView, BuildContext context) {

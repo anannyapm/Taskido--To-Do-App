@@ -14,8 +14,10 @@ class ProgressIndicatorWidget extends StatefulWidget {
 }
 
 class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
+  
   @override
   Widget build(BuildContext context) {
+    double max=widget.maxVal==0?1:widget.maxVal;
     double progressValue = widget.progressVal;
     return Container(
       margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
@@ -35,7 +37,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                       minimum: 0,
                       //centerX: 0.28,
                       //centerY: 0.3,
-                      maximum: widget.maxVal,
+                      maximum: max,
                       showLabels: false,
                       showTicks: false,
                       startAngle: 270,

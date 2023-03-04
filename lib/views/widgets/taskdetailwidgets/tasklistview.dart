@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/models/appviewmodel.dart';
 
 class TaskListView extends StatefulWidget {
-  const TaskListView({super.key});
+  String categoryName;
+  TaskListView({super.key, required this.categoryName});
 
   @override
   State<TaskListView> createState() => _TaskListViewState();
@@ -21,36 +22,35 @@ class _TaskListViewState extends State<TaskListView> {
           itemBuilder: ((context, index) {
             bool ifCompleted = viewModel.getTaskValue(index);
             /* if (ifCompleted == false) { */
-              return ListTile(
-                  horizontalTitleGap: 2,
-                  leading: Checkbox(
-                    
-                    side: BorderSide(width: 2),
-                    
-                    activeColor: viewModel.primclr1,
-                    value: ifCompleted,
-                    onChanged: (value) {
-                      setState(() {
-                         print(viewModel.taskCount);
-                      
-                      viewModel.setTaskValue(index, value!);
-                      });
-                       
-                      
-                    },
-                  ),
-                  title: ifCompleted?
-                  Text(viewModel.getTaskTitle(index),
-                    style: TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                    )):
-                   Text(viewModel.getTaskTitle(index)),
-                  trailing: IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.delete_outline,
-                        color: Colors.black,
-                      )));
+            return //viewModel.getCategory(index) == widget.categoryName?
+                 ListTile(
+                    horizontalTitleGap: 2,
+                    leading: Checkbox(
+                      side: BorderSide(width: 2),
+                      activeColor: viewModel.primclr1,
+                      value: ifCompleted,
+                      onChanged: (value) {
+                        setState(() {
+                          print(viewModel.taskCount);
+
+                          viewModel.setTaskValue(index, value!);
+                        });
+                      },
+                    ),
+                    title: (ifCompleted)
+                        ? Text(viewModel.getTaskTitle(index),
+                            style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                            ))
+                        : Text(viewModel.getTaskTitle(index)),
+                    trailing: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.delete_outline,
+                          color: Colors.black,
+                        )))
+                //: null
+                ;
             /* } else {
               return null;
             } */

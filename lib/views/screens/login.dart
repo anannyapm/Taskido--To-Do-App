@@ -47,8 +47,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
                         color: Colors.black,
                       ),
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (ctx) => const OnboardingHome()));
+                        Navigator.of(context).pop(
+                          /* MaterialPageRoute(
+                            builder: (ctx) => const OnboardingHome()) */
+                            );
                       },
                     ),
                   ),
@@ -92,7 +94,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                       const Color.fromARGB(255, 4, 209, 206),
                                   gradFunction: () {
                                     if (_formKey.currentState!.validate()) {
-                                      Navigator.of(context).push(
+                                      Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                    const ScreenHome()));

@@ -15,7 +15,7 @@ class ScreenTasks extends StatefulWidget {
 }
 
 class _ScreenTasksState extends State<ScreenTasks> {
-  String _chosenValue = 'Personal';
+  String chosenValue = 'Personal';
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
@@ -59,12 +59,12 @@ class _ScreenTasksState extends State<ScreenTasks> {
                       ),
                       isExpanded: true,
                       underline: Container(),
-                      value: _chosenValue,
+                      value: chosenValue,
                       items: dropdownItems,
                       onChanged: (String? newvalue) {
                         setState(() {
-                          _chosenValue = newvalue!;
-                          print(_chosenValue);
+                          chosenValue = newvalue!;
+                          print(chosenValue);
                         });
                       },
                     ),
@@ -115,7 +115,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                               padding: EdgeInsets.all(8.0),
                               child: Align(child: Text("Your task bucket is empty ;)",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)),
                             )
-                            : const TaskListView(),
+                            :  TaskListView(categoryName: chosenValue),
                         const SizedBox(
                           height: 30,
                         ),

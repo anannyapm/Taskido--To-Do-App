@@ -19,7 +19,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
         decoration: const BoxDecoration(
             color: Colors.white,
             image: DecorationImage(
-                image: AssetImage('assets/images/lineart.png'), scale:2,fit: BoxFit.cover)),
+                image: AssetImage('assets/images/lineart.png'),fit: BoxFit.cover)),
 
         //Scaffold area
         child: Scaffold(
@@ -84,7 +84,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
                   child: GradientBox(
                     colorStart:const Color(0xff011638) ,
                     colorEnd: const Color(0xff00A9A5),
-                    gradFunction: ()=>Navigator.of(context).push(MaterialPageRoute(
+                    gradFunction: ()=>Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => const OnboardingHome())),
                              textVal: "Let's Start",
                     textColor: Colors.white,)
