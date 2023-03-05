@@ -83,7 +83,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                              // _photo?.path == null?
                              const CircleAvatar(
                                 radius: 35,
-                              backgroundColor: Color(0xFF04D1CE),
+                              backgroundColor: Color.fromARGB(255, 9, 9, 9),
                               child: CircleAvatar(
                                 radius:33,
                                 backgroundImage: AssetImage(
