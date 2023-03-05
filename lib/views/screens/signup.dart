@@ -21,12 +21,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-
+      
         decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
-                  alignment: Alignment.bottomRight,
-                  image: AssetImage('assets/images/signbg.png'),
+                  alignment: Alignment.topRight,
+                  image: AssetImage('assets/images/Vector2.png'),
                  )),
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -56,69 +56,126 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
+                  
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const HeadingMessage(
-                          heading: "Hello There!\n",
-                          subheading: "Let's get you onboarded.",
-                        ),
-                    
-                        const SizedBox(
-                          height: 50,
-                        ),
-                    
-                        Form(
-                          key: _formKey,
-                    
-                          //child: Expanded(
-                          child: Column(
-                            //crossAxisAlignment: CrossAxisAlignment.start,
-                            //mainAxisAlignment: MainAxisAlignment.center,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 50),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          
+                          const HeadingMessage(
+                            heading: "Hello There!\n",
+                            subheading: "Let's get you onboarded.",
+                          ),
+                      
+                          const SizedBox(
+                            height: 30,
+                          ),
+                      
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Align(
+                          child: Stack(
+                            alignment: Alignment.bottomRight,
                             children: [
-                              const TextFieldWidget(
-                                hint: "Enter User Name",
-                                label: "User Name",
+                             // _photo?.path == null?
+                             const CircleAvatar(
+                                radius: 35,
+                              backgroundColor: Color(0xFF04D1CE),
+                              child: CircleAvatar(
+                                radius:33,
+                                backgroundImage: AssetImage(
+                                    'assets/images/stacked-steps-haikei.png'),
                               ),
-                              const SizedBox(
-                                height: 20,
+                                
                               ),
-                              const TextFieldWidget(
-                                  hint: "Enter Email Address",
-                                  label: "Email Address"),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Align(
-                                child: GradientBox(
-                                  colorStart:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  colorEnd:
-                                      const Color.fromARGB(255, 4, 209, 206),
-                                  gradFunction: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                   const ScreenHome()));
-                                    } else {
-                                     // print('Empty fields found');
-                                    }
-                                  },
-                                  textVal: "Sign Up",
-                                  textColor: const Color(0xff011638),
+                            /* : CircleAvatar(
+                                radius: 50,
+                              backgroundColor: Colors.blue,
+                              child: CircleAvatar(
+                                radius: 48,
+                                backgroundImage: FileImage(
+                                  File(
+                                    _photo!.path,
+                                  ),
                                 ),
-                              )
+                              ),
+                                
+                                
+                              ), */
+                              Container(
+                                height: 30,
+                                width: 30,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color.fromARGB(255, 255, 255, 255)
+                                ),
+                                padding: const EdgeInsets.all(2),
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle, color: Color.fromARGB(255, 1, 1, 1)),
+                                  child: IconButton(
+                                    icon: const Icon(Icons.edit,size: 15,color: Colors.white,),
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      //getPhoto();
+                                    },
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        //),
-                      ],
+                      ),
+                          Form(
+                            key: _formKey,
+                                              
+                            //child: Expanded(
+                            child: Column(
+                              //crossAxisAlignment: CrossAxisAlignment.start,
+                              //mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const TextFieldWidget(
+                                  hint: "Enter User Name",
+                                  label: "User Name",
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                const TextFieldWidget(
+                                    hint: "Enter Email Address",
+                                    label: "Email Address"),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Align(
+                                  child: GradientBox(
+                                    colorStart:
+                                        const Color.fromARGB(255, 255, 255, 255),
+                                    colorEnd:
+                                        Color(0xFF04D1CE),
+                                    gradFunction: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                     const ScreenHome()));
+                                      } else {
+                                       // print('Empty fields found');
+                                      }
+                                    },
+                                    textVal: "Sign Up",
+                                    textColor: const Color(0xff011638),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          //),
+                        ],
+                      ),
                     ),
                   ),
                    Align(

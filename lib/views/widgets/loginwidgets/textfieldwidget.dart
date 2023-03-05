@@ -11,14 +11,17 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
           border: OutlineInputBorder(
+            
               borderSide: const BorderSide(width: 1, color: Color(0xbf011638)),
               borderRadius: BorderRadius.circular(15)),
           hintText: hint,
           labelText: label),
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Name cannot be Empty!';
+          return '$label cannot be Empty!';
         } else
           return null;
       },

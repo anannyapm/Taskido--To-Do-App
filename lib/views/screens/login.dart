@@ -24,8 +24,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
         decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
-                  alignment: Alignment.bottomRight,
-                  image: AssetImage('assets/images/signbg.png'),
+                  alignment: Alignment.topRight,
+                  image: AssetImage('assets/images/Vector2.png'),
                  )),
         child: Scaffold(
           backgroundColor: Colors.transparent,
