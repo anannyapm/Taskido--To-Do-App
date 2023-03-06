@@ -58,8 +58,8 @@ class _ScreenHomeState extends State<ScreenHome> {
                 SpeedDialChild(
                     backgroundColor: const Color(0xff011638),
                     onTap: () {
-                      viewModel.bottomSheetBuilder(const TaskSheetWidget()
-                          , context);
+                      viewModel.bottomSheetBuilder(
+                          const TaskSheetWidget(), context);
                     },
                     child: const Icon(
                       Icons.add_task,
@@ -69,7 +69,8 @@ class _ScreenHomeState extends State<ScreenHome> {
                 SpeedDialChild(
                     backgroundColor: const Color(0xff011638),
                     onTap: () {
-                      viewModel.bottomSheetBuilder(const CategorySheetWidget(), context);
+                      viewModel.bottomSheetBuilder(
+                          const CategorySheetWidget(), context);
                     },
                     child: const Icon(
                       Icons.category,

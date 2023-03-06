@@ -16,22 +16,24 @@ class OnboardingHome extends StatelessWidget {
               image: DecorationImage(
                   alignment: Alignment.topCenter,
                   image: AssetImage('assets/images/screentwobg.png'),
-                  scale: 0.9,fit: BoxFit.contain)),
+                  scale: 0.9,
+                  fit: BoxFit.contain)),
           child: Scaffold(
-            resizeToAvoidBottomInset:false,
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
             //set background
             body: Column(
               children: [
-                 Expanded(
-                  flex: 8,
-                  child: Container(),
+                Expanded(
+                  flex: 9,
+                  child: Container(
+                    height: (MediaQuery.of(context).size.height) * 0.7,
+                  ),
                 ),
                 Expanded(
                   flex: 2,
                   child: Stack(
                     children: [
-                      
                       Positioned(
                         child: Align(
                           child: SizedBox(
@@ -66,9 +68,6 @@ class OnboardingHome extends StatelessWidget {
                           ),
                         ),
                       ),
-                
-                      
-                
                       Positioned(
                         left: 18,
                         top: -25,
@@ -95,21 +94,21 @@ class OnboardingHome extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Align(
-                    child: GradientBox(
-                      colorStart: const Color.fromARGB(255, 255, 255, 255),
-                      colorEnd: const Color.fromARGB(255, 4, 209, 206),
-                      gradFunction: () =>  Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ScreenSignUp())) ,
-                              textVal: "Sign Up",
-                              textColor: const Color(0xff011638),)
-                    
-                    
-                  ),
+                      child: GradientBox(
+                    colorStart: const Color.fromARGB(255, 255, 255, 255),
+                    colorEnd: const Color.fromARGB(255, 4, 209, 206),
+                    gradFunction: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => const ScreenSignUp())),
+                    textVal: "Sign Up",
+                    textColor: const Color(0xff011638),
+                  )),
                 ),
                 Expanded(
                   flex: 1,
                   child: TextButton(
-                    onPressed: () =>Navigator.of(context).push(MaterialPageRoute(
+                    onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
                             builder: (context) => const ScreenLogin())),
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,

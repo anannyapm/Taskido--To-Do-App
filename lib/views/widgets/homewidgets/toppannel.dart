@@ -6,23 +6,17 @@ import '../../screens/home.dart';
 import '../../screens/profilehome.dart';
 
 class TopPanelWidget extends StatefulWidget {
-  
-
   const TopPanelWidget({super.key});
 
   @override
-  State<TopPanelWidget> createState() => _TopPanelWidgetState(
-    
-  );
+  State<TopPanelWidget> createState() => _TopPanelWidgetState();
 }
 
 class _TopPanelWidgetState extends State<TopPanelWidget> {
   @override
   Widget build(BuildContext context) {
-    
     return Container(
-                margin: const EdgeInsets.fromLTRB(10,20,10,10),
-
+      margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,11 +40,10 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
               Column(
                 //text: const TextSpan(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                
-                
+
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-              /* 
+                  /* 
                   RichText(
                         textAlign: TextAlign.center,
                         text:  TextSpan(
@@ -79,7 +72,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                         ),
                                   
                     ), */
-              
+
                   const Text(
                     'Hey!',
                     style: TextStyle(
@@ -109,7 +102,10 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                   onPressed: () {
                     drawerkey.currentState!.openEndDrawer();
                   },
-                  icon: const Icon(Icons.menu,size: 30,)))
+                  icon: const Icon(
+                    Icons.menu,
+                    size: 30,
+                  )))
         ],
       ),
     );

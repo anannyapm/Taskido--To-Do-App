@@ -14,10 +14,9 @@ class ProgressIndicatorWidget extends StatefulWidget {
 }
 
 class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
-  
   @override
   Widget build(BuildContext context) {
-    double max=widget.maxVal==0?1:widget.maxVal;
+    double max = widget.maxVal == 0 ? 1 : widget.maxVal;
     double progressValue = widget.progressVal;
     return Container(
       margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
@@ -80,8 +79,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                                 children: [
                                   TextSpan(
                                     text:
-                                        '${((widget.maxVal==0?0:(progressValue / widget.maxVal) * 100))
-                                                .toStringAsFixed(0)}%\n',
+                                        '${((widget.maxVal == 0 ? 0 : (progressValue / widget.maxVal) * 100)).toStringAsFixed(0)}%\n',
                                     style: const TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.w600,
@@ -112,7 +110,8 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: '${widget.maxVal.toInt()-widget.progressVal.toInt()} ',
+                  text:
+                      '${widget.maxVal.toInt() - widget.progressVal.toInt()} ',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,

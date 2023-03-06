@@ -112,10 +112,16 @@ class _ScreenTasksState extends State<ScreenTasks> {
 
                         viewModel.taskCount == 0
                             ? const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Align(child: Text("Your task bucket is empty ;)",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),)),
-                            )
-                            :  TaskListView(categoryName: chosenValue),
+                                padding: EdgeInsets.all(8.0),
+                                child: Align(
+                                    child: Text(
+                                  "Your task bucket is empty ;)",
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                              )
+                            : TaskListView(categoryName: chosenValue),
                         const SizedBox(
                           height: 30,
                         ),

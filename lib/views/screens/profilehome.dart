@@ -21,8 +21,6 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-     
-
       return SafeArea(
           child: Container(
               decoration: const BoxDecoration(
@@ -41,7 +39,10 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                     children: [
                       const TopPanelWidget(),
                       const StreakBarWidget(),
-                      ProgressIndicatorWidget(progressVal: viewModel.completedCount.toDouble(),maxVal: viewModel.taskCount.toDouble(),),
+                      ProgressIndicatorWidget(
+                        progressVal: viewModel.completedCount.toDouble(),
+                        maxVal: viewModel.taskCount.toDouble(),
+                      ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(

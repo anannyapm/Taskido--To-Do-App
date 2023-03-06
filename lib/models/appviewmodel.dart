@@ -29,12 +29,11 @@ class AppViewModel extends ChangeNotifier {
 
   void addTask(Task newTask) {
     taskList.add(newTask);
-    
+
     notifyListeners();
   }
 
   bool getTaskValue(int taskIndex) {
-  
     return taskList[taskIndex].isCompleted;
   }
 
@@ -46,7 +45,8 @@ class AppViewModel extends ChangeNotifier {
   String getTaskTitle(int taskIndex) {
     return taskList[taskIndex].title;
   }
-   String getCategory(int taskIndex) {
+
+  String getCategory(int taskIndex) {
     return taskList[taskIndex].categoryname;
   }
 

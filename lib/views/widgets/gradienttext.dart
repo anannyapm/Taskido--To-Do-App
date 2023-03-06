@@ -5,7 +5,11 @@ class GradientTextWidget extends StatelessWidget {
   final double textSize;
   final FontWeight weight;
 
-  const GradientTextWidget({super.key, required this.textValue, required this.textSize,required this.weight});
+  const GradientTextWidget(
+      {super.key,
+      required this.textValue,
+      required this.textSize,
+      required this.weight});
 
   @override
   Widget build(BuildContext context) {

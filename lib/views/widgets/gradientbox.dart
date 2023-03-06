@@ -5,15 +5,15 @@ class GradientBox extends StatelessWidget {
   final Color colorEnd;
   final VoidCallback gradFunction;
   final String textVal;
-  final Color textColor ;
+  final Color textColor;
 
   const GradientBox(
       {super.key,
       this.colorStart = Colors.white,
-       this.colorEnd=Colors.white,
+      this.colorEnd = Colors.white,
       required this.gradFunction,
       required this.textVal,
-      this.textColor= Colors.black});
+      this.textColor = Colors.black});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class GradientBox extends StatelessWidget {
       height: 44,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.5),
-        gradient:  LinearGradient(
+        gradient: LinearGradient(
           begin: const Alignment(1.392, 4.273),
           end: const Alignment(-2.084, -18.136),
           colors: <Color>[
@@ -42,12 +42,10 @@ class GradientBox extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.5)),
         ),
-        child:  Text(
+        child: Text(
           textVal,
           style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 22,
-              color: textColor),
+              fontWeight: FontWeight.w900, fontSize: 22, color: textColor),
         ),
       ),
     );

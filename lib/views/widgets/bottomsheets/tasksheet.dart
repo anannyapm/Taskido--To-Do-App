@@ -51,10 +51,11 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                       icon: const Icon(Icons.close)),
                   trailing: TextButton(
                     onPressed: () {
-                      if (inputController.text.isNotEmpty ) {
+                      if (inputController.text.isNotEmpty) {
                         Task newTask = Task(inputController.text, false,
                             categoryList[defaultChoiceIndex].taskName);
-                        print('${newTask.categoryname} ${newTask.title} ${newTask.isCompleted}');
+                        print(
+                            '${newTask.categoryname} ${newTask.title} ${newTask.isCompleted}');
                         viewModel.addTask(newTask);
                         inputController.clear();
                       }
@@ -76,7 +77,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                 //textfieldbar
                 TextField(
                   controller: inputController,
-                  decoration: const InputDecoration(hintText: 'Enter Task Name'),
+                  decoration:
+                      const InputDecoration(hintText: 'Enter Task Name'),
                 ),
 
                 //select title

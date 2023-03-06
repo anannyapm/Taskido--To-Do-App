@@ -33,27 +33,34 @@ class CategoryViewWidget extends StatelessWidget {
       //height: MediaQuery.of(context).size.height,
       margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
       child: ListView.builder(
-
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
         itemBuilder: ((context, index) {
           return Card(
             elevation: 6,
             margin: EdgeInsets.only(bottom: 10),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.5)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.5)),
             child: ListTile(
-              minLeadingWidth:25 ,
-              leading: categoryList[index].taskIcon,
-              title: Text(categoryList[index].taskName,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),),
-              trailing:Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                    Text(categoryList[index].taskLiveCount.toString()+' Tasks'),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.delete,color: Colors.red,)),
-                ],
-              )
-                  
-            ),
+                minLeadingWidth: 25,
+                leading: categoryList[index].taskIcon,
+                title: Text(
+                  categoryList[index].taskName,
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                ),
+                trailing: Wrap(
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(categoryList[index].taskLiveCount.toString() +
+                        ' Tasks'),
+                    IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        )),
+                  ],
+                )),
           );
         }),
         itemCount: categoryList.length,

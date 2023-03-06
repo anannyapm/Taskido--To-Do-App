@@ -16,18 +16,18 @@ class _TaskListViewState extends State<TaskListView> {
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(
       builder: (context, viewModel, child) {
-        return ListView.builder(
+        return ListView.separated(
           shrinkWrap: true,
           physics: ClampingScrollPhysics(),
           itemBuilder: ((context, index) {
             bool ifCompleted = viewModel.getTaskValue(index);
             /* if (ifCompleted == false) { */
             return //viewModel.getCategory(index) == widget.categoryName?
-                 ListTile(
+                ListTile(
                     horizontalTitleGap: 2,
                     leading: Checkbox(
                       side: BorderSide(width: 2),
-                      activeColor: viewModel.primclr1,
+                      activeColor: Color.fromARGB(127, 0, 0, 0),
                       value: ifCompleted,
                       onChanged: (value) {
                         setState(() {
@@ -40,6 +40,7 @@ class _TaskListViewState extends State<TaskListView> {
                     title: (ifCompleted)
                         ? Text(viewModel.getTaskTitle(index),
                             style: TextStyle(
+                              color: Color.fromARGB(127, 0, 0, 0),
                               decoration: TextDecoration.lineThrough,
                             ))
                         : Text(viewModel.getTaskTitle(index)),
@@ -59,6 +60,11 @@ class _TaskListViewState extends State<TaskListView> {
           /*  separatorBuilder: (context, index) {
               return SizedBox(height: 1);
             } */
+          separatorBuilder: (context, index) {
+            return Divider(
+              height: 10,
+            );
+          },
         );
       },
     );

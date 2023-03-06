@@ -5,7 +5,8 @@ import 'package:flutter/src/widgets/placeholder.dart';
 class BottomTextButton extends StatelessWidget {
   final String linkText;
   final VoidCallback function;
-  const BottomTextButton({super.key, required this.linkText,required this.function});
+  const BottomTextButton(
+      {super.key, required this.linkText, required this.function});
 
   @override
   Widget build(BuildContext context) {

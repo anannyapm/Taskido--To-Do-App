@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:provider/provider.dart';
 
-
 class CategorySheetWidget extends StatefulWidget {
   const CategorySheetWidget({super.key});
 
@@ -11,7 +10,7 @@ class CategorySheetWidget extends StatefulWidget {
 }
 
 class _CategorySheetWidgetState extends State<CategorySheetWidget> {
- final List<Icon> _choicesList = [
+  final List<Icon> _choicesList = [
     const Icon(
       FontAwesome.heart,
       color: Color(0xffF96900),
@@ -51,7 +50,8 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
     return Consumer(builder: (context, viewModel, child) {
       return Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Container(
           height: 280,
           margin: const EdgeInsets.all(10),
@@ -76,21 +76,20 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                   ),
                 ),
               ),
-      
+
               //newtask
               const Text(
                 'Add New Category',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-      
+
               //textfieldbar
               TextField(
                 controller: inputController,
-                
-                
-                decoration: const InputDecoration(hintText: 'Enter Category Name'),
+                decoration:
+                    const InputDecoration(hintText: 'Enter Category Name'),
               ),
-      
+
               //select title
               Container(
                 margin: const EdgeInsets.only(top: 20, bottom: 10),
@@ -99,7 +98,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
-      
+
               //choice chip for select
               Row(
                 //crossAxisAlignment: CrossAxisAlignment.start,

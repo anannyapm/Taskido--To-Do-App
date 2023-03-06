@@ -16,6 +16,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     return SafeArea(
       //set background
       child: Container(
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           color: Colors.white,
           //image: DecorationImage(
@@ -40,8 +41,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
                     transform: Matrix4.rotationZ(6.9),
                     transformAlignment: Alignment.center,
                     //margin: const EdgeInsets.only(top: 60,),
-                    height: 350,
-                    width: 350,
+                    //height: 350,
+                    height: (MediaQuery.of(context).size.height) * 0.4,
+                    //width: 350,
                     child: Image.asset(
                       'assets/images/clock.png',
                     ),
