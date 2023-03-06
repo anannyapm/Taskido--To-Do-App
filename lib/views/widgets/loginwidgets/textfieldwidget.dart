@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final String hint;
@@ -24,8 +22,9 @@ class TextFieldWidget extends StatelessWidget {
         validator: (value) {
           if (value == null || value.isEmpty) {
             return '$label cannot be Empty!';
-          } else
+          } else {
             return null;
+          }
         },
       ),
     );

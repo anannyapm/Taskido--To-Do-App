@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:todoapp/models/appviewmodel.dart';
+import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 class TaskListView extends StatefulWidget {
   String categoryName;
@@ -18,7 +19,7 @@ class _TaskListViewState extends State<TaskListView> {
       builder: (context, viewModel, child) {
         return ListView.separated(
           shrinkWrap: true,
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           itemBuilder: ((context, index) {
             bool ifCompleted = viewModel.getTaskValue(index);
             /* if (ifCompleted == false) { */
@@ -26,8 +27,8 @@ class _TaskListViewState extends State<TaskListView> {
                 ListTile(
                     horizontalTitleGap: 2,
                     leading: Checkbox(
-                      side: BorderSide(width: 2),
-                      activeColor: Color.fromARGB(127, 0, 0, 0),
+                      side: const BorderSide(width: 2),
+                      activeColor: const Color.fromARGB(127, 0, 0, 0),
                       value: ifCompleted,
                       onChanged: (value) {
                         setState(() {
@@ -39,14 +40,17 @@ class _TaskListViewState extends State<TaskListView> {
                     ),
                     title: (ifCompleted)
                         ? Text(viewModel.getTaskTitle(index),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color.fromARGB(127, 0, 0, 0),
                               decoration: TextDecoration.lineThrough,
                             ))
                         : Text(viewModel.getTaskTitle(index)),
                     trailing: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
+                        onPressed: () {
+                          popupDialogueBox(() {}, context,
+                              'Delete task ${viewModel.getTaskTitle(index)}?');
+                        },
+                        icon: const Icon(
                           Icons.delete_outline,
                           color: Colors.black,
                         )))
@@ -61,7 +65,7 @@ class _TaskListViewState extends State<TaskListView> {
               return SizedBox(height: 1);
             } */
           separatorBuilder: (context, index) {
-            return Divider(
+            return const Divider(
               height: 10,
             );
           },

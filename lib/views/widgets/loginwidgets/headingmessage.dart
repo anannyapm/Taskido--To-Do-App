@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class HeadingMessage extends StatelessWidget {
   final String heading;
@@ -12,7 +10,7 @@ class HeadingMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
         text: TextSpan(
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w500,
               height: 1.5,
@@ -22,7 +20,7 @@ class HeadingMessage extends StatelessWidget {
           TextSpan(text: heading),
           TextSpan(
             text: subheading,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w300,
               height: 1.5,

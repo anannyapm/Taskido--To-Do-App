@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/login.dart';
-import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
 import '../widgets/loginwidgets/bottombarwidget.dart';
@@ -65,7 +64,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                     child: SingleChildScrollView(
                       child: Container(
                         height: (MediaQuery.of(context).size.height) * 0.75,
-                        margin: EdgeInsets.only(top: 50),
+                        margin: const EdgeInsets.only(top: 50),
                         child: Column(
                           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +166,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                     child: GradientBox(
                                       colorStart: const Color.fromARGB(
                                           255, 255, 255, 255),
-                                      colorEnd: Color(0xFF04D1CE),
+                                      colorEnd: const Color(0xFF04D1CE),
                                       gradFunction: () {
                                         if (_formKey.currentState!.validate()) {
                                           Navigator.of(context).pushReplacement(

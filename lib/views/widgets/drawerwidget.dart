@@ -11,25 +11,39 @@ class DrawerWidget extends StatelessWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const UserAccountsDrawerHeader(
-            decoration: BoxDecoration(
+           UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/drawerbg.png'),
                     fit: BoxFit.fill)),
-            accountName: Text(
-              "Greta",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Color(0xff011638)),
+            accountName: SizedBox(
+              width: (MediaQuery.of(context).size.width)*0.3,
+              child: const Text(
+                
+                "Greta",
+              maxLines: 2,
+           
+                
+                style: TextStyle(
+                        
+                    fontWeight: FontWeight.bold, color: Color(0xff011638)),
+              ),
             ),
-            accountEmail: Text(
-              "gretagreg123@gmail.com",
-              style: TextStyle(
-                  fontWeight: FontWeight.w400, color: Color(0xff011638)),
+            accountEmail: SizedBox(
+              width: (MediaQuery.of(context).size.width)*0.5,
+              child: const Text(
+                
+                "gretagreg123@gmail.com",
+                maxLines: 2,
+                style: TextStyle(
+                
+                    fontWeight: FontWeight.w400, color: Color(0xff011638)),
+              ),
             ),
-            currentAccountPicture: CircleAvatar(
+            currentAccountPicture:const CircleAvatar(
               backgroundImage: AssetImage('assets/images/profileImage.jpg'),
             ),
-          ),
+                   ),
           ListTile(
             leading: const Icon(
               Icons.share,
@@ -89,7 +103,7 @@ class DrawerWidget extends StatelessWidget {
             title: const Text('Sign Out'),
             onTap: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => OnboardingHome()));
+                  MaterialPageRoute(builder: (context) => const OnboardingHome()));
             },
           ),
         ],

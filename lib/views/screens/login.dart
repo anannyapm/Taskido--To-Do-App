@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/views/screens/home.dart';
-import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 

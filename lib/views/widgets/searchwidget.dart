@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget SearchBox() {
+Widget searchBox() {
   return Container(
-    margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-    child: TextField(
+    margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+    child: const TextField(
       decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'Search',

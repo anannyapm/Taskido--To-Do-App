@@ -26,7 +26,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
           child: Column(
             children: [
               //searchbar
-              SearchBox(),
+              searchBox(),
               Container(color: const Color.fromARGB(100, 0, 0, 0), height: 1),
               //dropdown
               Container(

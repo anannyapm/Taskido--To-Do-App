@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 import '../../../models/categoryclass.dart';
 
@@ -34,11 +33,11 @@ class CategoryViewWidget extends StatelessWidget {
       margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
       child: ListView.builder(
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemBuilder: ((context, index) {
           return Card(
             elevation: 6,
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.5)),
             child: ListTile(
@@ -46,16 +45,17 @@ class CategoryViewWidget extends StatelessWidget {
                 leading: categoryList[index].taskIcon,
                 title: Text(
                   categoryList[index].taskName,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                 ),
                 trailing: Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Text(categoryList[index].taskLiveCount.toString() +
-                        ' Tasks'),
+                    Text('${categoryList[index].taskLiveCount} Tasks'),
                     IconButton(
-                        onPressed: () {},
-                        icon: Icon(
+                        onPressed: () {
+                          popupDialogueBox(() {}, context,'Do you want to delete ${categoryList[index].taskName} category?');
+                        },
+                        icon: const Icon(
                           Icons.delete,
                           color: Colors.red,
                         )),

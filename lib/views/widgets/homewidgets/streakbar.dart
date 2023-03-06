@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 
 class StreakBarWidget extends StatelessWidget {

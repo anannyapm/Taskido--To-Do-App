@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class BottomTextButton extends StatelessWidget {
   final String linkText;
@@ -17,7 +15,7 @@ class BottomTextButton extends StatelessWidget {
       ),
       child: Text(
         linkText,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
           height: 1.5,
