@@ -5,7 +5,7 @@ import 'package:todoapp/constants/databaseconstants.dart';
 import 'package:todoapp/models/usermodel.dart';
 
 class DatabaseConnection {
-  static setDatabase(String dbname) async {
+   static setDatabase(String dbname,) async {
     var directory = await getApplicationDocumentsDirectory();
     var path = join(directory.path, dbname);
 
@@ -14,8 +14,14 @@ class DatabaseConnection {
     return database;
   }
 
-  static createDatabase(Database database, int version) async {
+   static createDatabase(Database database, int version) async {
     await database.execute(
-        "CREATE TABLE ${dbConst.tableName} (${dbConst.id} INTEGER PRIMARY KEY AUTOINCREMENT , ${dbConst.name} TEXT, ${dbConst.email} TEXT UNIQUE, ${dbConst.photo} TEXT)");
+        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT, ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
+/* 
+    await database.execute(
+        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT, ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
+    await database.execute(
+        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT, ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
+         */
   }
 }
