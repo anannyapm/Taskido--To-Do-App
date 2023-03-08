@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
+
+import '../../dbfunctions/repository.dart';
+import '../../models/appviewmodel.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
     return Drawer(
       child: ListView(
         // Important: Remove any padding from the ListView.
@@ -16,11 +23,12 @@ class DrawerWidget extends StatelessWidget {
                 image: DecorationImage(
                     image: AssetImage('assets/images/drawerbg.png'),
                     fit: BoxFit.fill)),
+
             accountName: SizedBox(
               width: (MediaQuery.of(context).size.width)*0.3,
-              child: const Text(
+              child:  Text(
                 
-                "Greta",
+               Repository.currentUserName,
               maxLines: 2,
            
                 
@@ -31,17 +39,20 @@ class DrawerWidget extends StatelessWidget {
             ),
             accountEmail: SizedBox(
               width: (MediaQuery.of(context).size.width)*0.5,
-              child: const Text(
+              child:  Text(
                 
-                "gretagreg123@gmail.com",
+                Repository.currentUserMail,
                 maxLines: 2,
                 style: TextStyle(
                 
                     fontWeight: FontWeight.w400, color: Color(0xff011638)),
               ),
             ),
-            currentAccountPicture:const CircleAvatar(
+            currentAccountPicture:viewModel.profilePhoto?.path == null? CircleAvatar(
               backgroundImage: AssetImage('assets/images/profileImage.jpg'),
+            ):CircleAvatar(
+              backgroundImage: FileImage(
+                                          File(Repository.currentUserPhoto)),
             ),
                    ),
           ListTile(
@@ -109,5 +120,6 @@ class DrawerWidget extends StatelessWidget {
         ],
       ),
     );
+    });
   }
 }

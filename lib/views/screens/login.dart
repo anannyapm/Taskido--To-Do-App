@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/dbfunctions/repository.dart';
+import 'package:todoapp/models/appviewmodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
@@ -15,6 +17,7 @@ class ScreenLogin extends StatefulWidget {
 }
 
 class _ScreenLoginState extends State<ScreenLogin> {
+  final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -84,9 +87,13 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                 //crossAxisAlignment: CrossAxisAlignment.start,
                                 //mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const TextFieldWidget(
-                                      hint: "Enter Email Address",
-                                      label: "Email Address"),
+                                  TextFieldWidget(
+                                    hint: "Enter Email Address",
+                                    label: "Email Address",
+                                    textController: _emailController,
+                                    typeValue: TextInputType.emailAddress,
+                                  ),
+
                                   /* const SizedBox(
                                     height: 20,
                                   ), */
@@ -98,10 +105,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                           255, 4, 209, 206),
                                       gradFunction: () {
                                         if (_formKey.currentState!.validate()) {
-                                          Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ScreenHome()));
+                                          checkIfUserExist(context);
                                         } else {
                                           //print('Empty field found');
                                         }
@@ -136,5 +140,28 @@ class _ScreenLoginState extends State<ScreenLogin> {
         ),
       ),
     );
+  }
+
+  Future<void> checkIfUserExist(BuildContext ctx) async {
+    final _email = _emailController.text.trim();
+
+    List<Map<String, dynamic>> out = await Repository.fetchData(_email);
+    debugPrint(out.toString());
+    if (out.isNotEmpty) {
+      Map val=out[0];
+      Repository.setCurrentUser(val['name'], val['email'], val['photo']);
+      Navigator.of(ctx)
+          .push(MaterialPageRoute(builder: (context) => const ScreenHome()));
+    } else {
+      var snackBar = SnackBar(
+        content: Text(
+          'Oops!!Looks like you are not registered. Sign Up to continue :)',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+        padding: EdgeInsets.all(20),
+      );
+      ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+    }
   }
 }

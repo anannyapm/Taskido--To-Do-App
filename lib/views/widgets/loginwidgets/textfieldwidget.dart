@@ -3,13 +3,23 @@ import 'package:flutter/material.dart';
 class TextFieldWidget extends StatelessWidget {
   final String hint;
   final String label;
-  const TextFieldWidget({super.key, required this.hint, required this.label});
+  TextEditingController textController;
+  TextInputType typeValue;
+
+  TextFieldWidget(
+      {super.key,
+      required this.hint,
+      required this.label,
+      required this.textController,
+      this.typeValue = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
       child: TextFormField(
+        controller: textController,
+        keyboardType: typeValue,
         decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
@@ -23,7 +33,16 @@ class TextFieldWidget extends StatelessWidget {
           if (value == null || value.isEmpty) {
             return '$label cannot be Empty!';
           } else {
-            return null;
+            if (typeValue == TextInputType.emailAddress) {
+              if (value.contains('@') != true ||
+                  value.toLowerCase().contains('.com') != true) {
+                return 'Please enter a valid email id!!';
+              } else {
+                return null;
+              }
+            } else {
+              return null;
+            }
           }
         },
       ),

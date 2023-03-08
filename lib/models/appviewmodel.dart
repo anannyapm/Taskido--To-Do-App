@@ -1,12 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:todoapp/models/taskmodel.dart';
 import 'package:todoapp/models/usermodel.dart';
 
 class AppViewModel extends ChangeNotifier {
   List<Task> taskList = <Task>[];
-  User user = User('Greta');
+  //User user = User('Greta');
 
   int get taskCount => taskList.length;
+
+  List<Map<String, dynamic>> currentUserData = <Map<String, dynamic>>[];
 
   int get completedCount {
     int counter = 0;
@@ -57,5 +62,19 @@ class AppViewModel extends ChangeNotifier {
         return bottomSheetView;
       },
     );
+  }
+
+  
+
+
+  File? profilePhoto;
+  Future<void> getPhoto() async {
+    final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (photo == null) {
+    } else {
+      final photoTemp = File(photo.path);
+      profilePhoto = photoTemp;
+      notifyListeners();
+    }
   }
 }
