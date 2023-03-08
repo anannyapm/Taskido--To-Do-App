@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/appviewmodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
+import '../../main.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
 import '../widgets/loginwidgets/textfieldwidget.dart';
@@ -150,8 +152,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
     if (out.isNotEmpty) {
       Map val=out[0];
       Repository.setCurrentUser(val['name'], val['email'], val['photo']);
+      //setting value of savekeyname to true when credentials are correct.
+      final _sharedPrefs = await SharedPreferences.getInstance();
+      await _sharedPrefs.setBool(SAVE_KEY_NAME, true);
       Navigator.of(ctx)
-          .push(MaterialPageRoute(builder: (context) => const ScreenHome()));
+          .pushReplacement(MaterialPageRoute(builder: (context) => const ScreenHome()));
     } else {
       var snackBar = SnackBar(
         content: Text(

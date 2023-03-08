@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 
 import '../../dbfunctions/repository.dart';
@@ -28,7 +29,7 @@ class DrawerWidget extends StatelessWidget {
               width: (MediaQuery.of(context).size.width)*0.3,
               child:  Text(
                 
-               Repository.currentUserName,
+               Repository.currentUserName.toTitleCase(),
               maxLines: 2,
            
                 
@@ -49,7 +50,7 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
             currentAccountPicture:viewModel.profilePhoto?.path == null? CircleAvatar(
-              backgroundImage: AssetImage('assets/images/profileImage.jpg'),
+              backgroundImage: AssetImage(Repository.currentUserPhoto),
             ):CircleAvatar(
               backgroundImage: FileImage(
                                           File(Repository.currentUserPhoto)),

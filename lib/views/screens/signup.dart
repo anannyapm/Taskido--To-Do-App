@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/usermodel.dart';
 import 'package:todoapp/views/screens/home.dart';
@@ -9,6 +10,7 @@ import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
 import '../../functions/helper.dart';
+import '../../main.dart';
 import '../../models/appviewmodel.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
@@ -244,8 +246,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
     dynamic out = await Repository.saveData(_userObject);
     if(out==true){
       Repository.setCurrentUser(_name, _email,  _photo.path.toString());
+
+      final _sharedPrefs = await SharedPreferences.getInstance();
+      await _sharedPrefs.setBool(SAVE_KEY_NAME, true);
+      
       Navigator.of(ctx)
-          .push(MaterialPageRoute(builder: (context) => const ScreenHome()));}
+          .pushReplacement(MaterialPageRoute(builder: (context) => const ScreenHome()));}
 
     else{
       var snackBar = SnackBar(

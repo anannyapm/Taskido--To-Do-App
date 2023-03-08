@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
+import 'package:todoapp/functions/string_extensions.dart';
 
 import '../../../models/appviewmodel.dart';
 import '../../screens/profilehome.dart';
@@ -65,7 +66,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                       ),
                     ),
                      Text(
-                      Repository.currentUserName,
+                      Repository.currentUserName.toTitleCase(),
                       style: TextStyle(
                         fontSize: 28,
                         height: 1.1,
