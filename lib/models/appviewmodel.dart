@@ -2,10 +2,30 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todoapp/models/categorymodel.dart';
 import 'package:todoapp/models/taskmodel.dart';
-import 'package:todoapp/models/usermodel.dart';
 
 class AppViewModel extends ChangeNotifier {
+  //category actions
+  List<CategoryModel> categModelList = <CategoryModel>[];
+
+  addCategoryList(List mapValue) {
+    categModelList.clear();
+    for (var map in mapValue) {
+      debugPrint(map.toString());
+      final category = CategoryModel.fromMap(map);
+      categModelList.add(category);
+      notifyListeners();
+    }
+  }
+
+  CategoryModel getCategoryListItem(int catIndex) {
+    return categModelList[catIndex];
+  }
+
+
+  int get CategoryCount => categModelList.length;
+  
   List<Task> taskList = <Task>[];
   //User user = User('Greta');
 
@@ -63,9 +83,6 @@ class AppViewModel extends ChangeNotifier {
       },
     );
   }
-
-  
-
 
   File? profilePhoto;
   Future<void> getPhoto() async {

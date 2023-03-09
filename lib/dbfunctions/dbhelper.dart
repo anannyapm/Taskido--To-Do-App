@@ -2,10 +2,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:todoapp/constants/databaseconstants.dart';
+import 'package:todoapp/constants/iconlist.dart';
 import 'package:todoapp/models/usermodel.dart';
 
 class DatabaseConnection {
-   static setDatabase(String dbname,) async {
+  static setDatabase(
+    String dbname,
+  ) async {
     var directory = await getApplicationDocumentsDirectory();
     var path = join(directory.path, dbname);
 
@@ -14,12 +17,22 @@ class DatabaseConnection {
     return database;
   }
 
-   static createDatabase(Database database, int version) async {
+  static createDatabase(Database database, int version) async {
     await database.execute(
-        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT, ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
-/* 
+        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT , ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
+
     await database.execute(
-        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT, ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
+        "CREATE TABLE ${categoryInstance.tableName} (${categoryInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${categoryInstance.colTwo} TEXT UNIQUE, ${categoryInstance.colThree} INT , ${categoryInstance.colFour} BOOLEAN)");
+
+     await database.rawInsert(
+        'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
+        ['Personal', 0, false]);
+    await database.rawInsert(
+        'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
+        ['Work',1 , false]); 
+   
+
+    /*
     await database.execute(
         "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT, ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
          */

@@ -77,7 +77,7 @@ class Repository {
   }
 
    static Future<List<Map<String, dynamic>>> fetchData(String email) async {
-    //print("in fecth" + email);
+   
     var dbClient = await database;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(

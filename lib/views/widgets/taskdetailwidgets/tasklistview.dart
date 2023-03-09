@@ -31,11 +31,12 @@ class _TaskListViewState extends State<TaskListView> {
                       activeColor: const Color.fromARGB(127, 0, 0, 0),
                       value: ifCompleted,
                       onChanged: (value) {
-                        setState(() {
+                        //setState(() {
                           print(viewModel.taskCount);
 
                           viewModel.setTaskValue(index, value!);
-                        });
+                        //}
+                        //);
                       },
                     ),
                     title: (ifCompleted)

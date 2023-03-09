@@ -13,4 +13,6 @@ class DBConst {
       required this.colFour});
 }
 
-DBConst userInstance = DBConst(tableName: 'user_table',colOne: 'id',colTwo: 'name',colThree: 'email',colFour: 'photo');
+DBConst userInstance = DBConst(tableName: 'user_table',colOne: 'uid',colTwo: 'name',colThree: 'email',colFour: 'photo');
+DBConst categoryInstance = DBConst(tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo_id',colFour: 'isDeleted');
+DBConst taskInstance = DBConst(tableName: 'task_table',colOne: 'tid',colTwo: 'task_name',colThree: 'isCompleted',colFour: 'category_id');

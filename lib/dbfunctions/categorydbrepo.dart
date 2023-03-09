@@ -1,39 +1,44 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/dbfunctions/dbhelper.dart';
 import 'package:todoapp/constants/databaseconstants.dart';
+import 'package:todoapp/models/appviewmodel.dart';
+import 'package:todoapp/models/categorymodel.dart';
 
-import '../models/usermodel.dart';
-
-class Repository {
+class CategRepository {
   static Database? _database;
 
- 
+  static AppViewModel _viewModel = AppViewModel();
 
   //check if database already exist; if yes return it else create a new db and return it.
   static Future<Database> get database async {
     if (_database != null) return _database!;
 
-    
     _database = await DatabaseConnection.setDatabase('todo_database.db');
     return _database!;
   }
 
-  static Future<bool> saveData(UserModel user) async {
+  static Future<bool> saveData(CategoryModel category) async {
     var dbClient = await database;
     /* print("In saveData" + user.email);
     print('all data-'); */
 
-    List<Map<String, dynamic>> result = await fetchData(user.email);
+    List<Map<String, dynamic>> result = await fetchData(category.category_name);
     if (result.isEmpty) {
       //bool res = true;
       //if (result == false) {
       debugPrint('inserting.....');
       //user.id =
       await dbClient.rawInsert(
-          'INSERT INTO ${dbConst.tableName}(${dbConst.name}, ${dbConst.email}, ${dbConst.photo}) VALUES(?, ?, ?)',
-          [user.name, user.email, user.photo]);
-      getAllUser();
+//DBConst(tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted');
+
+          'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
+          [
+            category.category_name,
+            category.category_logo_value,
+            category.isDeleted
+          ]);
+      getAllData();
 
       return true;
     } else {
@@ -43,33 +48,28 @@ class Repository {
     // return user;
   }
 
-  static Future<void> getAllUser() async {
+  static Future<void> getAllData() async {
     //get data form database
     //rawQuery will return list of map value
     var dbClient = await database;
 
     final _values =
-        await dbClient.rawQuery('select * from ${dbConst.tableName}');
+        await dbClient.rawQuery('select * from ${categoryInstance.tableName}');
 
     debugPrint(_values.toString());
-
+    if(_values.isNotEmpty)
+      _viewModel.addCategoryList(_values);
     //studentListNotifier.value.clear();
-
-    /*  _values.forEach((map) {
-    final student = StudentModel.fromMap(map);
-    studentListNotifier.value.add(student);
-    studentListNotifier.notifyListeners();
-  }); */
 
     //studentListNotifier.notifyListeners();
   }
 
-  static Future<List<Map<String, dynamic>>> fetchData(String email) async {
+  static Future<List<Map<String, dynamic>>> fetchData(String categName) async {
     //print("in fecth" + email);
     var dbClient = await database;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
-        'select * from ${dbConst.tableName} where ${dbConst.email}="$email"');
+        'select * from ${categoryInstance.tableName} where ${categoryInstance.colTwo}="$categName"');
 
     return result;
     /* if (result.isNotEmpty) {
@@ -90,4 +90,3 @@ class Repository {
     }*/
   }
 }
- */
