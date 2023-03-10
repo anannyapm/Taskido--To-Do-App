@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:todoapp/models/categoryclass.dart';
+import 'package:todoapp/models/categorymodel.dart';
 
+import '../../constants/iconlist.dart';
+import '../../dbfunctions/categorydbrepo.dart';
 import '../../models/appviewmodel.dart';
 import '../widgets/searchwidget.dart';
 import '../widgets/taskdetailwidgets/tasklistview.dart';
@@ -15,10 +17,11 @@ class ScreenTasks extends StatefulWidget {
 }
 
 class _ScreenTasksState extends State<ScreenTasks> {
-  String chosenValue = 'Personal';
+  String chosenValue = '';
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+      //viewModel.addCategList();
       return Scaffold(
         body: SafeArea(
             child: Container(
@@ -51,7 +54,35 @@ class _ScreenTasksState extends State<ScreenTasks> {
                       left: 20,
                       right: 20,
                     ),
-                    child: DropdownButton(
+                    child: FutureBuilder(
+                        future: CategRepository.getAllData(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<CategoryModel>> snapshot) {
+                          
+                          if (snapshot.hasData) {
+                            return DropdownButton(
+                              icon: const Icon(
+                                FontAwesome5.chevron_down,
+                                size: 15,
+                                color: Colors.black,
+                              ),
+                              isExpanded: true,
+                              underline: Container(),
+                              value: chosenValue,
+                              items: dropdownItems(snapshot),
+                              onChanged: (String? newvalue) {
+                                setState(() {
+                                  chosenValue = newvalue!;
+                                  print(chosenValue);
+                                });
+                              },
+                            );
+                          } else {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        })
+
+                    /*  DropdownButton(
                       icon: const Icon(
                         FontAwesome5.chevron_down,
                         size: 15,
@@ -67,7 +98,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
                           print(chosenValue);
                         });
                       },
-                    ),
+                    ) */
+                    ,
                   ),
                 ),
               ),
@@ -137,29 +169,40 @@ class _ScreenTasksState extends State<ScreenTasks> {
     });
   }
 
-  List<DropdownMenuItem<String>> get dropdownItems {
-    List<DropdownMenuItem<String>> menuItems = List.generate(
-      categoryList.length,
-      (index) => DropdownMenuItem(
-          value: categoryList[index].taskName,
+  List<DropdownMenuItem<String>> dropdownItems(AsyncSnapshot<List<CategoryModel>> snapshot) {
+    List<DropdownMenuItem<String>> menuItems;
+
+    List<DropdownMenuItem<String>> li = [
+      DropdownMenuItem(
+        value: '',
           child: Wrap(
-            spacing: 10,
-            children: [
-              categoryList[index].taskIcon,
-              Text(
-                categoryList[index].taskName,
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              )
-            ],
-          )),
-    ) /* [
-    DropdownMenuItem(child: Wrap(children: [categoryList[0].taskIcon,Text(categoryList[0].taskName,)],),value: "Category 1"),
-    DropdownMenuItem(child: Text("Canada"),value: "Canada"),
-    DropdownMenuItem(child: Text("Brazil"),value: "Brazil"),
-    DropdownMenuItem(child: Text("England"),value: "England"),
-  ] */
-        ;
+        spacing: 10,
+        children: [
+          Text(
+            'Select a Category',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+          )
+        ],
+      ))
+    ];
+    menuItems = [
+      ...li,
+      ...snapshot.data!
+          .map((e) => DropdownMenuItem(
+              value: e.category_name,
+              child: Wrap(
+                spacing: 10,
+                children: [
+                  IconList.Iconlist[e.category_logo_value],
+                  Text(
+                    e.category_name,
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600),
+                  )
+                ],
+              )))
+          .toList()
+    ];
     return menuItems;
   }
 }

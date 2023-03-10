@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../dbfunctions/categorydbrepo.dart';
 import '../../models/appviewmodel.dart';
+import '../../models/categorymodel.dart';
 import '../widgets/drawerwidget.dart';
 import '../widgets/homewidgets/categoryviewlist.dart';
 import '../widgets/homewidgets/progressindicator.dart';
@@ -12,12 +14,25 @@ final GlobalKey<ScaffoldState> drawerkey = GlobalKey();
 
 class ScreenProfileHome extends StatefulWidget {
   const ScreenProfileHome({super.key});
+  
+  
 
   @override
   State<ScreenProfileHome> createState() => _ScreenProfileHomeState();
 }
 
 class _ScreenProfileHomeState extends State<ScreenProfileHome> {
+  List<CategoryModel> categList = <CategoryModel>[];
+  /* Future<Future<List<CategoryModel>>> _refreshProducts(BuildContext context) async {
+    return CategRepository.getAllData();
+  } */
+
+  @override
+  void initState() {
+    // TODO: implement initState
+     addCategoryList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
@@ -35,6 +50,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                 backgroundColor: Colors.transparent,
                 endDrawer: const DrawerWidget(),
                 body: SingleChildScrollView(
+                  //physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
                       const TopPanelWidget(),
@@ -61,5 +77,17 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                 ),
               )));
     });
+  }
+
+  void addCategoryList() async {
+    await CategRepository.getAllData().then((value) {
+      setState(() {
+        for (var map in value) {
+          debugPrint(map.toString());
+
+          categList.add(map);
+        }
+      });
+    }).catchError((e) => debugPrint(e.toString()));
   }
 }

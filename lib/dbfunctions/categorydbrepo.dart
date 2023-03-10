@@ -8,8 +8,6 @@ import 'package:todoapp/models/categorymodel.dart';
 class CategRepository {
   static Database? _database;
 
-  static AppViewModel _viewModel = AppViewModel();
-
   //check if database already exist; if yes return it else create a new db and return it.
   static Future<Database> get database async {
     if (_database != null) return _database!;
@@ -18,20 +16,16 @@ class CategRepository {
     return _database!;
   }
 
+  //ADD DATA TO DATABASE
   static Future<bool> saveData(CategoryModel category) async {
     var dbClient = await database;
-    /* print("In saveData" + user.email);
-    print('all data-'); */
 
     List<Map<String, dynamic>> result = await fetchData(category.category_name);
     if (result.isEmpty) {
-      //bool res = true;
-      //if (result == false) {
       debugPrint('inserting.....');
-      //user.id =
-      await dbClient.rawInsert(
-//DBConst(tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted');
 
+      //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
+      await dbClient.rawInsert(
           'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
           [
             category.category_name,
@@ -44,11 +38,10 @@ class CategRepository {
     } else {
       return false;
     }
-
-    // return user;
   }
 
-  static Future<void> getAllData() async {
+  //FETCH?GET ALL DATA FROM DATABASE
+  static Future<List<CategoryModel>> getAllData() async {
     //get data form database
     //rawQuery will return list of map value
     var dbClient = await database;
@@ -57,36 +50,29 @@ class CategRepository {
         await dbClient.rawQuery('select * from ${categoryInstance.tableName}');
 
     debugPrint(_values.toString());
-    if(_values.isNotEmpty)
-      _viewModel.addCategoryList(_values);
-    //studentListNotifier.value.clear();
-
-    //studentListNotifier.notifyListeners();
+    return _values.map((e) => CategoryModel.fromMap(e)).toList();
   }
 
+  //FETCH DATA BASED ON EMAIL ID
   static Future<List<Map<String, dynamic>>> fetchData(String categName) async {
-    //print("in fecth" + email);
     var dbClient = await database;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'select * from ${categoryInstance.tableName} where ${categoryInstance.colTwo}="$categName"');
 
     return result;
-    /* if (result.isNotEmpty) {
+  }
 
-      debugPrint('In FetchData');
-      debugPrint(result.toString());
-      
-      return true;
+  //DELETE DATA
 
-      /* for (var res in res) {
-        if (res["email"] == email && res["password"] == password) {
-          currentUser = User.fromMap(res);
-        }
-      } */
-    } else {
-      debugPrint('no data');
-      return false;
-    }*/
+  static Future<dynamic> deleteData(String categName) async {
+    var dbClient = await database;
+
+    debugPrint("In delete repo");
+
+    List<Map<String, dynamic>> result = await dbClient.rawQuery(
+        'delete from ${categoryInstance.tableName} where ${categoryInstance.colTwo}="$categName"');
+
+    return result;
   }
 }

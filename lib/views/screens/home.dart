@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/models/appviewmodel.dart';
 
 import 'package:todoapp/views/screens/profilehome.dart';
 import 'package:todoapp/views/screens/taskdetails.dart';
 import 'package:todoapp/views/widgets/bottomnavigationwidget.dart';
 
+import '../../models/categorymodel.dart';
 import '../widgets/bottomsheets/categorysheet.dart';
 import '../widgets/bottomsheets/tasksheet.dart';
 
@@ -20,11 +22,25 @@ class ScreenHome extends StatefulWidget {
 
 class _ScreenHomeState extends State<ScreenHome> {
   final isDialOpen = ValueNotifier(false);
+
   final _pages = [const ScreenProfileHome(), const ScreenTasks()];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    initdb();
+   
+    super.initState();
+  }
+
+  void initdb() async {
+    await CategRepository.database;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+      //viewModel.addCategoryList();
       return WillPopScope(
         onWillPop: () async {
           if (isDialOpen.value) {
@@ -41,6 +57,8 @@ class _ScreenHomeState extends State<ScreenHome> {
               child: ValueListenableBuilder(
                 valueListenable: ScreenHome.selectedIndexNotifier,
                 builder: (context, updatedIndex, _) {
+                  //CategRepository.addDatatoListNotifier();
+                  debugPrint(viewModel.categModelList.toString());
                   return _pages[updatedIndex];
                 },
               ),
@@ -82,4 +100,6 @@ class _ScreenHomeState extends State<ScreenHome> {
       );
     });
   }
+
+  
 }

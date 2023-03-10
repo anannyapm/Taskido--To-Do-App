@@ -17,38 +17,6 @@ class CategorySheetWidget extends StatefulWidget {
 }
 
 class _CategorySheetWidgetState extends State<CategorySheetWidget> {
-  /* final List<Icon> _choicesList = [
-    const Icon(
-      FontAwesome.heart,
-      color: Color(0xffF96900),
-      size: 20,
-    ),
-    const Icon(
-      FontAwesome.suitcase,
-      color: Color(0xff66635B),
-      size: 20,
-    ),
-    const Icon(
-      FontAwesome.flight,
-      color: Colors.blue,
-      size: 20,
-    ),
-    const Icon(
-      FontAwesome.money,
-      color: Colors.green,
-      size: 20,
-    ),
-    const Icon(
-      Icons.movie,
-      color: Color(0xff00A9A5),
-      size: 20,
-    ),
-    const Icon(
-      Icons.sports_gymnastics,
-      color: Color(0xFF1C0800),
-      size: 20,
-    ),
-  ]; */
   int defaultChoiceIndex = 0;
 
   static final _formKey = GlobalKey<FormState>();
@@ -56,7 +24,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(builder: (context, viewModel, child) {
+    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -73,16 +41,22 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                   contentPadding: const EdgeInsets.all(0),
                   leading: IconButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.of(context).pop();
                       },
                       icon: const Icon(Icons.close)),
                   trailing: TextButton(
                     onPressed: () {
+      
+
                       if (_formKey.currentState!.validate()) {
-                        addCategorytoModel(defaultChoiceIndex, context);
-                        _inputController.text = '';
-                  
-                        /* var snackBar = const SnackBar(
+                         addCategorytoModel(defaultChoiceIndex, context);
+
+                        viewModel.addCategList();
+                        //debugPrint("hiii"+viewModel.categModelList.toString());
+
+                        Navigator.pop(context);
+
+                        var snackBar = const SnackBar(
                           content: Text(
                             'Success',
                             style: TextStyle(color: Colors.white),
@@ -90,30 +64,30 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                           backgroundColor: Colors.green,
                           padding: EdgeInsets.all(20),
                         );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar); */
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
                         debugPrint('Empty fields found');
                       }
                     },
                     child: const Text(
                       'Done',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                 ),
-          
+
                 //newtask
                 const Text(
                   'Add New Category',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-          
+
                 //textfieldbar
                 TextFormField(
-                  
                   validator: (value) {
-                    if (value == null ||value.isEmpty) {
-                      return 'Please enter cetegory name';
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter category name';
                     } else {
                       return null;
                     }
@@ -122,7 +96,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                   decoration:
                       const InputDecoration(hintText: 'Enter Category Name'),
                 ),
-          
+
                 //select title
                 Container(
                   margin: const EdgeInsets.only(top: 20, bottom: 10),
@@ -131,7 +105,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
                 ),
-          
+
                 //choice chip for select
                 Row(
                   //crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +116,8 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                       selectedColor: const Color.fromARGB(255, 220, 219, 219),
                       onSelected: (value) {
                         setState(() {
-                          defaultChoiceIndex = value ? index : defaultChoiceIndex;
+                          defaultChoiceIndex =
+                              value ? index : defaultChoiceIndex;
                         });
                       },
                       backgroundColor: Colors.transparent,
@@ -159,7 +134,8 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
     });
   }
 
-  Future<void> addCategorytoModel(int choiceIndex, BuildContext ctx) async {
+  Future<CategoryModel> addCategorytoModel(
+      int choiceIndex, BuildContext ctx) async {
     final _name = _inputController.text.trim();
     final _logoindex = choiceIndex;
 
@@ -167,7 +143,8 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
     /* print("$_name $_email before calling savedata"); */
 
-    dynamic out = await CategRepository.saveData(_categoryObject);
+    bool out = await CategRepository.saveData(_categoryObject);
+
     if (out != true) {
       var snackBar = const SnackBar(
         content: Text(
@@ -178,7 +155,11 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
         padding: EdgeInsets.all(20),
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+      debugPrint(out.toString());
     }
+
     debugPrint(out.toString());
+
+    return _categoryObject;
   }
 }

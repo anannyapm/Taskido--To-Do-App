@@ -1,5 +1,10 @@
 import 'package:sqflite/sqflite.dart';
 
+import 'appviewmodel.dart';
+
+
+
+
 class CategoryModel {
   int? cid;
   String category_name;
@@ -28,3 +33,6 @@ class CategoryModel {
     return CategoryModel(category_name, category_logo_value, isDeleted);
   }
 }
+
+
+
