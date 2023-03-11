@@ -72,12 +72,12 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                               Text('000 Tasks'),
                               IconButton(
                                   onPressed: () {
-                                    popupDialogueBox(() {
+                                    popupDialogueBox(() async {
                                       debugPrint("delete pressed");
-                                      deleteCategory(
+                                      await deleteCategory(
                                           snapshot.data![index].category_name,
                                           context);
-                                      viewModel.addCategList();
+                                      await viewModel.addCategList();
                                     }, context,
                                         'Do you want to delete ${snapshot.data![index].category_name} category?');
                                   },

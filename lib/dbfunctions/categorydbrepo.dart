@@ -25,7 +25,7 @@ class CategRepository {
       debugPrint('inserting.....');
 
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
-      await dbClient.rawInsert(
+      category.cid =await dbClient.rawInsert(
           'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
           [
             category.category_name,

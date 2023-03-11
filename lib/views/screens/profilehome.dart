@@ -14,8 +14,6 @@ final GlobalKey<ScaffoldState> drawerkey = GlobalKey();
 
 class ScreenProfileHome extends StatefulWidget {
   const ScreenProfileHome({super.key});
-  
-  
 
   @override
   State<ScreenProfileHome> createState() => _ScreenProfileHomeState();
@@ -30,9 +28,11 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
   @override
   void initState() {
     // TODO: implement initState
-     addCategoryList();
+    AppViewModel instance = AppViewModel();
+    instance.addCategList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
@@ -79,7 +79,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
     });
   }
 
-  void addCategoryList() async {
+/*   void addCategoryList() async {
     await CategRepository.getAllData().then((value) {
       setState(() {
         for (var map in value) {
@@ -89,5 +89,5 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
         }
       });
     }).catchError((e) => debugPrint(e.toString()));
-  }
+  } */
 }

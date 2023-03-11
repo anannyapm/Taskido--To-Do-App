@@ -45,7 +45,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                       },
                       icon: const Icon(Icons.close)),
                   trailing: TextButton(
-                    onPressed: () {
+                    onPressed: () async{
       
 
                       if (_formKey.currentState!.validate()) {
@@ -148,7 +148,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
     if (out != true) {
       var snackBar = const SnackBar(
         content: Text(
-          'Oh Snap! Something went wrong.',
+          'Oh Snap! Catrgory already exist.',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,

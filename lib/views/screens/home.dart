@@ -29,12 +29,15 @@ class _ScreenHomeState extends State<ScreenHome> {
   void initState() {
     // TODO: implement initState
     initdb();
-   
+
+ 
+
     super.initState();
   }
 
   void initdb() async {
-    await CategRepository.database;
+    await CategRepository.database;  
+  
   }
 
   @override
@@ -75,9 +78,24 @@ class _ScreenHomeState extends State<ScreenHome> {
               children: [
                 SpeedDialChild(
                     backgroundColor: const Color(0xff011638),
-                    onTap: () {
-                      viewModel.bottomSheetBuilder(
-                          const TaskSheetWidget(), context);
+                    onTap: () async{
+                      await viewModel.addCategList();
+                      if (viewModel.categoryCount == 0) {
+                        var snackBar = const SnackBar(
+                          content: Text(
+                            'Oops!Please add a category to start adding tasks!!',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 5),
+                          padding: EdgeInsets.all(20),
+                          
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        viewModel.bottomSheetBuilder(
+                            const TaskSheetWidget(), context);
+                      }
                     },
                     child: const Icon(
                       Icons.add_task,
@@ -100,6 +118,4 @@ class _ScreenHomeState extends State<ScreenHome> {
       );
     });
   }
-
-  
 }

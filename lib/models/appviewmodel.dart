@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/categorymodel.dart';
+import 'package:todoapp/models/oldtaskmodel.dart';
 import 'package:todoapp/models/taskmodel.dart';
 
 import '../dbfunctions/categorydbrepo.dart';
+import '../dbfunctions/taskdbrepo.dart';
 
 class AppViewModel extends ChangeNotifier {
   //category actions
@@ -18,7 +21,7 @@ class AppViewModel extends ChangeNotifier {
       notifyListeners();
     } */
 
-  void addCategList() async {
+  Future<void> addCategList() async {
     await CategRepository.getAllData().then((value) {
       categModelList.clear();
       for (var map in value) {
@@ -34,7 +37,119 @@ class AppViewModel extends ChangeNotifier {
     return categModelList[catIndex];
   }
 
-  int get CategoryCount => categModelList.length;
+  int get categoryCount => categModelList.length;
+
+  //taskdetails
+
+  List<TaskModel> taskModelList = <TaskModel>[];
+
+  void addTaskList() async {
+    await TaskRepository.getAllData().then((value) {
+      taskModelList.clear();
+      for (var map in value) {
+        debugPrint(map.toString());
+
+        taskModelList.add(map);
+        notifyListeners();
+      }
+    }).catchError((e) => debugPrint(e.toString()));
+  }
+
+//list based on category
+
+  List<TaskModel> cTaskList = <TaskModel>[];
+
+  void addCTaskList(int categID) async {
+    await TaskRepository.fetchDataWithId(categID, Repository.currentUserID)
+        .then((value) {
+      cTaskList.clear();
+      for (var map in value) {
+        debugPrint(map.toString());
+
+        cTaskList.add(TaskModel.fromMap(map));
+        notifyListeners();
+      }
+    }).catchError((e) => debugPrint(e.toString()));
+  }
+
+  int? getCategoryId(String catName) {
+    for (var val in categModelList) {
+      if (val.category_name == catName) {
+        return val.cid;
+      }
+    }
+  }
+
+  TaskModel getCTaskListItem(int taskIndex) {
+    return cTaskList[taskIndex];
+  }
+
+  TaskModel getTaskListItem(int taskIndex) {
+    return taskModelList[taskIndex];
+  }
+
+  bool getCTaskValue(int taskIndex) {
+    if (cTaskList[taskIndex].isCompleted == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int cBasedTaskCount(int catId) {
+    int count = 0;
+    for (var value in taskModelList) {
+      if (value.category_id == catId) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  int cBasedCompletdTaskCount(int catId) {
+    int count = 0;
+    for (var value in taskModelList) {
+      if (value.category_id == catId && value.isCompleted == 1) {
+        count++;
+      }
+    }
+    return count;
+  }
+  /*  int categoryBasedTaskCount(int catId) async {
+    //final output =
+    await TaskRepository.fetchCount(catId, Repository.currentUserID)
+        .then((value) {
+      return value[0]['count'];
+    }).catchError((e) {
+      
+      debugPrint(e.toString());
+      return 0;
+    });
+  } */
+
+  Future<int> categoryBasedCompletedTaskCount(int catId) async {
+    final output = await TaskRepository.fetchCompletedCount(
+        catId, Repository.currentUserID);
+    return output[0]['count'];
+  }
+
+  int get totalTaskCount => taskModelList.length;
+
+  void updateTaskValue(int taskIndex, bool taskValue, int categoryIndex) {
+    int taskval = 0;
+    if (taskValue == true) {
+      taskval = 1;
+    }
+    cTaskList[taskIndex].isCompleted = taskval;
+    //call db function to update
+    final output = TaskRepository.updateCompletedStatus(
+        taskIndex, categoryIndex, Repository.currentUserID, taskValue);
+    debugPrint("in update" + output.toString());
+    addTaskList();
+    notifyListeners();
+  }
+
+  //old task details
 
   List<Task> taskList = <Task>[];
   //User user = User('Greta');

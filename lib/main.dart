@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: 'onboardingScreen',
+      /* initialRoute: 'onboardingScreen',
   
   routes: {  
     'onboardingScreen':(context)=>OnboardingHome(),
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
     'signupScreen':(context) => ScreenSignUp(),
     'profileScreen':(context) => ScreenProfileHome(),
     'taskScreen':(context) => ScreenTasks(),
-  },
+  }, */
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

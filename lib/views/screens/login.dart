@@ -152,7 +152,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
     debugPrint(out.toString());
     if (out.isNotEmpty) {
       Map val = out[0];
-      Repository.setCurrentUser(val['name'], val['email'], val['photo']);
+      Repository.setCurrentUser(val['uid'],val['name'], val['email'], val['photo']);
       //setting value of savekeyname to true when credentials are correct.
       final _sharedPrefs = await SharedPreferences.getInstance();
       await _sharedPrefs.setBool(SAVE_KEY_NAME, true);

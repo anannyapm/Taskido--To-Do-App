@@ -5,8 +5,10 @@ import 'package:todoapp/models/appviewmodel.dart';
 import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 class TaskListView extends StatefulWidget {
-  String categoryName;
-  TaskListView({super.key, required this.categoryName});
+  final String categoryName;
+  final int categoryID;
+  const TaskListView(
+      {super.key, required this.categoryName, required this.categoryID});
 
   @override
   State<TaskListView> createState() => _TaskListViewState();
@@ -21,7 +23,8 @@ class _TaskListViewState extends State<TaskListView> {
           shrinkWrap: true,
           physics: const ClampingScrollPhysics(),
           itemBuilder: ((context, index) {
-            bool ifCompleted = viewModel.getTaskValue(index);
+            viewModel.addCTaskList(widget.categoryID);
+            bool ifCompleted = viewModel.getCTaskValue(index);
             /* if (ifCompleted == false) { */
             return //viewModel.getCategory(index) == widget.categoryName?
                 ListTile(
@@ -32,24 +35,25 @@ class _TaskListViewState extends State<TaskListView> {
                       value: ifCompleted,
                       onChanged: (value) {
                         //setState(() {
-                          print(viewModel.taskCount);
+                        print(viewModel.cBasedTaskCount(widget.categoryID));
 
-                          viewModel.setTaskValue(index, value!);
+                        viewModel.updateTaskValue(
+                            index, value!, widget.categoryID);
                         //}
                         //);
                       },
                     ),
                     title: (ifCompleted)
-                        ? Text(viewModel.getTaskTitle(index),
+                        ? Text(viewModel.getCTaskListItem(index).task_name,
                             style: const TextStyle(
                               color: Color.fromARGB(127, 0, 0, 0),
                               decoration: TextDecoration.lineThrough,
                             ))
-                        : Text(viewModel.getTaskTitle(index)),
+                        : Text(viewModel.getCTaskListItem(index).task_name),
                     trailing: IconButton(
                         onPressed: () {
                           popupDialogueBox(() {}, context,
-                              'Delete task ${viewModel.getTaskTitle(index)}?');
+                              'Delete task ${viewModel.getCTaskListItem(index).task_name}?');
                         },
                         icon: const Icon(
                           Icons.delete_outline,
@@ -61,7 +65,7 @@ class _TaskListViewState extends State<TaskListView> {
               return null;
             } */
           }),
-          itemCount: viewModel.taskCount,
+          itemCount: viewModel.cBasedTaskCount(widget.categoryID),
           /*  separatorBuilder: (context, index) {
               return SizedBox(height: 1);
             } */

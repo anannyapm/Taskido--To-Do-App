@@ -245,7 +245,11 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
 
     dynamic out = await Repository.saveData(_userObject);
     if(out==true){
-      Repository.setCurrentUser(_name, _email,  _photo.path.toString());
+      final List<Map<String, dynamic>> uidFetchOutput =
+        await Repository.fetchID(_email);
+    final _currentUserId = uidFetchOutput[0]['uid'];
+    print(_currentUserId);
+      Repository.setCurrentUser(_currentUserId,_name, _email,  _photo.path.toString());
 
       final _sharedPrefs = await SharedPreferences.getInstance();
       await _sharedPrefs.setBool(SAVE_KEY_NAME, true);

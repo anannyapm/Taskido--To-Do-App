@@ -7,6 +7,7 @@ import '../../constants/iconlist.dart';
 import '../../dbfunctions/categorydbrepo.dart';
 import '../../models/appviewmodel.dart';
 import '../widgets/searchwidget.dart';
+import '../widgets/taskdetailwidgets/showtaskdetails.dart';
 import '../widgets/taskdetailwidgets/tasklistview.dart';
 
 class ScreenTasks extends StatefulWidget {
@@ -18,6 +19,7 @@ class ScreenTasks extends StatefulWidget {
 
 class _ScreenTasksState extends State<ScreenTasks> {
   String chosenValue = '';
+  int chosenID = 0;
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
@@ -58,7 +60,6 @@ class _ScreenTasksState extends State<ScreenTasks> {
                         future: CategRepository.getAllData(),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<CategoryModel>> snapshot) {
-                          
                           if (snapshot.hasData) {
                             return DropdownButton(
                               icon: const Icon(
@@ -73,6 +74,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
                               onChanged: (String? newvalue) {
                                 setState(() {
                                   chosenValue = newvalue!;
+                                  chosenID =
+                                      viewModel.getCategoryId(chosenValue) ?? 0;
                                   print(chosenValue);
                                 });
                               },
@@ -105,63 +108,10 @@ class _ScreenTasksState extends State<ScreenTasks> {
               ),
 
               //list
-              Expanded(
-                  flex: 7,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: ListView(
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                            //margin: EdgeInsets.all(10),
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: LinearProgressIndicator(
-                                    minHeight: 8,
-                                    backgroundColor:
-                                        const Color.fromARGB(51, 0, 169, 166),
-                                    color: const Color(0xff00A9A5),
-                                    value: viewModel.taskCount == 0
-                                        ? 0
-                                        : (viewModel.completedCount) /
-                                            viewModel.taskCount),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                      '${viewModel.completedCount}/${viewModel.taskCount} Completed ',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                      ),
-                                    )),
-                              )
-                            ]),
 
-                        viewModel.taskCount == 0
-                            ? const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Align(
-                                    child: Text(
-                                  "Your task bucket is empty ;)",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                )),
-                              )
-                            : TaskListView(categoryName: chosenValue),
-                        const SizedBox(
-                          height: 30,
-                        ),
-
-                        //CompletedListView(),
-                      ],
-                    ),
-                  ))
+              chosenValue == ''
+                  ? Expanded(child: Text('No Category Selected'))
+                  : ShowTaskDetail(chosenVal: chosenValue,chosenId:chosenID),
             ],
           ),
         )),
@@ -169,21 +119,23 @@ class _ScreenTasksState extends State<ScreenTasks> {
     });
   }
 
-  List<DropdownMenuItem<String>> dropdownItems(AsyncSnapshot<List<CategoryModel>> snapshot) {
+  List<DropdownMenuItem<String>> dropdownItems(
+      AsyncSnapshot<List<CategoryModel>> snapshot) {
     List<DropdownMenuItem<String>> menuItems;
 
     List<DropdownMenuItem<String>> li = [
       DropdownMenuItem(
-        value: '',
+          value: '',
           child: Wrap(
-        spacing: 10,
-        children: [
-          Text(
-            'Select a Category',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-          )
-        ],
-      ))
+            spacing: 10,
+            children: [
+              Text(
+                'Select a Category',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+              )
+            ],
+          ))
     ];
     menuItems = [
       ...li,

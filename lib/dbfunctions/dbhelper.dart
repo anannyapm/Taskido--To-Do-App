@@ -19,10 +19,10 @@ class DatabaseConnection {
 
   static createDatabase(Database database, int version) async {
     await database.execute(
-        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT , ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
+        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT NOT NULL, ${userInstance.colThree} TEXT UNIQUE NOT NULL, ${userInstance.colFour} TEXT NOT NULL)");
 
     await database.execute(
-        "CREATE TABLE ${categoryInstance.tableName} (${categoryInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${categoryInstance.colTwo} TEXT UNIQUE, ${categoryInstance.colThree} INT , ${categoryInstance.colFour} BOOLEAN)");
+        "CREATE TABLE ${categoryInstance.tableName} (${categoryInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${categoryInstance.colTwo} TEXT UNIQUE NOT NULL, ${categoryInstance.colThree} INT NOT NULL, ${categoryInstance.colFour} BOOLEAN NOT NULL)");
 
      await database.rawInsert(
         'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
@@ -32,9 +32,9 @@ class DatabaseConnection {
         ['Work',1 , false]); 
    
 
-    /*
+    
     await database.execute(
-        "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT, ${userInstance.colThree} TEXT UNIQUE, ${userInstance.colFour} TEXT)");
-         */
+        "CREATE TABLE ${taskInstance.tableName} (${taskInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${taskInstance.colTwo} TEXT NOT NULL , ${taskInstance.colThree} BOOLEAN NOT NULL, ${taskInstance.colFour} INT NOT NULL,${taskInstance.colFive} INT NOT NULL,FOREIGN KEY (${taskInstance.colFour}) REFERENCES ${categoryInstance.tableName}(${categoryInstance.colOne}),FOREIGN KEY (${taskInstance.colFive}) REFERENCES ${userInstance.tableName}(${userInstance.colOne}))");
+         
   }
 }
