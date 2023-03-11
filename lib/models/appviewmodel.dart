@@ -25,7 +25,8 @@ class AppViewModel extends ChangeNotifier {
     await CategRepository.getAllData().then((value) {
       categModelList.clear();
       for (var map in value) {
-        debugPrint(map.toString());
+        //debugPrint("In addcateglist" + map.category_name);
+        //getCategoryId(map.category_name);
 
         categModelList.add(map);
         notifyListeners();
@@ -43,7 +44,7 @@ class AppViewModel extends ChangeNotifier {
 
   List<TaskModel> taskModelList = <TaskModel>[];
 
-  void addTaskList() async {
+  Future<void> addTaskList() async {
     await TaskRepository.getAllData().then((value) {
       taskModelList.clear();
       for (var map in value) {
@@ -59,7 +60,7 @@ class AppViewModel extends ChangeNotifier {
 
   List<TaskModel> cTaskList = <TaskModel>[];
 
-  void addCTaskList(int categID) async {
+  Future<void> addCTaskList(int categID) async {
     await TaskRepository.fetchDataWithId(categID, Repository.currentUserID)
         .then((value) {
       cTaskList.clear();
@@ -72,15 +73,23 @@ class AppViewModel extends ChangeNotifier {
     }).catchError((e) => debugPrint(e.toString()));
   }
 
-  int? getCategoryId(String catName) {
+  getCategoryId(String catName) {
     for (var val in categModelList) {
+      debugPrint("in getcategid val " + val.category_name);
+      debugPrint("in getcategid catname " + catName);
+      debugPrint("i am catgmodel" + val.toString());
+
       if (val.category_name == catName) {
+        debugPrint("in getcategid fun ${val.cid} ");
         return val.cid;
       }
     }
+    debugPrint("outside if getcategid fun ");
+    return 0;
   }
 
   TaskModel getCTaskListItem(int taskIndex) {
+
     return cTaskList[taskIndex];
   }
 
@@ -89,6 +98,7 @@ class AppViewModel extends ChangeNotifier {
   }
 
   bool getCTaskValue(int taskIndex) {
+    
     if (cTaskList[taskIndex].isCompleted == 1) {
       return true;
     } else {
@@ -135,17 +145,17 @@ class AppViewModel extends ChangeNotifier {
 
   int get totalTaskCount => taskModelList.length;
 
-  void updateTaskValue(int taskIndex, bool taskValue, int categoryIndex) {
+  Future<void> updateTaskValue(int taskIndex, bool taskValue, int categoryIndex) async{
     int taskval = 0;
     if (taskValue == true) {
       taskval = 1;
     }
-    cTaskList[taskIndex].isCompleted = taskval;
+    //cTaskList[taskIndex].isCompleted = taskval;
     //call db function to update
-    final output = TaskRepository.updateCompletedStatus(
+    final output =await TaskRepository.updateCompletedStatus(
         taskIndex, categoryIndex, Repository.currentUserID, taskValue);
-    debugPrint("in update" + output.toString());
-    addTaskList();
+    debugPrint("in update$output");
+    //addTaskList();
     notifyListeners();
   }
 

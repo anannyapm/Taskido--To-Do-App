@@ -41,7 +41,7 @@ class Repository {
       //bool res = true;
       //if (result == false) {
       debugPrint('inserting.....');
-      user.id = await dbClient.rawInsert(
+      user.uid = await dbClient.rawInsert(
           'INSERT INTO ${userInstance.tableName}(${userInstance.colTwo}, ${userInstance.colThree}, ${userInstance.colFour}) VALUES(?, ?, ?)',
           [user.name, user.email, user.photo]);
       getAllUser();

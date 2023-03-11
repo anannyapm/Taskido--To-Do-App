@@ -185,12 +185,11 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             addUserToModel(
-                                                viewModel.profilePhoto,context);
+                                                viewModel.profilePhoto,
+                                                context);
 
                                             _usernameController.text = '';
                                             _emailController.text = '';
-
-
                                           } else {
                                             debugPrint('Empty fields found');
                                           }
@@ -228,7 +227,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
     });
   }
 
-  Future<void> addUserToModel(File? profilephoto,BuildContext ctx) async {
+  Future<void> addUserToModel(File? profilephoto, BuildContext ctx) async {
     final _name = _usernameController.text.trim();
     final _email = _emailController.text.trim();
     File? _photo = File('assets/images/stacked-steps-haikei.png');
@@ -239,25 +238,27 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
       _photo = _image;
     }
 
-    final _userObject = UserModel(_name, _email, _photo.path.toString());
+    final _userObject =
+        UserModel(name: _name, email: _email, photo: _photo.path.toString());
+
 
     /* print("$_name $_email before calling savedata"); */
 
     dynamic out = await Repository.saveData(_userObject);
-    if(out==true){
+    if (out == true) {
       final List<Map<String, dynamic>> uidFetchOutput =
-        await Repository.fetchID(_email);
-    final _currentUserId = uidFetchOutput[0]['uid'];
-    print(_currentUserId);
-      Repository.setCurrentUser(_currentUserId,_name, _email,  _photo.path.toString());
+          await Repository.fetchID(_email);
+      final _currentUserId = uidFetchOutput[0]['uid'];
+      print(_currentUserId);
+      Repository.setCurrentUser(
+          _currentUserId, _name, _email, _photo.path.toString());
 
       final _sharedPrefs = await SharedPreferences.getInstance();
       await _sharedPrefs.setBool(SAVE_KEY_NAME, true);
-      
-      Navigator.of(ctx)
-          .pushReplacement(MaterialPageRoute(builder: (context) => const ScreenHome()));}
 
-    else{
+      Navigator.of(ctx).pushReplacement(
+          MaterialPageRoute(builder: (context) => const ScreenHome()));
+    } else {
       var snackBar = SnackBar(
         content: Text(
           'This email id is already registered. Please Login back to continue!',
@@ -269,6 +270,5 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
     }
     debugPrint(out.toString());
-
   }
 }

@@ -21,7 +21,6 @@ class TaskSheetWidget extends StatefulWidget {
 }
 
 class _TaskSheetWidgetState extends State<TaskSheetWidget> {
-
   int defaultChoiceIndex = 0;
   static final _formKey = GlobalKey<FormState>();
   final TextEditingController _inputController = TextEditingController();
@@ -52,10 +51,10 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                     trailing: TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          await addTasktoModel(defaultChoiceIndex+1, context);
+                          await addTasktoModel(defaultChoiceIndex + 1, context);
 
                           viewModel.addTaskList();
-                          viewModel.addCTaskList(defaultChoiceIndex+1);
+                          viewModel.addCTaskList(defaultChoiceIndex);
                           //debugPrint("hiii"+viewModel.categModelList.toString());
 
                           Navigator.pop(context);
@@ -165,7 +164,11 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
     final _currUserId = Repository.currentUserID;
     debugPrint("I am userid " + _currUserId.toString());
 
-    final _taskObject = TaskModel(_taskname, 0, choiceIndex, _currUserId);
+    final _taskObject = TaskModel(
+        task_name: _taskname,
+        isCompleted: 0,
+        category_id: choiceIndex,
+        user_id: _currUserId);
 
     /* print("$_name $_email before calling savedata"); */
 

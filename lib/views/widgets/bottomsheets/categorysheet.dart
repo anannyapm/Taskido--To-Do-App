@@ -45,11 +45,9 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                       },
                       icon: const Icon(Icons.close)),
                   trailing: TextButton(
-                    onPressed: () async{
-      
-
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                         addCategorytoModel(defaultChoiceIndex, context);
+                        await addCategorytoModel(defaultChoiceIndex, context);
 
                         viewModel.addCategList();
                         //debugPrint("hiii"+viewModel.categModelList.toString());
@@ -139,7 +137,8 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
     final _name = _inputController.text.trim();
     final _logoindex = choiceIndex;
 
-    final _categoryObject = CategoryModel(_name, choiceIndex, 0);
+    final _categoryObject = CategoryModel(
+        category_name: _name, category_logo_value: _logoindex, isDeleted: 0);
 
     /* print("$_name $_email before calling savedata"); */
 
@@ -155,7 +154,6 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
         padding: EdgeInsets.all(20),
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
-      debugPrint(out.toString());
     }
 
     debugPrint(out.toString());

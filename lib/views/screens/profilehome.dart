@@ -28,8 +28,8 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
   @override
   void initState() {
     // TODO: implement initState
-    AppViewModel instance = AppViewModel();
-    instance.addCategList();
+    /* AppViewModel instance = AppViewModel();
+    instance.addCategList(); */
     super.initState();
   }
 

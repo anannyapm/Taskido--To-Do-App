@@ -20,8 +20,6 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
   void initState() {
     // TODO: implement initState
 
-    
-
     super.initState();
   }
   /* Future<Future<List<CategoryModel>>> _refreshProducts(BuildContext context) async {
@@ -50,7 +48,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                     //CategoryModel categItem =
                     //viewModel.getCategoryListItem(index);
 
-                    debugPrint("In listview");
+                    //debugPrint("In listview");
                     return Card(
                       elevation: 6,
                       margin: const EdgeInsets.only(bottom: 10),
@@ -69,7 +67,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               //placeholder 000 given
-                              Text('000 Tasks'),
+                              Text('${viewModel.cBasedTaskCount(snapshot.data![index].cid!)} Tasks'),
                               IconButton(
                                   onPressed: () {
                                     popupDialogueBox(() async {

@@ -71,12 +71,17 @@ class _ScreenTasksState extends State<ScreenTasks> {
                               underline: Container(),
                               value: chosenValue,
                               items: dropdownItems(snapshot),
-                              onChanged: (String? newvalue) {
+                              onChanged: (String? newvalue) async {
+                                await viewModel.addCategList();
                                 setState(() {
                                   chosenValue = newvalue!;
+                                  
                                   chosenID =
-                                      viewModel.getCategoryId(chosenValue) ?? 0;
-                                  print(chosenValue);
+                                      viewModel.getCategoryId(chosenValue);
+                                  viewModel.addCTaskList(chosenID);
+
+                                  print(
+                                      chosenValue + " " + chosenID.toString());
                                 });
                               },
                             );
@@ -110,8 +115,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
               //list
 
               chosenValue == ''
-                  ? Expanded(child: Text('No Category Selected'))
-                  : ShowTaskDetail(chosenVal: chosenValue,chosenId:chosenID),
+                  ? const Expanded(child: Text('No Category Selected'))
+                  : ShowTaskDetail(chosenVal: chosenValue, chosenId: chosenID),
             ],
           ),
         )),

@@ -1,12 +1,12 @@
 import 'package:sqflite/sqflite.dart';
 
 class UserModel {
-  int? id;
-  String name;
-  String email;
-  String photo;
+  int? uid;
+  final String name;
+  final String email;
+  final String photo;
 
-  UserModel(this.name, this.email, this.photo);
+  UserModel({required this.name, required this.email, required this.photo,this.uid});
 
   /* Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -19,13 +19,11 @@ class UserModel {
   } */
 
   UserModel fromMap(Map<String, dynamic> map) {
-    //id = map['userid'] as int;
-    name = map['username'] as String;
-    email = map['email'] as String;
-    photo = map['photo'] as String;
+    final uid = map['uid'] as int;
+    final name = map['name'] as String;
+    final email = map['email'] as String;
+    final photo = map['photo'] as String;
 
-    return UserModel( name, email, photo)
-    ;
-
+    return UserModel(name: name, email: email, photo: photo);
   }
 }

@@ -8,6 +8,18 @@ import 'package:todoapp/models/categorymodel.dart';
 class CategRepository {
   static Database? _database;
 
+  //static late int currentCategoryID;
+
+  /* static Future<void> setCurrentCategID(String categName) async {
+    List<Map<String, dynamic>> result = await fetchData(categName);
+
+
+    currentCategoryID = result[0]['cid'];
+  
+
+    debugPrint(currentCategoryID.toString());
+  } */
+
   //check if database already exist; if yes return it else create a new db and return it.
   static Future<Database> get database async {
     if (_database != null) return _database!;
@@ -25,13 +37,15 @@ class CategRepository {
       debugPrint('inserting.....');
 
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
-      category.cid =await dbClient.rawInsert(
+      category.cid = await dbClient.rawInsert(
           'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
           [
             category.category_name,
             category.category_logo_value,
             category.isDeleted
           ]);
+
+      
       getAllData();
 
       return true;
@@ -40,7 +54,7 @@ class CategRepository {
     }
   }
 
-  //FETCH?GET ALL DATA FROM DATABASE
+  //FETCH/GET ALL DATA FROM DATABASE
   static Future<List<CategoryModel>> getAllData() async {
     //get data form database
     //rawQuery will return list of map value
@@ -49,8 +63,10 @@ class CategRepository {
     final _values =
         await dbClient.rawQuery('select * from ${categoryInstance.tableName}');
 
-    debugPrint(_values.toString());
-    return _values.map((e) => CategoryModel.fromMap(e)).toList();
+    debugPrint("Db getAlldata called: " + _values.toString());
+    final category = _values.map((e) => CategoryModel.fromMap(e)).toList();
+
+    return category;
   }
 
   //FETCH DATA BASED ON EMAIL ID

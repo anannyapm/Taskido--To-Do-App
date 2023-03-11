@@ -11,16 +11,19 @@ import '../../../models/appviewmodel.dart';
 class ShowTaskDetail extends StatefulWidget {
   final String chosenVal;
   final int chosenId;
-  const ShowTaskDetail({super.key, required this.chosenVal,required this.chosenId});
+  const ShowTaskDetail(
+      {super.key, required this.chosenVal, required this.chosenId});
 
   @override
   State<ShowTaskDetail> createState() => _ShowTaskDetailState();
 }
 
 class _ShowTaskDetailState extends State<ShowTaskDetail> {
+
+
   @override
   Widget build(BuildContext context) {
-
+    debugPrint("In showtaskdet"+widget.chosenId.toString());
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return Expanded(
           flex: 7,
@@ -39,9 +42,11 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                             backgroundColor:
                                 const Color.fromARGB(51, 0, 169, 166),
                             color: const Color(0xff00A9A5),
-                            value: viewModel.cBasedTaskCount(widget.chosenId) == 0
+                            value: viewModel.cBasedTaskCount(widget.chosenId) ==
+                                    0
                                 ? 0
-                                : (viewModel.cBasedCompletdTaskCount(widget.chosenId)) /
+                                : (viewModel.cBasedCompletdTaskCount(
+                                        widget.chosenId)) /
                                     viewModel.cBasedTaskCount(widget.chosenId)),
                       ),
                       Padding(
@@ -60,17 +65,18 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                     ]),
 
                 viewModel.cBasedTaskCount(widget.chosenId) == 0
-                    ? const Padding(
+                    ? Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Align(
                             child: Text(
-                          "Your task bucket is empty ;)",
+                          "Your task bucket is empty ;) chosen val is ${widget.chosenId}",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600),
                         )),
                       )
                     : TaskListView(
-                        categoryName: widget.chosenVal, categoryID: widget.chosenId),
+                        categoryName: widget.chosenVal,
+                        categoryID: widget.chosenId),
                 const SizedBox(
                   height: 30,
                 ),

@@ -8,6 +8,7 @@ import '../models/taskmodel.dart';
 
 class TaskRepository {
   static Database? _database;
+  
 
   //check if database already exist; if yes return it else create a new db and return it.
   static Future<Database> get database async {
@@ -28,7 +29,7 @@ class TaskRepository {
 
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
       task.tid = await dbClient.rawInsert(
-          'INSERT INTO ${taskInstance.tableName}(${taskInstance.colTwo}, ${taskInstance.colThree}, ${taskInstance.colFour}, ${taskInstance.colFive}) VALUES(?, ?,?,?)',
+          'INSERT INTO ${taskInstance.tableName}(${taskInstance.colTwo}, ${taskInstance.colThree}, ${taskInstance.colFour}, ${taskInstance.colFive}) VALUES(?,?,?,?)',
           [task.task_name, task.isCompleted, task.category_id, task.user_id]);
       getAllData();
 
@@ -104,7 +105,7 @@ class TaskRepository {
     var dbClient = await database;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
-        'update ${taskInstance.tableName} set ${taskInstance.colThree}="$statusVal" where ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid" AND ${taskInstance.colOne}="$taskid"');
+        'update ${taskInstance.tableName} set ${taskInstance.colThree}=? where ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid" AND ${taskInstance.colOne}="$taskid"',[statusVal]);
 
     return result;
   }

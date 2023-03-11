@@ -2,17 +2,17 @@ import 'package:sqflite/sqflite.dart';
 
 import 'appviewmodel.dart';
 
-
-
-
 class CategoryModel {
   int? cid;
-  String category_name;
-  int category_logo_value;
-  int isDeleted;
+  final String category_name;
+  final int category_logo_value;
+  final int isDeleted;
 
   CategoryModel(
-      this.category_name, this.category_logo_value, this.isDeleted);
+      {required this.category_name,
+      required this.category_logo_value,
+      required this.isDeleted,
+      this.cid});
 
   /* Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -25,14 +25,15 @@ class CategoryModel {
   } */
 
   static CategoryModel fromMap(Map<String, dynamic> map) {
-    //id = map['userid'] as int;
+    final cid = map['cid'] as int;
     final category_name = map['category_name'] as String;
     final category_logo_value = map['category_logo_id'] as int;
     final isDeleted = map['isDeleted'] as int;
 
-    return CategoryModel(category_name, category_logo_value, isDeleted);
+    return CategoryModel(
+        category_name: category_name,
+        category_logo_value: category_logo_value,
+        isDeleted: isDeleted,
+        cid: cid);
   }
 }
-
-
-

@@ -2,12 +2,17 @@ import 'package:sqflite/sqflite.dart';
 
 class TaskModel {
   int? tid;
-  String task_name;
+  final String task_name;
   int isCompleted;
-  int category_id;
-  int user_id;
+  final int category_id;
+  final int user_id;
 
-  TaskModel(this.task_name, this.isCompleted, this.category_id, this.user_id);
+  TaskModel(
+      {required this.task_name,
+      required this.isCompleted,
+      required this.category_id,
+      required this.user_id,
+      this.tid});
 
   /* Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -20,12 +25,17 @@ class TaskModel {
   } */
 
   static TaskModel fromMap(Map<String, dynamic> map) {
-    //id = map['userid'] as int;
+    final tid = map['tid'] as int;
     final task_name = map['task_name'] as String;
     final isCompleted = map['isCompleted'] as int;
     final category_id = map['category_id'] as int;
     final user_id = map['user_id'] as int;
 
-    return TaskModel(task_name, isCompleted,category_id,user_id);
+    return TaskModel(
+        task_name: task_name,
+        isCompleted: isCompleted,
+        category_id: category_id,
+        user_id: user_id,
+        tid: tid);
   }
 }

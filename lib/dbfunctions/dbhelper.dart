@@ -24,17 +24,17 @@ class DatabaseConnection {
     await database.execute(
         "CREATE TABLE ${categoryInstance.tableName} (${categoryInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${categoryInstance.colTwo} TEXT UNIQUE NOT NULL, ${categoryInstance.colThree} INT NOT NULL, ${categoryInstance.colFour} BOOLEAN NOT NULL)");
 
-     await database.rawInsert(
+     /* await database.rawInsert(
         'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
         ['Personal', 0, false]);
     await database.rawInsert(
         'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',
-        ['Work',1 , false]); 
+        ['Work',1 , false]);  */
    
 
     
     await database.execute(
-        "CREATE TABLE ${taskInstance.tableName} (${taskInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${taskInstance.colTwo} TEXT NOT NULL , ${taskInstance.colThree} BOOLEAN NOT NULL, ${taskInstance.colFour} INT NOT NULL,${taskInstance.colFive} INT NOT NULL,FOREIGN KEY (${taskInstance.colFour}) REFERENCES ${categoryInstance.tableName}(${categoryInstance.colOne}),FOREIGN KEY (${taskInstance.colFive}) REFERENCES ${userInstance.tableName}(${userInstance.colOne}))");
+        "CREATE TABLE ${taskInstance.tableName} (${taskInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${taskInstance.colTwo} TEXT NOT NULL , ${taskInstance.colThree} INTEGER NOT NULL, ${taskInstance.colFour} INT NOT NULL,${taskInstance.colFive} INT NOT NULL,FOREIGN KEY (${taskInstance.colFour}) REFERENCES ${categoryInstance.tableName}(${categoryInstance.colOne}),FOREIGN KEY (${taskInstance.colFive}) REFERENCES ${userInstance.tableName}(${userInstance.colOne}))");
          
   }
 }
