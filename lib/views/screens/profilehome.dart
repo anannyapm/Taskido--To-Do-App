@@ -57,7 +57,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                       const StreakBarWidget(),
                       ProgressIndicatorWidget(
                         progressVal: viewModel.completedCount.toDouble(),
-                        maxVal: viewModel.taskCount.toDouble(),
+                        maxVal: viewModel.totalTaskCount.toDouble(),
                       ),
                       Align(
                         alignment: Alignment.centerLeft,

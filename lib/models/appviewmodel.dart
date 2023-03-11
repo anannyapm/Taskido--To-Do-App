@@ -168,16 +168,17 @@ class AppViewModel extends ChangeNotifier {
 
   List<Map<String, dynamic>> currentUserData = <Map<String, dynamic>>[];
 
+//.........................
   int get completedCount {
     int counter = 0;
-    for (var element in taskList) {
-      if (element.isCompleted == true) {
+    for (var element in taskModelList) {
+      if (element.isCompleted == 1) {
         counter++;
       }
     }
     return counter;
   }
-
+//.....................................
   Color primclr1 = const Color(0xff011638);
   Color primclr2 = const Color(0xff00a9a5);
   Color primclr3 = Colors.black;
