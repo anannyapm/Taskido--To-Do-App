@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 
-class StreakBarWidget extends StatelessWidget {
-  const StreakBarWidget({super.key});
+class StreakBarWidget extends StatefulWidget {
+  final double streakval;
+  const StreakBarWidget({super.key, required this.streakval});
 
   @override
+  State<StreakBarWidget> createState() => _StreakBarWidgetState();
+}
+
+class _StreakBarWidgetState extends State<StreakBarWidget> {
+  @override
   Widget build(BuildContext context) {
+    List streakdata = streakMessage();
     return Align(
       alignment: const Alignment(-1, 1),
       child: Container(
-        width: 300,
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width*0.85),
         height: 55,
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -20,9 +27,9 @@ class StreakBarWidget extends StatelessWidget {
           margin: const EdgeInsets.only(left: 25),
           child: Row(
             children: [
-              const Text(
-                'You are on Streak',
-                style: TextStyle(
+              Text(streakdata[0]
+                ,
+                style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 22,
                     color: Colors.white),
@@ -37,8 +44,8 @@ class StreakBarWidget extends StatelessWidget {
                       colors: [Color(0xffFFFFFF), Color(0xffFF1F00)],
                     ).createShader(bounds);
                   },
-                  child: const Icon(
-                    FontAwesome5.fire,
+                  child:  Icon(
+                    streakdata[1],
                     color: Colors.white,
                     size: 25,
                   ),
@@ -49,5 +56,17 @@ class StreakBarWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  List streakMessage() {
+    if (widget.streakval == 0) {
+      return ['You need to get started', FontAwesome5.smile];
+    } else if (widget.streakval <= 0.30) {
+      return ['You are lagging behind', FontAwesome5.sad_tear];
+    } else if (widget.streakval <= 0.6) {
+      return ['Good Going my friend', FontAwesome5.smile_wink];
+    } else {
+      return ['You are on Streak',FontAwesome5.fire];
+    }
   }
 }

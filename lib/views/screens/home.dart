@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
+import 'package:todoapp/dbfunctions/taskdbrepo.dart';
 import 'package:todoapp/models/appviewmodel.dart';
 
 import 'package:todoapp/views/screens/profilehome.dart';
@@ -30,14 +31,12 @@ class _ScreenHomeState extends State<ScreenHome> {
     // TODO: implement initState
     initdb();
 
- 
-
     super.initState();
   }
 
   void initdb() async {
-    await CategRepository.database;  
-  
+    await CategRepository.database;
+    await TaskRepository.database;
   }
 
   @override
@@ -78,7 +77,7 @@ class _ScreenHomeState extends State<ScreenHome> {
               children: [
                 SpeedDialChild(
                     backgroundColor: const Color(0xff011638),
-                    onTap: () async{
+                    onTap: () async {
                       await viewModel.addCategList();
                       if (viewModel.categoryCount == 0) {
                         var snackBar = const SnackBar(
@@ -89,7 +88,6 @@ class _ScreenHomeState extends State<ScreenHome> {
                           backgroundColor: Colors.red,
                           duration: Duration(seconds: 5),
                           padding: EdgeInsets.all(20),
-                          
                         );
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {

@@ -89,7 +89,6 @@ class AppViewModel extends ChangeNotifier {
   }
 
   TaskModel getCTaskListItem(int taskIndex) {
-
     return cTaskList[taskIndex];
   }
 
@@ -98,7 +97,6 @@ class AppViewModel extends ChangeNotifier {
   }
 
   bool getCTaskValue(int taskIndex) {
-    
     if (cTaskList[taskIndex].isCompleted == 1) {
       return true;
     } else {
@@ -143,16 +141,25 @@ class AppViewModel extends ChangeNotifier {
     return output[0]['count'];
   }
 
-  int get totalTaskCount => taskModelList.length;
+  int get totalTaskCount {
+    int counter = 0;
+    for (var listval in taskModelList) {
+      if (listval.user_id == Repository.currentUserID) {
+        counter++;
+      }
+    }
+    return counter;
+  }
 
-  Future<void> updateTaskValue(int taskIndex, bool taskValue, int categoryIndex) async{
+  Future<void> updateTaskValue(
+      int taskIndex, bool taskValue, int categoryIndex) async {
     int taskval = 0;
     if (taskValue == true) {
       taskval = 1;
     }
     //cTaskList[taskIndex].isCompleted = taskval;
     //call db function to update
-    final output =await TaskRepository.updateCompletedStatus(
+    final output = await TaskRepository.updateCompletedStatus(
         taskIndex, categoryIndex, Repository.currentUserID, taskValue);
     debugPrint("in update$output");
     //addTaskList();
@@ -178,6 +185,7 @@ class AppViewModel extends ChangeNotifier {
     }
     return counter;
   }
+
 //.....................................
   Color primclr1 = const Color(0xff011638);
   Color primclr2 = const Color(0xff00a9a5);

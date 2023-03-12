@@ -8,7 +8,6 @@ import '../models/taskmodel.dart';
 
 class TaskRepository {
   static Database? _database;
-  
 
   //check if database already exist; if yes return it else create a new db and return it.
   static Future<Database> get database async {
@@ -38,6 +37,7 @@ class TaskRepository {
       return false;
     }
   }
+
 
   //FETCH/GET ALL DATA FROM DATABASE
   static Future<List<TaskModel>> getAllData() async {
@@ -101,11 +101,12 @@ class TaskRepository {
   //UPDATE DATA ON COMPLETE
 
   static Future<List<Map<String, dynamic>>> updateCompletedStatus(
-      int taskid, int catid, int userid,bool statusVal) async {
+      int taskid, int catid, int userid, bool statusVal) async {
     var dbClient = await database;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
-        'update ${taskInstance.tableName} set ${taskInstance.colThree}=? where ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid" AND ${taskInstance.colOne}="$taskid"',[statusVal]);
+        'update ${taskInstance.tableName} set ${taskInstance.colThree}=? where ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid" AND ${taskInstance.colOne}="$taskid"',
+        [statusVal]);
 
     return result;
   }
@@ -121,6 +122,7 @@ class TaskRepository {
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'delete from ${taskInstance.tableName} where ${taskInstance.colTwo}="$taskName" AND ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid"');
 
+    getAllData();
     return result;
   }
 }

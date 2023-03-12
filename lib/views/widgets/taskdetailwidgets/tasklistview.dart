@@ -122,7 +122,7 @@ class _TaskListViewState extends State<TaskListView> {
         .then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
-          'Deleted Category',
+          'Deleted Task',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.red,

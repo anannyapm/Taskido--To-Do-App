@@ -22,7 +22,7 @@ class DatabaseConnection {
         "CREATE TABLE ${userInstance.tableName} (${userInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${userInstance.colTwo} TEXT NOT NULL, ${userInstance.colThree} TEXT UNIQUE NOT NULL, ${userInstance.colFour} TEXT NOT NULL)");
 
     await database.execute(
-        "CREATE TABLE ${categoryInstance.tableName} (${categoryInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${categoryInstance.colTwo} TEXT UNIQUE NOT NULL, ${categoryInstance.colThree} INT NOT NULL, ${categoryInstance.colFour} BOOLEAN NOT NULL)");
+        "CREATE TABLE ${categoryInstance.tableName} (${categoryInstance.colOne} INTEGER PRIMARY KEY AUTOINCREMENT , ${categoryInstance.colTwo} TEXT NOT NULL, ${categoryInstance.colThree} INT NOT NULL, ${categoryInstance.colFour} BOOLEAN NOT NULL,${categoryInstance.colFive} INT NOT NULL,FOREIGN KEY (${categoryInstance.colFive}) REFERENCES ${userInstance.tableName}(${userInstance.colOne}),UNIQUE(${categoryInstance.colTwo},${categoryInstance.colFive}))");
 
      /* await database.rawInsert(
         'INSERT INTO ${categoryInstance.tableName}(${categoryInstance.colTwo}, ${categoryInstance.colThree}, ${categoryInstance.colFour}) VALUES(?, ?, ?)',

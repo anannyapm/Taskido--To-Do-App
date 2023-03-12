@@ -102,7 +102,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
 
     debugPrint(out.toString()); */
 
-    CategRepository.deleteData(categoryname).then((value) {
+    await CategRepository.deleteData(categoryname).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
           'Deleted Category',

@@ -27,7 +27,8 @@ DBConst categoryInstance = DBConst(
     colOne: 'cid',
     colTwo: 'category_name',
     colThree: 'category_logo_id',
-    colFour: 'isDeleted');
+    colFour: 'isDeleted',
+    colFive: 'user_id');
 DBConst taskInstance = DBConst(
     tableName: 'task_table',
     colOne: 'tid',

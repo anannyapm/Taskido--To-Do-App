@@ -250,7 +250,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
           await Repository.fetchID(_email);
       final _currentUserId = uidFetchOutput[0]['uid'];
       print(_currentUserId);
-      Repository.setCurrentUser(
+      await Repository.setCurrentUser(
           _currentUserId, _name, _email, _photo.path.toString());
 
       final _sharedPrefs = await SharedPreferences.getInstance();

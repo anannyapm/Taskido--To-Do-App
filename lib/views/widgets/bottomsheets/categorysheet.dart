@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
+import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/appviewmodel.dart';
 import 'package:todoapp/models/categorymodel.dart';
 import 'package:todoapp/views/widgets/popupdialogue.dart';
@@ -54,15 +55,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
                         Navigator.pop(context);
 
-                        var snackBar = const SnackBar(
-                          content: Text(
-                            'Success',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.green,
-                          padding: EdgeInsets.all(20),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        
                       } else {
                         debugPrint('Empty fields found');
                       }
@@ -138,7 +131,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
     final _logoindex = choiceIndex;
 
     final _categoryObject = CategoryModel(
-        category_name: _name, category_logo_value: _logoindex, isDeleted: 0);
+        category_name: _name, category_logo_value: _logoindex, isDeleted: 0,user_id: Repository.currentUserID);
 
     /* print("$_name $_email before calling savedata"); */
 
@@ -154,6 +147,17 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
         padding: EdgeInsets.all(20),
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+    }
+    else{
+      var snackBar = const SnackBar(
+                          content: Text(
+                            'Success',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: Colors.green,
+                          padding: EdgeInsets.all(20),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
     debugPrint(out.toString());

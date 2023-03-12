@@ -54,7 +54,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                   child: Column(
                     children: [
                       const TopPanelWidget(),
-                      const StreakBarWidget(),
+                      StreakBarWidget(streakval: viewModel.completedCount/viewModel.totalTaskCount,),
                       ProgressIndicatorWidget(
                         progressVal: viewModel.completedCount.toDouble(),
                         maxVal: viewModel.totalTaskCount.toDouble(),
@@ -65,7 +65,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                           margin: const EdgeInsets.only(
                               left: 25, right: 25, top: 15),
                           child: const Text(
-                            'My Tasks',
+                            'Tasks Dashboard',
                             style: TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 24),
                           ),

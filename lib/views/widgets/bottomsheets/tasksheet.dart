@@ -21,6 +21,7 @@ class TaskSheetWidget extends StatefulWidget {
 }
 
 class _TaskSheetWidgetState extends State<TaskSheetWidget> {
+  int selectedChoiceIndex = 1;
   int defaultChoiceIndex = 0;
   static final _formKey = GlobalKey<FormState>();
   final TextEditingController _inputController = TextEditingController();
@@ -51,10 +52,12 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                     trailing: TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          await addTasktoModel(defaultChoiceIndex + 1, context);
+                          debugPrint(
+                              'selected in onpressed $selectedChoiceIndex');
+                          await addTasktoModel(context);
 
                           viewModel.addTaskList();
-                          viewModel.addCTaskList(defaultChoiceIndex);
+                          viewModel.addCTaskList(selectedChoiceIndex);
                           //debugPrint("hiii"+viewModel.categModelList.toString());
 
                           Navigator.pop(context);
@@ -106,6 +109,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                       builder: (BuildContext context,
                           AsyncSnapshot<List<CategoryModel>> snapshot) {
                         if (snapshot.hasData) {
+                          //selectedChoiceIndex = snapshot.data![0].cid!;
                           return ListView(
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
@@ -132,9 +136,14 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                   selectedColor:
                                       const Color.fromARGB(255, 220, 219, 219),
                                   onSelected: (value) {
+                                    selectedChoiceIndex =
+                                        snapshot.data![index].cid!;
                                     setState(() {
                                       defaultChoiceIndex =
                                           value ? index : defaultChoiceIndex;
+
+                                      debugPrint(
+                                          "selected $selectedChoiceIndex default $defaultChoiceIndex");
                                     });
                                   },
                                   backgroundColor: Colors.transparent,
@@ -157,9 +166,12 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
     );
   }
 
-  Future<TaskModel> addTasktoModel(int choiceIndex, BuildContext ctx) async {
+  Future<TaskModel> addTasktoModel(BuildContext ctx) async {
     final _taskname = _inputController.text.trim();
-    final _logoindex = choiceIndex;
+    
+
+    final cidOut = await CategRepository.fetchFirstCid();
+    final _logoindex = selectedChoiceIndex==1?cidOut[0]['cid']:selectedChoiceIndex;
 
     final _currUserId = Repository.currentUserID;
     debugPrint("I am userid " + _currUserId.toString());
@@ -167,7 +179,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
     final _taskObject = TaskModel(
         task_name: _taskname,
         isCompleted: 0,
-        category_id: choiceIndex,
+        category_id: selectedChoiceIndex,
         user_id: _currUserId);
 
     /* print("$_name $_email before calling savedata"); */
