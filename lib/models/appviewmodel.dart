@@ -24,11 +24,20 @@ class AppViewModel extends ChangeNotifier {
   Future<void> addCategList() async {
     await CategRepository.getAllData().then((value) {
       categModelList.clear();
+      if (value.isEmpty) {
+        debugPrint("category count=$categoryCount");
+        debugPrint("category completed count=$completedCount");
+
+        notifyListeners();
+      }
       for (var map in value) {
         //debugPrint("In addcateglist" + map.category_name);
         //getCategoryId(map.category_name);
 
         categModelList.add(map);
+        debugPrint("category count=$categoryCount");
+        debugPrint("category completed count=$completedCount");
+
         notifyListeners();
       }
     }).catchError((e) => debugPrint(e.toString()));
@@ -38,7 +47,11 @@ class AppViewModel extends ChangeNotifier {
     return categModelList[catIndex];
   }
 
-  int get categoryCount => categModelList.length;
+  int get categoryCount {
+    int count = 0;
+    count = categModelList.length;
+    return count;
+  }
 
   //taskdetails
 
@@ -47,6 +60,11 @@ class AppViewModel extends ChangeNotifier {
   Future<void> addTaskList() async {
     await TaskRepository.getAllData().then((value) {
       taskModelList.clear();
+        if (value.isEmpty) {
+
+
+        notifyListeners();
+      }
       for (var map in value) {
         debugPrint(map.toString());
 
@@ -179,7 +197,7 @@ class AppViewModel extends ChangeNotifier {
   int get completedCount {
     int counter = 0;
     for (var element in taskModelList) {
-      if (element.isCompleted == 1) {
+      if (element.isCompleted == 1 && element.user_id == Repository.currentUserID) {
         counter++;
       }
     }

@@ -54,10 +54,15 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                   child: Column(
                     children: [
                       const TopPanelWidget(),
-                      StreakBarWidget(streakval: viewModel.completedCount/viewModel.totalTaskCount,),
+                      StreakBarWidget(
+                        /* streakval: viewModel.completedCount == 0
+                            ? 0
+                            : viewModel.completedCount /
+                                viewModel.totalTaskCount, */
+                      ),
                       ProgressIndicatorWidget(
-                        progressVal: viewModel.completedCount.toDouble(),
-                        maxVal: viewModel.totalTaskCount.toDouble(),
+                       /*  progressVal: viewModel.completedCount.toDouble(),
+                        maxVal: viewModel.totalTaskCount.toDouble(), */
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -71,6 +76,8 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                           ),
                         ),
                       ),
+
+                      viewModel.categoryCount==0?Text("No Category"):
                       const CategoryViewWidget(),
                     ],
                   ),

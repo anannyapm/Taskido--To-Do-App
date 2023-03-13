@@ -67,7 +67,8 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
                               //placeholder 000 given
-                              Text('${viewModel.cBasedTaskCount(snapshot.data![index].cid!)} Tasks'),
+                              Text(
+                                  '${viewModel.cBasedTaskCount(snapshot.data![index].cid!)} Tasks'),
                               IconButton(
                                   onPressed: () {
                                     popupDialogueBox(() async {
@@ -76,6 +77,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                                           snapshot.data![index].category_name,
                                           context);
                                       await viewModel.addCategList();
+                                      await viewModel.addTaskList();
                                     }, context,
                                         'Do you want to delete ${snapshot.data![index].category_name} category?');
                                   },
@@ -102,7 +104,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
 
     debugPrint(out.toString()); */
 
-    await CategRepository.deleteData(categoryname).then((value) {
+    CategRepository.deleteData(categoryname).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(
           'Deleted Category',

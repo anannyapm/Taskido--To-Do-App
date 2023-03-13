@@ -38,7 +38,6 @@ class TaskRepository {
     }
   }
 
-
   //FETCH/GET ALL DATA FROM DATABASE
   static Future<List<TaskModel>> getAllData() async {
     //get data form database
@@ -48,7 +47,7 @@ class TaskRepository {
     final _values =
         await dbClient.rawQuery('select * from ${taskInstance.tableName}');
 
-    debugPrint(_values.toString());
+    debugPrint("TASK TABLE CONTAINS : ${_values.toString()}");
     return _values.map((e) => TaskModel.fromMap(e)).toList();
   }
 

@@ -63,13 +63,13 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                             )),
                       )
                     ]),
-
+              
                 viewModel.cBasedTaskCount(widget.chosenId) == 0
                     ? Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Align(
                             child: Text(
-                          "Your task bucket is empty ;) chosen val is ${widget.chosenId}",
+                          "Your task bucket is empty ;)",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600),
                         )),

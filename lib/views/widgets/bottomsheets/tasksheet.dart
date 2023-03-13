@@ -179,7 +179,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
     final _taskObject = TaskModel(
         task_name: _taskname,
         isCompleted: 0,
-        category_id: selectedChoiceIndex,
+        category_id: _logoindex,
         user_id: _currUserId);
 
     /* print("$_name $_email before calling savedata"); */
