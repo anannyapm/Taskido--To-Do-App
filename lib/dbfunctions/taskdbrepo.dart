@@ -28,8 +28,8 @@ class TaskRepository {
 
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
       task.tid = await dbClient.rawInsert(
-          'INSERT INTO ${taskInstance.tableName}(${taskInstance.colTwo}, ${taskInstance.colThree}, ${taskInstance.colFour}, ${taskInstance.colFive}) VALUES(?,?,?,?)',
-          [task.task_name, task.isCompleted, task.category_id, task.user_id]);
+          'INSERT INTO ${taskInstance.tableName}(${taskInstance.colTwo}, ${taskInstance.colThree}, ${taskInstance.colFour}, ${taskInstance.colFive}, ${taskInstance.colSix}) VALUES(?,?,?,?,?)',
+          [task.task_name, task.isCompleted, task.category_id, task.user_id, task.task_date_time.toIso8601String()]);
       getAllData();
 
       return true;
@@ -72,6 +72,9 @@ class TaskRepository {
 
     return result;
   }
+
+  
+
 
   //FETCH COUNT
 

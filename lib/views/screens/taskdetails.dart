@@ -7,6 +7,7 @@ import '../../constants/iconlist.dart';
 import '../../dbfunctions/categorydbrepo.dart';
 import '../../models/appviewmodel.dart';
 import '../widgets/searchwidget.dart';
+import '../widgets/taskdetailwidgets/showalltask.dart';
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
 import '../widgets/taskdetailwidgets/tasklistview.dart';
 
@@ -115,7 +116,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
               //list
 
               chosenValue == ''
-                  ? const Expanded(child: Text('No Category Selected'))
+                  ? 
+                  ShowAllTaskDetail()
                   : ShowTaskDetail(chosenVal: chosenValue, chosenId: chosenID),
             ],
           ),

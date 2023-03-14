@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/constants/iconlist.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
@@ -25,6 +26,10 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
   int defaultChoiceIndex = 0;
   static final _formKey = GlobalKey<FormState>();
   final TextEditingController _inputController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
+  DateTime? date;
+  TimeOfDay? time;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +39,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Container(
-            height: 350,
+            //height: 350,
             margin: const EdgeInsets.all(10),
             child: Form(
               key: _formKey,
@@ -93,7 +98,92 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                         const InputDecoration(hintText: 'Enter Task Name'),
                   ),
 
-                  //select title
+                  //datepicker
+
+                  Container(
+                    margin: const EdgeInsets.only(top: 20, bottom: 10),
+                    child: const Text(
+                      'Pick a Date and Time',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          readOnly: true,
+                          controller: _dateController,
+                          onTap: () async {
+                            DateTime? pickdate = await showDatePicker(
+                                context: context,
+                                initialDate: date ?? DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(DateTime.now().year + 5));
+
+                            if (pickdate == null) {
+                              _dateController.clear();
+                            } else {
+                              date = pickdate;
+
+                              setState(() {
+                                _dateController.text =
+                                    DateFormat('EEE, dd/MM/yyyy')
+                                        .format(pickdate);
+                                //'${pickdate.weekday} ${pickdate.day}/${pickdate.month}/${pickdate.year}';
+                              });
+                            }
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Pick a date';
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: const InputDecoration(hintText: 'Date'),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: TextFormField(
+                          readOnly: true,
+                          controller: _timeController,
+                          onTap: () async {
+                            TimeOfDay? picktime = await showTimePicker(
+                              context: context,
+                              initialTime:
+                                  time ?? TimeOfDay(hour: 9, minute: 0),
+                            );
+
+                            if (picktime == null) {
+                              _timeController.clear();
+                            } else {
+                              time = picktime;
+                              
+
+                              setState(() {
+                                _timeController.text = picktime.format(context);
+                              });
+                            }
+                          },
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Pick a time';
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: const InputDecoration(hintText: 'Time'),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  //select category
                   Container(
                     margin: const EdgeInsets.only(top: 20, bottom: 10),
                     child: const Text(
@@ -168,10 +258,11 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
 
   Future<TaskModel> addTasktoModel(BuildContext ctx) async {
     final _taskname = _inputController.text.trim();
-    
-
+    final _date = _dateController.text.trim();
+    final _time = _timeController.text.trim();
     final cidOut = await CategRepository.fetchFirstCid();
-    final _logoindex = selectedChoiceIndex==1?cidOut[0]['cid']:selectedChoiceIndex;
+    final _logoindex =
+        selectedChoiceIndex == 1 ? cidOut[0]['cid'] : selectedChoiceIndex;
 
     final _currUserId = Repository.currentUserID;
     debugPrint("I am userid " + _currUserId.toString());
@@ -180,7 +271,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
         task_name: _taskname,
         isCompleted: 0,
         category_id: _logoindex,
-        user_id: _currUserId);
+        user_id: _currUserId,
+        task_date_time: DateTime(date!.year,date!.month,date!.day,time!.hour,time!.minute));
 
     /* print("$_name $_email before calling savedata"); */
 

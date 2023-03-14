@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
@@ -7,6 +8,7 @@ import 'package:todoapp/models/appviewmodel.dart';
 import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 class TaskListView extends StatefulWidget {
+  
   final String categoryName;
   final int categoryID;
   const TaskListView(
@@ -32,6 +34,15 @@ class _TaskListViewState extends State<TaskListView> {
                   physics: const ClampingScrollPhysics(),
                   itemBuilder: ((context, index) {
                     //viewModel.addCTaskList(widget.categoryID);
+                    DateTime date =
+                        DateTime.parse(snapshot.data![index]['task_date_time']);
+                    bool overdue = false;
+
+                    if (date.isAfter(DateTime.now())) {
+                      overdue = true;
+                    }
+                    debugPrint(
+                        '$overdue $date is date ${DateTime.now()} is now}');
                     bool ifCompleted =
                         (snapshot.data![index]['isCompleted'] == 1)
                             ? true
@@ -40,6 +51,7 @@ class _TaskListViewState extends State<TaskListView> {
                     /* if (ifCompleted == false) { */
                     return //viewModel.getCategory(index) == widget.categoryName?
                         ListTile(
+                            //contentPadding: EdgeInsets.all(0),
                             horizontalTitleGap: 2,
                             leading: Checkbox(
                               side: const BorderSide(width: 2),
@@ -64,12 +76,50 @@ class _TaskListViewState extends State<TaskListView> {
                                     style: const TextStyle(
                                         color: Color.fromARGB(127, 0, 0, 0),
                                         decoration: TextDecoration.lineThrough,
-                                        fontStyle: FontStyle.italic))
-                                : Text(snapshot.data![index]['task_name'],
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w600))
+                                : (overdue
+                                    ? Text(snapshot.data![index]['task_name'],
+                                        //viewModel.getCTaskListItem(index).task_name,
+                                        style: const TextStyle(
+                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            fontWeight: FontWeight.w600))
+                                    : RichText(
+                                      
+                                      text: TextSpan(
+                                      
+                                        text:
+                                            '${snapshot.data![index]['task_name']}',
+                                            style: const TextStyle(
+                                            color: Color.fromARGB(255, 0, 0, 0),
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18),
+                                        children: const [TextSpan(text: '\t\tOverdue',style:TextStyle(
+                                            color:
+                                                Color.fromARGB(255, 255, 3, 3),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14
+                                          ))],
+                                        //viewModel.getCTaskListItem(index).task_name,
+                                        ))),
+                            subtitle: (ifCompleted)
+                                ? Text(
+                                    DateFormat('EEE, dd/MM/yyyy hh:mm aaa')
+                                        .format(date),
+                                    //viewModel.getCTaskListItem(index).task_name,
                                     style: const TextStyle(
-                                      color: Color(0xff011638),
-                                      fontWeight: FontWeight.w600,
-                                    )),
+                                        color: Color.fromARGB(127, 0, 0, 0),
+                                        fontWeight: FontWeight.w400,
+                                        decoration: TextDecoration.lineThrough,
+                                        fontStyle: FontStyle.italic,
+                                        fontSize: 13))
+                                : Text(
+                                    DateFormat('EEE, dd/MM/yyyy hh:mm aaa')
+                                        .format(date),
+                                    style: const TextStyle(
+                                        color: Color(0xff011638),
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 13)),
                             trailing: IconButton(
                                 onPressed: () {
                                   popupDialogueBox(() async {
@@ -100,12 +150,13 @@ class _TaskListViewState extends State<TaskListView> {
                 } */
                   separatorBuilder: (context, index) {
                     return const Divider(
+                      thickness: 1,
                       height: 10,
                     );
                   },
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             });
       },

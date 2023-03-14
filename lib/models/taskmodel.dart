@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TaskModel {
@@ -6,12 +7,16 @@ class TaskModel {
   int isCompleted;
   final int category_id;
   final int user_id;
+  final DateTime task_date_time;
+  //final DateTime task_time;
 
   TaskModel(
       {required this.task_name,
       required this.isCompleted,
       required this.category_id,
       required this.user_id,
+      required this.task_date_time,
+     // required this.task_time,
       this.tid});
 
   /* Map<String, dynamic> toMap() {
@@ -30,12 +35,16 @@ class TaskModel {
     final isCompleted = map['isCompleted'] as int;
     final category_id = map['category_id'] as int;
     final user_id = map['user_id'] as int;
+    final task_date_time = map['task_date_time'] as String;
+    //final task_time = map['task_time'] as String;
 
     return TaskModel(
         task_name: task_name,
         isCompleted: isCompleted,
         category_id: category_id,
         user_id: user_id,
+        task_date_time: DateTime.parse(task_date_time),
+        //task_time: DateTime.parse(task_time),
         tid: tid);
   }
 }

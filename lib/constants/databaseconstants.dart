@@ -5,6 +5,10 @@ class DBConst {
   final String colThree;
   final String colFour;
   final String colFive;
+  final String colSix;
+  //final String colSeven;
+
+
 
   DBConst(
       {required this.tableName,
@@ -12,7 +16,10 @@ class DBConst {
       required this.colTwo,
       required this.colThree,
       required this.colFour,
-      this.colFive=''}
+      this.colFive='',
+      this.colSix='',
+      //this.colSeven=''
+      }
       );
 }
 
@@ -35,4 +42,7 @@ DBConst taskInstance = DBConst(
     colTwo: 'task_name',
     colThree: 'isCompleted',
     colFour: 'category_id',
-    colFive: 'user_id');
+    colFive: 'user_id',
+    colSix: 'task_date_time'
+    //colSeven: 'task_time'
+    );
