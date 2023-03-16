@@ -5,13 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/constants/iconlist.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
-import 'package:todoapp/models/appviewmodel.dart';
+import 'package:todoapp/viewmodel/appviewmodel.dart';
 
 import '../../../dbfunctions/categorydbrepo.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
-import '../../../models/categoryclass.dart';
+
 import '../../../models/categorymodel.dart';
-import '../../../models/oldtaskmodel.dart';
 import '../../../models/taskmodel.dart';
 
 class TaskSheetWidget extends StatefulWidget {

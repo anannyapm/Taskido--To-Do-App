@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/dbfunctions/dbhelper.dart';
 import 'package:todoapp/constants/databaseconstants.dart';
-import 'package:todoapp/dbfunctions/repository.dart';
 
 import '../models/taskmodel.dart';
 
@@ -63,14 +62,14 @@ class TaskRepository {
   }
 
   //FETCH DATA BASED ON CID,UID
-  static Future<List<Map<String, dynamic>>> fetchDataWithId(
+  static Future<List<TaskModel>> fetchDataWithId(
       int catid, int userid) async {
     var dbClient = await database;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'select * from ${taskInstance.tableName} where ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid"');
 
-    return result;
+    return result.map((e) => TaskModel.fromMap(e)).toList();
   }
 
   

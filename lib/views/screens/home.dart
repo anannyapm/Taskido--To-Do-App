@@ -3,7 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/dbfunctions/taskdbrepo.dart';
-import 'package:todoapp/models/appviewmodel.dart';
+import 'package:todoapp/viewmodel/appviewmodel.dart';
 
 import 'package:todoapp/views/screens/profilehome.dart';
 import 'package:todoapp/views/screens/taskdetails.dart';

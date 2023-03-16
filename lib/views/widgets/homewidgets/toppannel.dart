@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 
-import '../../../models/appviewmodel.dart';
+import '../../../viewmodel/appviewmodel.dart';
 import '../../screens/profilehome.dart';
 
 class TopPanelWidget extends StatefulWidget {

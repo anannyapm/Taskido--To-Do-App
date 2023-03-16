@@ -2,8 +2,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:todoapp/constants/databaseconstants.dart';
-import 'package:todoapp/constants/iconlist.dart';
-import 'package:todoapp/models/usermodel.dart';
 
 class DatabaseConnection {
   static setDatabase(

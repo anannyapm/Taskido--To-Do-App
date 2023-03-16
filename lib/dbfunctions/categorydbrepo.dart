@@ -3,7 +3,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/dbfunctions/dbhelper.dart';
 import 'package:todoapp/constants/databaseconstants.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
-import 'package:todoapp/models/appviewmodel.dart';
 import 'package:todoapp/models/categorymodel.dart';
 
 class CategRepository {
@@ -68,7 +67,7 @@ class CategRepository {
     final _values = await dbClient.rawQuery(
         'select * from ${categoryInstance.tableName} where ${categoryInstance.colFive}="$curUserId"');
 
-    debugPrint("Db getAlldata called: " + _values.toString());
+    debugPrint("Db getAlldata called: $_values");
     final category = _values.map((e) => CategoryModel.fromMap(e)).toList();
 
     return category;

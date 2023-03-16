@@ -4,22 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/categorymodel.dart';
-import 'package:todoapp/models/oldtaskmodel.dart';
+
 import 'package:todoapp/models/taskmodel.dart';
 
 import '../dbfunctions/categorydbrepo.dart';
 import '../dbfunctions/taskdbrepo.dart';
 
 class AppViewModel extends ChangeNotifier {
+
+
   //category actions
   List<CategoryModel> categModelList = <CategoryModel>[];
 
-  /*  void addCategoryList(CategoryModel Value) {
-    //categModelList.clear();
-    
-      categModelList.add(Value);
-      notifyListeners();
-    } */
 
   Future<void> addCategList() async {
     await CategRepository.getAllData().then((value) {
@@ -31,8 +27,6 @@ class AppViewModel extends ChangeNotifier {
         notifyListeners();
       }
       for (var map in value) {
-        //debugPrint("In addcateglist" + map.category_name);
-        //getCategoryId(map.category_name);
 
         categModelList.add(map);
         debugPrint("category count=$categoryCount");
@@ -60,9 +54,7 @@ class AppViewModel extends ChangeNotifier {
   Future<void> addTaskList() async {
     await TaskRepository.getAllData().then((value) {
       taskModelList.clear();
-        if (value.isEmpty) {
-
-
+      if (value.isEmpty) {
         notifyListeners();
       }
       for (var map in value) {
@@ -74,7 +66,7 @@ class AppViewModel extends ChangeNotifier {
     }).catchError((e) => debugPrint(e.toString()));
   }
 
-//list based on category
+//task list based on category
 
   List<TaskModel> cTaskList = <TaskModel>[];
 
@@ -85,7 +77,7 @@ class AppViewModel extends ChangeNotifier {
       for (var map in value) {
         debugPrint(map.toString());
 
-        cTaskList.add(TaskModel.fromMap(map));
+        cTaskList.add(map);
         notifyListeners();
       }
     }).catchError((e) => debugPrint(e.toString()));
@@ -141,17 +133,7 @@ class AppViewModel extends ChangeNotifier {
     }
     return count;
   }
-  /*  int categoryBasedTaskCount(int catId) async {
-    //final output =
-    await TaskRepository.fetchCount(catId, Repository.currentUserID)
-        .then((value) {
-      return value[0]['count'];
-    }).catchError((e) {
-      
-      debugPrint(e.toString());
-      return 0;
-    });
-  } */
+
 
   Future<int> categoryBasedCompletedTaskCount(int catId) async {
     final output = await TaskRepository.fetchCompletedCount(
@@ -175,7 +157,7 @@ class AppViewModel extends ChangeNotifier {
     if (taskValue == true) {
       taskval = 1;
     }
-    //cTaskList[taskIndex].isCompleted = taskval;
+
     //call db function to update
     final output = await TaskRepository.updateCompletedStatus(
         taskIndex, categoryIndex, Repository.currentUserID, taskValue);
@@ -186,25 +168,19 @@ class AppViewModel extends ChangeNotifier {
 
   //old task details
 
-  List<Task> taskList = <Task>[];
-  //User user = User('Greta');
-
-  int get taskCount => taskList.length;
-
-  List<Map<String, dynamic>> currentUserData = <Map<String, dynamic>>[];
-
-//.........................
+  
   int get completedCount {
     int counter = 0;
     for (var element in taskModelList) {
-      if (element.isCompleted == 1 && element.user_id == Repository.currentUserID) {
+      if (element.isCompleted == 1 &&
+          element.user_id == Repository.currentUserID) {
         counter++;
       }
     }
     return counter;
   }
 
-//.....................................
+//..........CONST COLORS................
   Color primclr1 = const Color(0xff011638);
   Color primclr2 = const Color(0xff00a9a5);
   Color primclr3 = Colors.black;
@@ -214,27 +190,23 @@ class AppViewModel extends ChangeNotifier {
   Color iconclr3 = Colors.blue;
   Color iconclr4 = const Color(0xFF1C0800);
 
-  void addTask(Task newTask) {
-    taskList.add(newTask);
+ 
 
-    notifyListeners();
-  }
-
-  bool getTaskValue(int taskIndex) {
-    return taskList[taskIndex].isCompleted;
-  }
-
-  void setTaskValue(int taskIndex, bool taskValue) {
-    taskList[taskIndex].isCompleted = taskValue;
-    notifyListeners();
-  }
-
-  String getTaskTitle(int taskIndex) {
-    return taskList[taskIndex].title;
-  }
-
-  String getCategory(int taskIndex) {
-    return taskList[taskIndex].categoryname;
+  double progressIndicatorValue(int choosenid) {
+    if (choosenid == 0) {
+      if (totalTaskCount == 0) {
+        return 0;
+      } else {
+        return completedCount / totalTaskCount;
+      }
+    }
+    else{
+      if (cBasedTaskCount(choosenid) == 0) {
+        return 0;
+      } else {
+        return cBasedCompletdTaskCount(choosenid) / cBasedTaskCount(choosenid);
+      }
+    }
   }
 
   void bottomSheetBuilder(Widget bottomSheetView, BuildContext context) {

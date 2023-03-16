@@ -4,25 +4,26 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/dbfunctions/taskdbrepo.dart';
-import 'package:todoapp/models/appviewmodel.dart';
+import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 import '../../../models/taskmodel.dart';
 
-class PendingTotalList extends StatefulWidget {
-  const PendingTotalList({super.key});
+class ListWidget extends StatefulWidget {
+  final Future<List<TaskModel>> futureList;
+  const ListWidget({super.key,required this.futureList});
 
   @override
-  State<PendingTotalList> createState() => _PendingTotalListState();
+  State<ListWidget> createState() => _ListWidgetState();
 }
 
-class _PendingTotalListState extends State<PendingTotalList> {
+class _ListWidgetState extends State<ListWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(
       builder: (context, viewModel, child) {
         return FutureBuilder(
-            future: TaskRepository.getAllData(),
+            future: widget.futureList,
             builder: (BuildContext context,
                 AsyncSnapshot<List<TaskModel>> snapshot) {
               if (snapshot.hasData) {
@@ -40,8 +41,8 @@ class _PendingTotalListState extends State<PendingTotalList> {
                         '$overdue $date is date ${DateTime.now()} is now}');
                     bool ifCompleted =
                         (snapshot.data![index].isCompleted == 1) ? true : false;
-                    
-                      return ListTile(
+
+                    return ListTile(
                         //contentPadding: EdgeInsets.all(0),
                         horizontalTitleGap: 2,
                         leading: Checkbox(
@@ -127,9 +128,7 @@ class _PendingTotalListState extends State<PendingTotalList> {
                               Icons.delete_outline,
                               color: Colors.red,
                             )));
-                    }
-                    
-                  ),
+                  }),
                   itemCount: snapshot.data!.length,
                   separatorBuilder: (context, index) {
                     return const Divider(

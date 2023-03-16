@@ -6,7 +6,7 @@ import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 
 import '../../dbfunctions/repository.dart';
-import '../../models/appviewmodel.dart';
+import '../../viewmodel/appviewmodel.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});

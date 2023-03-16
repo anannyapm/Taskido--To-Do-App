@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
-import 'package:todoapp/models/appviewmodel.dart';
+import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';

@@ -1,6 +1,4 @@
-import 'package:sqflite/sqflite.dart';
 
-import 'appviewmodel.dart';
 
 class CategoryModel {
   int? cid;

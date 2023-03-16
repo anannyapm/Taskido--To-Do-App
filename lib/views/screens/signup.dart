@@ -9,9 +9,8 @@ import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
-import '../../functions/helper.dart';
 import '../../main.dart';
-import '../../models/appviewmodel.dart';
+import '../../viewmodel/appviewmodel.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
 import '../widgets/loginwidgets/textfieldwidget.dart';

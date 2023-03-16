@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/appviewmodel.dart';
+import '../../../viewmodel/appviewmodel.dart';
 
 class StreakBarWidget extends StatefulWidget {
   //final double streakval;

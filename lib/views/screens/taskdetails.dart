@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/models/categorymodel.dart';
+import 'package:todoapp/views/screens/searchscreen.dart';
 
 import '../../constants/iconlist.dart';
 import '../../dbfunctions/categorydbrepo.dart';
-import '../../models/appviewmodel.dart';
-import '../widgets/searchwidget.dart';
-import '../widgets/taskdetailwidgets/showalltask.dart';
+import '../../viewmodel/appviewmodel.dart';
+
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
-import '../widgets/taskdetailwidgets/tasklistview.dart';
 
 class ScreenTasks extends StatefulWidget {
   const ScreenTasks({super.key});
@@ -24,7 +23,6 @@ class _ScreenTasksState extends State<ScreenTasks> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      //viewModel.addCategList();
       return Scaffold(
         body: SafeArea(
             child: Container(
@@ -32,8 +30,44 @@ class _ScreenTasksState extends State<ScreenTasks> {
           child: Column(
             children: [
               //searchbar
-              searchBox(),
-              Container(color: const Color.fromARGB(100, 0, 0, 0), height: 1),
+              
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        showSearch(
+                          context: context,
+                          delegate: ScreenSearch(),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(Icons.search),
+                  Text('\tSearch',style: TextStyle(fontSize: 18),),
+                          
+                        ],
+                      )
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                    child: GestureDetector(
+                      onTap: () {
+                        showSearch(
+                          context: context,
+                          delegate: ScreenSearch(),
+                        );
+                      },
+                      child: const Icon(Icons.filter_alt_outlined),
+                    ),
+                  ),
+                ],
+              ),
+
+             Container(color: const Color.fromARGB(100, 0, 0, 0), height: 1),
               //dropdown
               Container(
                 margin: const EdgeInsets.only(bottom: 10, top: 20),
@@ -76,38 +110,22 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                 await viewModel.addCategList();
                                 setState(() {
                                   chosenValue = newvalue!;
-                                  
+
                                   chosenID =
                                       viewModel.getCategoryId(chosenValue);
                                   viewModel.addCTaskList(chosenID);
 
-                                  print(
-                                      chosenValue + " " + chosenID.toString());
+                                  debugPrint("$chosenValue $chosenID");
                                 });
                               },
                             );
                           } else {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           }
                         })
 
-                    /*  DropdownButton(
-                      icon: const Icon(
-                        FontAwesome5.chevron_down,
-                        size: 15,
-                        color: Colors.black,
-                      ),
-                      isExpanded: true,
-                      underline: Container(),
-                      value: chosenValue,
-                      items: dropdownItems,
-                      onChanged: (String? newvalue) {
-                        setState(() {
-                          chosenValue = newvalue!;
-                          print(chosenValue);
-                        });
-                      },
-                    ) */
+                   
                     ,
                   ),
                 ),
@@ -116,9 +134,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
               //list
 
               chosenValue == ''
-                  ? 
-                  ShowAllTaskDetail()
-                  : ShowTaskDetail(chosenVal: chosenValue, chosenId: chosenID),
+                  ? const ShowTaskDetail()
+                  : ShowTaskDetail(chosenId: chosenID),
             ],
           ),
         )),
@@ -136,10 +153,9 @@ class _ScreenTasksState extends State<ScreenTasks> {
           child: Wrap(
             spacing: 10,
             children: [
-              Text(
+              const Text(
                 'Select a Category',
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
               )
             ],
           ))

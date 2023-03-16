@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-import '../../../models/appviewmodel.dart';
+import '../../../viewmodel/appviewmodel.dart';
 
 class ProgressIndicatorWidget extends StatefulWidget {
   /* final double progressVal;

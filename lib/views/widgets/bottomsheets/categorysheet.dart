@@ -3,12 +3,12 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
-import 'package:todoapp/models/appviewmodel.dart';
+import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/models/categorymodel.dart';
 import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 import '../../../constants/iconlist.dart';
-import '../../../constants/keys.dart';
+
 
 class CategorySheetWidget extends StatefulWidget {
   const CategorySheetWidget({super.key});

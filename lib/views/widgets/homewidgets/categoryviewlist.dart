@@ -5,8 +5,8 @@ import 'package:todoapp/models/categorymodel.dart';
 import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 import '../../../constants/iconlist.dart';
-import '../../../models/appviewmodel.dart';
-import '../../../models/categoryclass.dart';
+import '../../../viewmodel/appviewmodel.dart';
+
 
 class CategoryViewWidget extends StatefulWidget {
   const CategoryViewWidget({super.key});

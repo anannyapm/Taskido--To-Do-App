@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../dbfunctions/categorydbrepo.dart';
-import '../../models/appviewmodel.dart';
+import '../../viewmodel/appviewmodel.dart';
 import '../../models/categorymodel.dart';
 import '../widgets/drawerwidget.dart';
 import '../widgets/homewidgets/categoryviewlist.dart';
@@ -21,15 +21,10 @@ class ScreenProfileHome extends StatefulWidget {
 
 class _ScreenProfileHomeState extends State<ScreenProfileHome> {
   List<CategoryModel> categList = <CategoryModel>[];
-  /* Future<Future<List<CategoryModel>>> _refreshProducts(BuildContext context) async {
-    return CategRepository.getAllData();
-  } */
+
 
   @override
   void initState() {
-    // TODO: implement initState
-    /* AppViewModel instance = AppViewModel();
-    instance.addCategList(); */
     super.initState();
   }
 
@@ -54,16 +49,8 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                   child: Column(
                     children: [
                       const TopPanelWidget(),
-                      StreakBarWidget(
-                        /* streakval: viewModel.completedCount == 0
-                            ? 0
-                            : viewModel.completedCount /
-                                viewModel.totalTaskCount, */
-                      ),
-                      ProgressIndicatorWidget(
-                       /*  progressVal: viewModel.completedCount.toDouble(),
-                        maxVal: viewModel.totalTaskCount.toDouble(), */
-                      ),
+                      const StreakBarWidget(),
+                      const ProgressIndicatorWidget(),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
