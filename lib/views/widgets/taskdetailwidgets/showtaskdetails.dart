@@ -31,6 +31,7 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
       return Expanded(
           flex: 7,
           child: Container(
+            
             margin: const EdgeInsets.only(top: 10, bottom: 10),
             child: ListView(
               children: [
@@ -73,8 +74,10 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                               fontSize: 18, fontWeight: FontWeight.w600),
                         )),
                       )
+                      //find a way to use usablelist
                     : ListWidget(
-                        futureList: widget.chosenId==0?TaskRepository.getAllData(): TaskRepository.fetchDataWithId(
+                        futureList: 
+                        widget.chosenId==0?TaskRepository.getAllData(): TaskRepository.fetchDataWithId(
                             widget.chosenId, Repository.currentUserID)),
                 const SizedBox(
                   height: 30,

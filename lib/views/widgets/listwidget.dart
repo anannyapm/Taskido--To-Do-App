@@ -6,12 +6,14 @@ import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/dbfunctions/taskdbrepo.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/widgets/popupdialogue.dart';
+import 'package:todoapp/views/widgets/taskdetailwidgets/tasktile.dart';
 
 import '../../../models/taskmodel.dart';
 
 class ListWidget extends StatefulWidget {
   final Future<List<TaskModel>> futureList;
-  const ListWidget({super.key,required this.futureList});
+
+  const ListWidget({super.key, required this.futureList});
 
   @override
   State<ListWidget> createState() => _ListWidgetState();
@@ -31,6 +33,7 @@ class _ListWidgetState extends State<ListWidget> {
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   itemBuilder: ((context, index) {
+                    TaskModel data = snapshot.data![index];
                     DateTime date = snapshot.data![index].task_date_time;
                     bool overdue = false;
 
@@ -42,92 +45,68 @@ class _ListWidgetState extends State<ListWidget> {
                     bool ifCompleted =
                         (snapshot.data![index].isCompleted == 1) ? true : false;
 
-                    return ListTile(
-                        //contentPadding: EdgeInsets.all(0),
-                        horizontalTitleGap: 2,
-                        leading: Checkbox(
-                          side: const BorderSide(width: 2),
-                          activeColor: const Color.fromARGB(127, 0, 0, 0),
-                          value: ifCompleted,
-                          onChanged: (value) async {
-                            viewModel.updateTaskValue(
-                                snapshot.data![index].tid!,
-                                value!,
-                                snapshot.data![index].category_id);
-                            viewModel.addTaskList();
-                            /* setState(() {
-                                  
-
-                                   
-                                }); */
-                          },
-                        ),
-                        title: (ifCompleted)
-                            ? Text(snapshot.data![index].task_name,
-                                //viewModel.getCTaskListItem(index).task_name,
-                                style: const TextStyle(
-                                    color: Color.fromARGB(127, 0, 0, 0),
-                                    decoration: TextDecoration.lineThrough,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.w600))
-                            : (overdue
-                                ? Text(snapshot.data![index].task_name,
-                                    //viewModel.getCTaskListItem(index).task_name,
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                        fontWeight: FontWeight.w600))
-                                : RichText(
-                                    text: TextSpan(
-                                    text: '${snapshot.data![index].task_name}',
-                                    style: const TextStyle(
-                                        color: Color.fromARGB(255, 0, 0, 0),
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18),
-                                    children: const [
-                                      TextSpan(
-                                          text: '\t\tOverdue',
-                                          style: TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 255, 3, 3),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 14))
-                                    ],
-                                    //viewModel.getCTaskListItem(index).task_name,
-                                  ))),
-                        subtitle: (ifCompleted)
-                            ? Text(
-                                DateFormat('EEE, dd/MM/yyyy hh:mm aaa')
-                                    .format(date),
-                                //viewModel.getCTaskListItem(index).task_name,
-                                style: const TextStyle(
-                                    color: Color.fromARGB(127, 0, 0, 0),
-                                    fontWeight: FontWeight.w400,
-                                    decoration: TextDecoration.lineThrough,
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 13))
-                            : Text(
-                                DateFormat('EEE, dd/MM/yyyy hh:mm aaa')
-                                    .format(date),
-                                style: const TextStyle(
-                                    color: Color(0xff011638),
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 13)),
-                        trailing: IconButton(
-                            onPressed: () {
-                              popupDialogueBox(() async {
-                                debugPrint("delete pressed");
-                                await deleteTask(
-                                    snapshot.data![index].task_name,
-                                    snapshot.data![index].category_id,
-                                    context);
-                                await viewModel.addTaskList();
-                              }, context,
-                                  'Do you want to delete ${snapshot.data![index].task_name} category?');
-                            },
-                            icon: const Icon(
-                              Icons.delete_outline,
-                              color: Colors.red,
-                            )));
+                    //if (viewModel.filterSelection != "") {
+                    debugPrint('Im here in filter');
+                    if (viewModel.filterSelection.contains('Today')) {
+                      DateTime today = DateTime.now();
+                      if (date.day == today.day &&
+                          date.month == today.month &&
+                          date.year == today.year) {
+                        return TaskTileWidget(
+                            ifcomplete: ifCompleted,
+                            data: data,
+                            date: date,
+                            overdue: overdue);
+                      } else {
+                        return Container();
+                      }
+                    } else if (viewModel.filterSelection.contains('Tomorrow')) {
+                      DateTime tomorrow = DateTime.now().add(Duration(days: 1));
+                      if (date.day == tomorrow.day &&
+                          date.month == tomorrow.month &&
+                          date.year == tomorrow.year) {
+                        return TaskTileWidget(
+                            ifcomplete: ifCompleted,
+                            data: data,
+                            date: date,
+                            overdue: overdue);
+                      } else {
+                        return Container();
+                      }
+                    } else if (viewModel.filterSelection.contains('Custom')) {
+                      //debugPrint("in custom --" +
+                         // date.isAfter(viewModel.date1!).toString());
+                      if (viewModel.date1 != null && viewModel.date2 != null) {
+                        if (date.isAfter(viewModel.date1!) &&
+                            date.isBefore(viewModel.date2!)) {
+                          return TaskTileWidget(
+                              ifcomplete: ifCompleted,
+                              data: data,
+                              date: date,
+                              overdue: overdue);
+                        } else {
+                          return Container();
+                        }
+                      } else {
+                        return Container();
+                      }
+                    }
+                    //}
+                    else if (viewModel.filterSelection.contains('Clear')) {
+                      viewModel.filterSelection="";
+                      return TaskTileWidget(
+                          ifcomplete: ifCompleted,
+                          data: data,
+                          date: date,
+                          overdue: overdue);
+                    }
+                    else{
+                      return TaskTileWidget(
+                          ifcomplete: ifCompleted,
+                          data: data,
+                          date: date,
+                          overdue: overdue);
+                    }
                   }),
                   itemCount: snapshot.data!.length,
                   separatorBuilder: (context, index) {

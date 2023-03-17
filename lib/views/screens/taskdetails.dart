@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/dbfunctions/taskdbrepo.dart';
 import 'package:todoapp/models/categorymodel.dart';
+import 'package:todoapp/views/screens/searchresult.dart';
 import 'package:todoapp/views/screens/searchscreen.dart';
 
 import '../../constants/iconlist.dart';
 import '../../dbfunctions/categorydbrepo.dart';
+import '../../models/taskmodel.dart';
 import '../../viewmodel/appviewmodel.dart';
 
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
+import 'filterscreen.dart';
+
+enum SampleItem { Today, Tomorrow, Custom ,Clear}
 
 class ScreenTasks extends StatefulWidget {
   const ScreenTasks({super.key});
@@ -20,6 +26,11 @@ class ScreenTasks extends StatefulWidget {
 class _ScreenTasksState extends State<ScreenTasks> {
   String chosenValue = '';
   int chosenID = 0;
+  DateTime? startDate;
+  DateTime? endDate;
+  List<TaskModel> activeUsableList = [];
+  SampleItem? selectedMenu;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
@@ -30,109 +41,178 @@ class _ScreenTasksState extends State<ScreenTasks> {
           child: Column(
             children: [
               //searchbar
-              
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        showSearch(
-                          context: context,
-                          delegate: ScreenSearch(),
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          const Icon(Icons.search),
-                  Text('\tSearch',style: TextStyle(fontSize: 18),),
-                          
-                        ],
-                      )
-                    ),
+                    child: //SearchWidget(searchID: chosenID)
+                        GestureDetector(
+                            onTap: () {
+                              //viewModel.isSubmitted = true;
+                              showSearch(
+                                context: context,
+                                delegate: ScreenSearch(),
+                              );
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.search),
+                                const Text(
+                                  '\tSearch',
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
+                            )),
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        showSearch(
-                          context: context,
-                          delegate: ScreenSearch(),
-                        );
+                    child: PopupMenuButton<SampleItem>(
+                      icon: Icon(Icons.filter_alt_outlined),
+                      initialValue: selectedMenu,
+                      // Callback that sets the selected popup menu item.
+                      onSelected: (SampleItem item) {
+                        setState(() {
+                          selectedMenu = item;
+                        });
+                        if (selectedMenu == SampleItem.Custom) {
+                          selectDateRange();
+                          viewModel.setDateFilter(startDate, endDate);
+                        }
+                      
+                        viewModel.setFilterSelection(selectedMenu.toString());
                       },
-                      child: const Icon(Icons.filter_alt_outlined),
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuEntry<SampleItem>>[
+                        const PopupMenuItem<SampleItem>(
+                          value: SampleItem.Today,
+                          child: Text('Today'),
+                        ),
+                        const PopupMenuItem<SampleItem>(
+                          value: SampleItem.Tomorrow,
+                          child: Text('Tomorrow'),
+                        ),
+                        const PopupMenuItem<SampleItem>(
+                          value: SampleItem.Custom,
+                          child: Text('Custom Date'),
+                        ),
+                        const PopupMenuItem<SampleItem>(
+                          value: SampleItem.Clear,
+                          child: Text('Clear Filter'),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
 
-             Container(color: const Color.fromARGB(100, 0, 0, 0), height: 1),
-              //dropdown
-              Container(
-                margin: const EdgeInsets.only(bottom: 10, top: 20),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                            // ignore: prefer_const_constructors
-                            color: Color.fromRGBO(
-                                0, 0, 0, 0.507), //shadow for button
-                            blurRadius: 4,
-                            offset: Offset.fromDirection(
-                                115 * 180 / 3.14)) //blur radius of shadow
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 5,
-                      bottom: 5,
-                      left: 20,
-                      right: 20,
-                    ),
-                    child: FutureBuilder(
-                        future: CategRepository.getAllData(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<List<CategoryModel>> snapshot) {
-                          if (snapshot.hasData) {
-                            return DropdownButton(
-                              icon: const Icon(
-                                FontAwesome5.chevron_down,
-                                size: 15,
-                                color: Colors.black,
-                              ),
-                              isExpanded: true,
-                              underline: Container(),
-                              value: chosenValue,
-                              items: dropdownItems(snapshot),
-                              onChanged: (String? newvalue) async {
-                                await viewModel.addCategList();
-                                setState(() {
-                                  chosenValue = newvalue!;
+              //Container(color: const Color.fromARGB(100, 0, 0, 0), height: 1),
 
-                                  chosenID =
-                                      viewModel.getCategoryId(chosenValue);
-                                  viewModel.addCTaskList(chosenID);
+              //choicechip
+              Container(
+                height: 50,
+                margin: const EdgeInsets.only(top: 10, bottom: 20),
+                child: FutureBuilder(
+                    future: CategRepository.getAllData(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<CategoryModel>> snapshot) {
+                      if (snapshot.hasData) {
+                        debugPrint("Active list${viewModel.activeUsableList}");
+                        List<Widget> initialchip = [
+                          ChoiceChip(
+                            label: const Text('All Tasks'),
+                            selected: chosenValue == '',
+                            shape: const StadiumBorder(
+                                side: BorderSide(color: Colors.black12)),
+                            backgroundColor: Colors.transparent,
+                            selectedColor:
+                                const Color.fromARGB(255, 159, 159, 160),
+                            elevation: 0,
+                            onSelected: (bool selected) async {
+                              await viewModel.addTaskList();
+                              debugPrint(
+                                  "Active list${viewModel.activeUsableList}");
+                              setState(() {
+                                chosenValue = selected ? '' : '';
+                              });
+                            },
+                          )
+                        ];
+                        List<Widget> chipList = List<Widget>.generate(
+                          snapshot.data!.length,
+                          (int index) {
+                            return ChoiceChip(
+                              shape: const StadiumBorder(
+                                  side: BorderSide(color: Colors.black12)),
+                              backgroundColor: Colors.transparent,
+                              selectedColor:
+                                  const Color.fromARGB(255, 159, 159, 160),
+                              elevation: 0,
+                              padding: const EdgeInsets.all(5),
+                              label: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconList.Iconlist[snapshot
+                                      .data![index].category_logo_value],
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    snapshot.data![index].category_name,
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                  )
+                                ],
+                              ),
+                              selected: chosenValue ==
+                                  snapshot.data![index].category_name,
+                              onSelected: (bool selected) async {
+                                await viewModel.addCategList();
+                                String value = selected
+                                    ? snapshot.data![index].category_name
+                                    : '';
+                                chosenID = viewModel.getCategoryId(value);
+                                await viewModel.addCTaskList(chosenID);
+                                viewModel.setList(viewModel.cTaskList);
+                                debugPrint(
+                                    "Active list${viewModel.activeUsableList}");
+                                setState(() {
+                                  chosenValue = value;
 
                                   debugPrint("$chosenValue $chosenID");
                                 });
                               },
                             );
-                          } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                        })
+                          },
+                        ).toList();
 
-                   
-                    ,
-                  ),
-                ),
+                        List<Widget> finalChoiceList = [
+                          ...initialchip,
+                          ...chipList
+                        ];
+
+                        return Align(
+                          alignment: Alignment.centerLeft,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Wrap(
+                              spacing: 5,
+                              direction: Axis.horizontal,
+                              children: finalChoiceList,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }),
               ),
+              // ),
+              // ),
 
               //list
-
+              // viewModel.isSubmitted==false?ListResult():
               chosenValue == ''
                   ? const ShowTaskDetail()
                   : ShowTaskDetail(chosenId: chosenID),
@@ -143,41 +223,28 @@ class _ScreenTasksState extends State<ScreenTasks> {
     });
   }
 
-  List<DropdownMenuItem<String>> dropdownItems(
-      AsyncSnapshot<List<CategoryModel>> snapshot) {
-    List<DropdownMenuItem<String>> menuItems;
-
-    List<DropdownMenuItem<String>> li = [
-      DropdownMenuItem(
-          value: '',
-          child: Wrap(
-            spacing: 10,
-            children: [
-              const Text(
-                'Select a Category',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-              )
-            ],
-          ))
-    ];
-    menuItems = [
-      ...li,
-      ...snapshot.data!
-          .map((e) => DropdownMenuItem(
-              value: e.category_name,
-              child: Wrap(
-                spacing: 10,
-                children: [
-                  IconList.Iconlist[e.category_logo_value],
-                  Text(
-                    e.category_name,
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.w600),
-                  )
-                ],
-              )))
-          .toList()
-    ];
-    return menuItems;
+  void selectDateRange() async {
+    final DateTime? pickedStartDate = await showDatePicker(
+      helpText: 'Select Start Date',
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (pickedStartDate != null) {
+      final DateTime? pickedEndDate = await showDatePicker(
+        helpText: 'Select End Date',
+        context: context,
+        initialDate: pickedStartDate,
+        firstDate: pickedStartDate,
+        lastDate: DateTime(2100),
+      );
+      if (pickedEndDate != null) {
+        setState(() {
+          startDate = pickedStartDate;
+          endDate = pickedEndDate;
+        });
+      }
+    }
   }
 }

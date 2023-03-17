@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/taskdbrepo.dart';
+import 'package:todoapp/views/widgets/taskdetailwidgets/tasktile.dart';
 
 import '../../dbfunctions/repository.dart';
 import '../../viewmodel/appviewmodel.dart';
@@ -29,21 +30,22 @@ class ScreenSearch extends SearchDelegate {
   //to pop out of the search menu
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
-    return IconButton(
-      icon: const Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null); // for closing the search page and going back
-      },
-    );
+    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+      // TODO: implement buildLeading
+      return IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          close(context, null); // for closing the search page and going back
+        },
+      );
+    });
   }
 
 //to show query result
   @override
   Widget buildResults(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      return searchList(
-          context); 
+      return searchList(context);
     });
   }
 
@@ -79,91 +81,14 @@ class ScreenSearch extends SearchDelegate {
                         '$overdue $date is date ${DateTime.now()} is now}');
                     bool ifCompleted =
                         (snapshot.data![index].isCompleted == 1) ? true : false;
+
                     if ((taskName.toLowerCase())
                         .contains((query.trim()).toLowerCase())) {
-                      return ListTile(
-                          //contentPadding: EdgeInsets.all(0),
-                          horizontalTitleGap: 2,
-                          leading: Checkbox(
-                            side: const BorderSide(width: 2),
-                            activeColor: const Color.fromARGB(127, 0, 0, 0),
-                            value: ifCompleted,
-                            onChanged: (value) async {
-                              viewModel.updateTaskValue(
-                                  snapshot.data![index].tid!,
-                                  value!,
-                                  snapshot.data![index].category_id);
-                              viewModel.addTaskList();
-                     
-                            },
-                          ),
-                          title: (ifCompleted)
-                              ? Text(snapshot.data![index].task_name,
-                                  //viewModel.getCTaskListItem(index).task_name,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(127, 0, 0, 0),
-                                      decoration: TextDecoration.lineThrough,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.w600))
-                              : (overdue
-                                  ? Text(snapshot.data![index].task_name,
-                                      //viewModel.getCTaskListItem(index).task_name,
-                                      style: const TextStyle(
-                                          color: Color.fromARGB(255, 0, 0, 0),
-                                          fontWeight: FontWeight.w600))
-                                  : RichText(
-                                      text: TextSpan(
-                                      text:
-                                          '${snapshot.data![index].task_name}',
-                                      style: const TextStyle(
-                                          color: Color.fromARGB(255, 0, 0, 0),
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18),
-                                      children: const [
-                                        TextSpan(
-                                            text: '\t\tOverdue',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 255, 3, 3),
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14))
-                                      ],
-                                      //viewModel.getCTaskListItem(index).task_name,
-                                    ))),
-                          subtitle: (ifCompleted)
-                              ? Text(
-                                  DateFormat('EEE, dd/MM/yyyy hh:mm aaa')
-                                      .format(date),
-                                  //viewModel.getCTaskListItem(index).task_name,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(127, 0, 0, 0),
-                                      fontWeight: FontWeight.w400,
-                                      decoration: TextDecoration.lineThrough,
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 13))
-                              : Text(
-                                  DateFormat('EEE, dd/MM/yyyy hh:mm aaa')
-                                      .format(date),
-                                  style: const TextStyle(
-                                      color: Color(0xff011638),
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 13)),
-                          trailing: IconButton(
-                              onPressed: () {
-                                popupDialogueBox(() async {
-                                  debugPrint("delete pressed");
-                                  await deleteTask(
-                                      snapshot.data![index].task_name,
-                                      snapshot.data![index].category_id,
-                                      context);
-                                  await viewModel.addTaskList();
-                                }, context,
-                                    'Do you want to delete ${snapshot.data![index].task_name} category?');
-                              },
-                              icon: const Icon(
-                                Icons.delete_outline,
-                                color: Colors.red,
-                              )));
+                      return TaskTileWidget(
+                          ifcomplete: ifCompleted,
+                          data: data,
+                          date: date,
+                          overdue: overdue);
                     } else {
                       return Container();
                     }

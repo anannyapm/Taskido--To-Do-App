@@ -11,11 +11,8 @@ import '../dbfunctions/categorydbrepo.dart';
 import '../dbfunctions/taskdbrepo.dart';
 
 class AppViewModel extends ChangeNotifier {
-
-
   //category actions
   List<CategoryModel> categModelList = <CategoryModel>[];
-
 
   Future<void> addCategList() async {
     await CategRepository.getAllData().then((value) {
@@ -27,7 +24,6 @@ class AppViewModel extends ChangeNotifier {
         notifyListeners();
       }
       for (var map in value) {
-
         categModelList.add(map);
         debugPrint("category count=$categoryCount");
         debugPrint("category completed count=$completedCount");
@@ -74,6 +70,7 @@ class AppViewModel extends ChangeNotifier {
     await TaskRepository.fetchDataWithId(categID, Repository.currentUserID)
         .then((value) {
       cTaskList.clear();
+      debugPrint("in add ctask");
       for (var map in value) {
         debugPrint(map.toString());
 
@@ -134,7 +131,6 @@ class AppViewModel extends ChangeNotifier {
     return count;
   }
 
-
   Future<int> categoryBasedCompletedTaskCount(int catId) async {
     final output = await TaskRepository.fetchCompletedCount(
         catId, Repository.currentUserID);
@@ -168,10 +164,77 @@ class AppViewModel extends ChangeNotifier {
 
   //old task details
 
-  
   int get completedCount {
     int counter = 0;
     for (var element in taskModelList) {
+      if (element.isCompleted == 1 &&
+          element.user_id == Repository.currentUserID) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  String filterSelection = "";
+  DateTime? date1;
+  DateTime? date2;
+  void setDateFilter(DateTime? d1, DateTime? d2) {
+    date1 = d1;
+    date2 = d2;
+    //will be null if date panel closed
+    //debugPrint("date selection-" + date1!.toIso8601String()+" "+date2!.toIso8601String());
+
+    notifyListeners();
+  }
+
+  void setFilterSelection(String value) {
+    filterSelection = value;
+    debugPrint("filter selection-" + filterSelection);
+    notifyListeners();
+  }
+
+  List<TaskModel> getSearchList(int choosen) {
+    if (choosen == 0) {
+      addTaskList();
+      return taskModelList;
+    } else if (choosen == -1) {
+      return [];
+    } else {
+      addCTaskList(choosen);
+      return cTaskList;
+    }
+  }
+
+//created when search enabled
+  List<TaskModel> currentUsableList = [];
+  setUsableList(List<TaskModel> tasklist) {
+    currentUsableList.clear();
+    currentUsableList.addAll(tasklist);
+    notifyListeners();
+  }
+
+//created when chip is selected
+  List<TaskModel> activeUsableList = [];
+
+  void setList(List<TaskModel> li) {
+    activeUsableList.clear();
+    activeUsableList.addAll(li);
+    notifyListeners();
+  }
+
+  int get tempTaskCount {
+    int counter = 0;
+    for (var listval in currentUsableList) {
+      if (listval.user_id == Repository.currentUserID) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  int get tempcompletedCount {
+    int counter = 0;
+    for (var element in currentUsableList) {
       if (element.isCompleted == 1 &&
           element.user_id == Repository.currentUserID) {
         counter++;
@@ -190,8 +253,6 @@ class AppViewModel extends ChangeNotifier {
   Color iconclr3 = Colors.blue;
   Color iconclr4 = const Color(0xFF1C0800);
 
- 
-
   double progressIndicatorValue(int choosenid) {
     if (choosenid == 0) {
       if (totalTaskCount == 0) {
@@ -199,8 +260,7 @@ class AppViewModel extends ChangeNotifier {
       } else {
         return completedCount / totalTaskCount;
       }
-    }
-    else{
+    } else {
       if (cBasedTaskCount(choosenid) == 0) {
         return 0;
       } else {
