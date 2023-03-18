@@ -45,13 +45,10 @@ class _ListWidgetState extends State<ListWidget> {
                     bool ifCompleted =
                         (snapshot.data![index].isCompleted == 1) ? true : false;
 
-                    //if (viewModel.filterSelection != "") {
-                    debugPrint('Im here in filter');
-                    if (viewModel.filterSelection.contains('Today')) {
-                      DateTime today = DateTime.now();
-                      if (date.day == today.day &&
-                          date.month == today.month &&
-                          date.year == today.year) {
+                    if (viewModel.filterSelection != "") {
+                      debugPrint('Im here in filter');
+                      
+                      if (viewModel.filteredList.contains(data.tid)) {
                         return TaskTileWidget(
                             ifcomplete: ifCompleted,
                             data: data,
@@ -60,47 +57,7 @@ class _ListWidgetState extends State<ListWidget> {
                       } else {
                         return Container();
                       }
-                    } else if (viewModel.filterSelection.contains('Tomorrow')) {
-                      DateTime tomorrow = DateTime.now().add(Duration(days: 1));
-                      if (date.day == tomorrow.day &&
-                          date.month == tomorrow.month &&
-                          date.year == tomorrow.year) {
-                        return TaskTileWidget(
-                            ifcomplete: ifCompleted,
-                            data: data,
-                            date: date,
-                            overdue: overdue);
-                      } else {
-                        return Container();
-                      }
-                    } else if (viewModel.filterSelection.contains('Custom')) {
-                      //debugPrint("in custom --" +
-                         // date.isAfter(viewModel.date1!).toString());
-                      if (viewModel.date1 != null && viewModel.date2 != null) {
-                        if (date.isAfter(viewModel.date1!) &&
-                            date.isBefore(viewModel.date2!)) {
-                          return TaskTileWidget(
-                              ifcomplete: ifCompleted,
-                              data: data,
-                              date: date,
-                              overdue: overdue);
-                        } else {
-                          return Container();
-                        }
-                      } else {
-                        return Container();
-                      }
-                    }
-                    //}
-                    else if (viewModel.filterSelection.contains('Clear')) {
-                      viewModel.filterSelection="";
-                      return TaskTileWidget(
-                          ifcomplete: ifCompleted,
-                          data: data,
-                          date: date,
-                          overdue: overdue);
-                    }
-                    else{
+                    } else {
                       return TaskTileWidget(
                           ifcomplete: ifCompleted,
                           data: data,
@@ -110,10 +67,22 @@ class _ListWidgetState extends State<ListWidget> {
                   }),
                   itemCount: snapshot.data!.length,
                   separatorBuilder: (context, index) {
-                    return const Divider(
-                      thickness: 1,
-                      height: 10,
-                    );
+                    if (viewModel.filterSelection != "") {
+                      if (viewModel.filteredList
+                          .contains(snapshot.data![index].tid)) {
+                        return const Divider(
+                          thickness: 1,
+                          height: 5,
+                        );
+                      } else {
+                        return Container();
+                      }
+                    } else {
+                      return const Divider(
+                        thickness: 1,
+                        height: 5,
+                      );
+                    }
                   },
                 );
               } else {
@@ -126,10 +95,6 @@ class _ListWidgetState extends State<ListWidget> {
 
   Future<void> deleteTask(
       String taskname, int categid, BuildContext ctx) async {
-    /* dynamic out = await CategRepository.deleteData(categoryname);
-
-    debugPrint(out.toString()); */
-
     TaskRepository.deleteData(taskname, Repository.currentUserID, categid)
         .then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

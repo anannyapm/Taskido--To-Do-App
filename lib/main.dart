@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
+import 'package:todoapp/views/screens/initialsplashscreen.dart';
 import 'package:todoapp/views/screens/splashscreen.dart';
 
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: const ScreenSplash(),
+      home: const ScreenInitialSplash(),
     );
   }
 }

@@ -253,10 +253,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
           _currentUserId, _name, _email, _photo.path.toString());
 
       final _sharedPrefs = await SharedPreferences.getInstance();
-      await _sharedPrefs.setBool(SAVE_KEY_NAME, true);
+      await _sharedPrefs.setString(SAVE_KEY_NAME, _email);
 
-      Navigator.of(ctx).pushReplacement(
-          MaterialPageRoute(builder: (context) => const ScreenHome()));
+      Navigator.of(ctx).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const ScreenHome()),(route)=>false);
     } else {
       var snackBar = SnackBar(
         content: Text(

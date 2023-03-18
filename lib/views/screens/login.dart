@@ -154,9 +154,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                     child: BottomTextButton(
                                         linkText: 'Sign Up',
                                         function: () => Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const ScreenSignUp())))),
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ScreenHome()),
+                                                (route) => false))),
                               )
                             ],
                           ),
@@ -182,16 +184,13 @@ class _ScreenLoginState extends State<ScreenLogin> {
           val['uid'], val['name'], val['email'], val['photo']);
       //setting value of savekeyname to true when credentials are correct.
       final _sharedPrefs = await SharedPreferences.getInstance();
-      await _sharedPrefs.setBool(SAVE_KEY_NAME, true);
+      await _sharedPrefs.setString(SAVE_KEY_NAME, _email);
 
       await Repository.getAllUser();
 
       return true;
-
-     
     } else {
       return false;
-     
     }
   }
 }

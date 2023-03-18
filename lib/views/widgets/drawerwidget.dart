@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 
@@ -113,10 +114,11 @@ class DrawerWidget extends StatelessWidget {
               Icons.logout_outlined,
             ),
             title: const Text('Sign Out'),
-            onTap: () {
-              
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => const OnboardingHome()));
+            onTap: () async{
+              final _sharedPrefs = await SharedPreferences.getInstance();
+    await _sharedPrefs.clear();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const OnboardingHome()),(route) => false);
             },
           ),
         ],

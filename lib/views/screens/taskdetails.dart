@@ -14,7 +14,7 @@ import '../../viewmodel/appviewmodel.dart';
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
 import 'filterscreen.dart';
 
-enum SampleItem { Today, Tomorrow, Custom ,Clear}
+const List<String> SampleItem = ['Today', 'Tomorrow', 'Custom', 'Clear'];
 
 class ScreenTasks extends StatefulWidget {
   const ScreenTasks({super.key});
@@ -29,7 +29,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
   DateTime? startDate;
   DateTime? endDate;
   List<TaskModel> activeUsableList = [];
-  SampleItem? selectedMenu;
+  String? selectedMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -68,37 +68,38 @@ class _ScreenTasksState extends State<ScreenTasks> {
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-                    child: PopupMenuButton<SampleItem>(
+                    child: PopupMenuButton<String>(
                       icon: Icon(Icons.filter_alt_outlined),
                       initialValue: selectedMenu,
                       // Callback that sets the selected popup menu item.
-                      onSelected: (SampleItem item) {
+                      onSelected: (String item) {
                         setState(() {
                           selectedMenu = item;
                         });
-                        if (selectedMenu == SampleItem.Custom) {
+                        if (selectedMenu == SampleItem[2]) {
                           selectDateRange();
                           viewModel.setDateFilter(startDate, endDate);
                         }
-                      
-                        viewModel.setFilterSelection(selectedMenu.toString());
+
+                        viewModel.setFilterSelection(selectedMenu!);
+                        viewModel.addToFilteredList();
                       },
                       itemBuilder: (BuildContext context) =>
-                          <PopupMenuEntry<SampleItem>>[
-                        const PopupMenuItem<SampleItem>(
-                          value: SampleItem.Today,
+                          <PopupMenuEntry<String>>[
+                         PopupMenuItem<String>(
+                          value: SampleItem[0],
                           child: Text('Today'),
                         ),
-                        const PopupMenuItem<SampleItem>(
-                          value: SampleItem.Tomorrow,
+                         PopupMenuItem<String>(
+                          value: SampleItem[1],
                           child: Text('Tomorrow'),
                         ),
-                        const PopupMenuItem<SampleItem>(
-                          value: SampleItem.Custom,
+                         PopupMenuItem<String>(
+                          value: SampleItem[2],
                           child: Text('Custom Date'),
                         ),
-                        const PopupMenuItem<SampleItem>(
-                          value: SampleItem.Clear,
+                         PopupMenuItem<String>(
+                          value: SampleItem[3],
                           child: Text('Clear Filter'),
                         ),
                       ],
@@ -213,6 +214,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
 
               //list
               // viewModel.isSubmitted==false?ListResult():
+              Text(viewModel.filterSelection),
               chosenValue == ''
                   ? const ShowTaskDetail()
                   : ShowTaskDetail(chosenId: chosenID),

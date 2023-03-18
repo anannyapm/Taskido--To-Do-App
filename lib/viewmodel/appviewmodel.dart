@@ -178,6 +178,67 @@ class AppViewModel extends ChangeNotifier {
   String filterSelection = "";
   DateTime? date1;
   DateTime? date2;
+  List<int> filteredList = [];
+  void addToFilteredList() {
+    if (filterSelection.contains('Today')) {
+      DateTime today = DateTime.now();
+      filteredList.clear();
+      for (var data in taskModelList) {
+        if (data.task_date_time.day == today.day &&
+            data.task_date_time.month == today.month &&
+            data.task_date_time.year == today.year) {
+          filteredList.add(data.tid!);
+        }
+      }
+    } else if (filterSelection.contains('Tomorrow')) {
+      DateTime tomorrow = DateTime.now().add(Duration(days: 1));
+      filteredList.clear();
+      for (var data in taskModelList) {
+        if (data.task_date_time.day == tomorrow.day &&
+            data.task_date_time.month == tomorrow.month &&
+            data.task_date_time.year == tomorrow.year) {
+          filteredList.add(data.tid!);
+        }
+      }
+    } else if (filterSelection.contains('Custom')) {
+      filteredList.clear();
+      for (var data in taskModelList) {
+        if (date1 != null && date2 != null) {
+          if (data.task_date_time.isAfter(date1!) &&
+              data.task_date_time.isBefore(date2!)) {
+            filteredList.add(data.tid!);
+          }
+        }
+      }
+    } else if(filterSelection.contains('Clear')) {
+      filteredList.clear();
+      filterSelection = "";
+    }
+    notifyListeners();
+  }
+
+//active list is not correct
+  int get filterTotalTaskCount {
+    int counter = 0;
+    for (var listval in activeUsableList) {
+      if (filteredList.contains(listval.tid) && listval.user_id == Repository.currentUserID) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  int get filterCompletedCount {
+    int counter = 0;
+    for (var element in activeUsableList) {
+      if (filteredList.contains(element.tid) && element.isCompleted == 1 &&
+          element.user_id == Repository.currentUserID) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
   void setDateFilter(DateTime? d1, DateTime? d2) {
     date1 = d1;
     date2 = d2;
@@ -193,26 +254,6 @@ class AppViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<TaskModel> getSearchList(int choosen) {
-    if (choosen == 0) {
-      addTaskList();
-      return taskModelList;
-    } else if (choosen == -1) {
-      return [];
-    } else {
-      addCTaskList(choosen);
-      return cTaskList;
-    }
-  }
-
-//created when search enabled
-  List<TaskModel> currentUsableList = [];
-  setUsableList(List<TaskModel> tasklist) {
-    currentUsableList.clear();
-    currentUsableList.addAll(tasklist);
-    notifyListeners();
-  }
-
 //created when chip is selected
   List<TaskModel> activeUsableList = [];
 
@@ -220,27 +261,6 @@ class AppViewModel extends ChangeNotifier {
     activeUsableList.clear();
     activeUsableList.addAll(li);
     notifyListeners();
-  }
-
-  int get tempTaskCount {
-    int counter = 0;
-    for (var listval in currentUsableList) {
-      if (listval.user_id == Repository.currentUserID) {
-        counter++;
-      }
-    }
-    return counter;
-  }
-
-  int get tempcompletedCount {
-    int counter = 0;
-    for (var element in currentUsableList) {
-      if (element.isCompleted == 1 &&
-          element.user_id == Repository.currentUserID) {
-        counter++;
-      }
-    }
-    return counter;
   }
 
 //..........CONST COLORS................
