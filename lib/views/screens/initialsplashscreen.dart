@@ -21,10 +21,10 @@ class ScreenInitialSplash extends StatefulWidget {
 
 class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
   @override
-  void initState() {
+  void initState()  {
     // TODO: implement initState
-    checkUserLogin();
     initdb();
+    checkUserLogin();
     
 
     super.initState();
