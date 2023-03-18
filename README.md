@@ -1,4 +1,13 @@
 # todoapp
+This To Do App is created using flutter and SQFLITE as database.
+
+Provider is used for state management.
+
+User can add personalized category like Work,Health and add tasks under each category. A progress overview panel that motivates user and individual progress bar based on category and filters is included. Users can search for tasks as well apply filters based on dates.
+Basic CRUD operations are implemented.
+
+Hope you enjoy the app!!
+
 
 A new Flutter project.
 
