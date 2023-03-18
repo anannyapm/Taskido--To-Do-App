@@ -50,7 +50,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
 
                     //debugPrint("In listview");
                     return Card(
-                      elevation: 6,
+                      elevation: 1,
                       margin: const EdgeInsets.only(bottom: 10),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.5)),
@@ -68,7 +68,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                             children: [
                               //placeholder 000 given
                               Text(
-                                  '${viewModel.cBasedTaskCount(snapshot.data![index].cid!)} Tasks'),
+                                  '${viewModel.cBasedTaskCount(snapshot.data![index].cid!)-viewModel.cBasedCompletdTaskCount(snapshot.data![index].cid!)} Tasks'),
                               IconButton(
                                   onPressed: () {
                                     popupDialogueBox(() async {

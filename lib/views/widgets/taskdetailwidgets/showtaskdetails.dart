@@ -78,15 +78,24 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                   )
                 ]),
                 totalCount == 0
-                    ? const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Align(
-                            child: Text(
-                          "Your task bucket is empty ;)",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600),
-                        )),
-                      )
+                    ? Column(
+                      children: [
+                        const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Align(
+                                child: Text(
+                              "Your task bucket is empty ;)",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            )),
+                          ),
+                          SizedBox(height: 40,),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Image.asset('assets/images/happybird.png'),
+                          )
+                      ],
+                    )
                     //find a way to use usablelist
                     : ListWidget(
                         futureList: widget.chosenId == 0

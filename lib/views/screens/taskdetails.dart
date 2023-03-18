@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
+
 import 'package:provider/provider.dart';
-import 'package:todoapp/dbfunctions/taskdbrepo.dart';
+
 import 'package:todoapp/models/categorymodel.dart';
-import 'package:todoapp/views/screens/searchresult.dart';
+
 import 'package:todoapp/views/screens/searchscreen.dart';
 
 import '../../constants/iconlist.dart';
@@ -12,7 +12,7 @@ import '../../models/taskmodel.dart';
 import '../../viewmodel/appviewmodel.dart';
 
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
-import 'filterscreen.dart';
+
 
 const List<String> SampleItem = ['Today', 'Tomorrow', 'Custom', 'Clear'];
 

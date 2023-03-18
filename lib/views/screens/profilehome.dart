@@ -63,7 +63,14 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                         ),
                       ),
                       viewModel.categoryCount == 0
-                          ? Text("No Category")
+                          ? Container(
+                            margin: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(color: Color.fromARGB(255, 255, 255, 255)),
+                            child: Column(children: [
+                            Text('Add a category to start..',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18,color: Color.fromARGB(255, 1, 111, 110)),),
+                             Image.asset('assets/images/empty.png',scale: 3,),
+                          ]),)
                           : const CategoryViewWidget(),
                     ],
                   ),
