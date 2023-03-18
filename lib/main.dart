@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/screens/initialsplashscreen.dart';
-import 'package:todoapp/views/screens/splashscreen.dart';
 
 
 const SAVE_KEY_NAME = 'UserLoggedIn'; //value of shared prefrence stored here ;ie it can be true or false for this key

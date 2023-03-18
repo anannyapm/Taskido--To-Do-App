@@ -22,7 +22,6 @@ class ScreenProfileHome extends StatefulWidget {
 class _ScreenProfileHomeState extends State<ScreenProfileHome> {
   List<CategoryModel> categList = <CategoryModel>[];
 
-
   @override
   void initState() {
     super.initState();
@@ -63,9 +62,9 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                           ),
                         ),
                       ),
-
-                      viewModel.categoryCount==0?Text("No Category"):
-                      const CategoryViewWidget(),
+                      viewModel.categoryCount == 0
+                          ? Text("No Category")
+                          : const CategoryViewWidget(),
                     ],
                   ),
                 ),

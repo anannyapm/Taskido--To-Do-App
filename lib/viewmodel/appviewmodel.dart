@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/categorymodel.dart';
 
@@ -176,6 +177,7 @@ class AppViewModel extends ChangeNotifier {
   }
 
   String filterSelection = "";
+  String displayFilterDetail = "";
   DateTime? date1;
   DateTime? date2;
   List<int> filteredList = [];
@@ -188,6 +190,7 @@ class AppViewModel extends ChangeNotifier {
             data.task_date_time.month == today.month &&
             data.task_date_time.year == today.year) {
           filteredList.add(data.tid!);
+          displayFilterDetail = DateFormat('EEE, M/d/y').format(today);
         }
       }
     } else if (filterSelection.contains('Tomorrow')) {
@@ -198,6 +201,7 @@ class AppViewModel extends ChangeNotifier {
             data.task_date_time.month == tomorrow.month &&
             data.task_date_time.year == tomorrow.year) {
           filteredList.add(data.tid!);
+          displayFilterDetail = DateFormat('EEE, M/d/y').format(tomorrow);
         }
       }
     } else if (filterSelection.contains('Custom')) {
@@ -207,36 +211,86 @@ class AppViewModel extends ChangeNotifier {
           if (data.task_date_time.isAfter(date1!) &&
               data.task_date_time.isBefore(date2!)) {
             filteredList.add(data.tid!);
+            displayFilterDetail =
+                "${DateFormat('EEE, M/d/y').format(date1!)} to ${DateFormat('EEE, M/d/y').format(date2!)}";
           }
+        } else {
+          displayFilterDetail = "No date range selected";
         }
       }
-    } else if(filterSelection.contains('Clear')) {
+    } else if (filterSelection.contains('Clear')) {
       filteredList.clear();
       filterSelection = "";
+      date1 = null;
+      date2 = null;
+      displayFilterDetail = "";
     }
     notifyListeners();
   }
 
 //active list is not correct
-  int get filterTotalTaskCount {
+  int filterTotalTaskCount(int chosenid) {
     int counter = 0;
-    for (var listval in activeUsableList) {
-      if (filteredList.contains(listval.tid) && listval.user_id == Repository.currentUserID) {
-        counter++;
+
+    for (var listval in taskModelList) {
+      if (chosenid != 0) {
+        if (filteredList.contains(listval.tid) &&
+            listval.user_id == Repository.currentUserID && listval.category_id == chosenid) {
+          counter++;
+        }
+      }
+      else{
+        if (filteredList.contains(listval.tid) &&
+            listval.user_id == Repository.currentUserID) {
+          counter++;
+        }
       }
     }
     return counter;
   }
 
-  int get filterCompletedCount {
+  int filterCompletedCount(int chosenid) {
     int counter = 0;
-    for (var element in activeUsableList) {
-      if (filteredList.contains(element.tid) && element.isCompleted == 1 &&
+    for (var element in taskModelList) {
+      if(chosenid!=0){
+        if (filteredList.contains(element.tid) &&
+           element.category_id == chosenid &&
+          element.isCompleted == 1 &&
           element.user_id == Repository.currentUserID) {
         counter++;
       }
+      }
+      else{
+        if (filteredList.contains(element.tid) &&
+          
+          element.isCompleted == 1 &&
+          element.user_id == Repository.currentUserID) {
+        counter++;
+      }
+      }
     }
     return counter;
+  }
+
+  Map<String, int> setCountValues(int chosenid) {
+    Map<String, int> result;
+    if (filterSelection == "") {
+      if (chosenid == 0) {
+        result = {'Total': totalTaskCount, 'Completed': completedCount};
+      } else {
+        result = {
+          'Total': cBasedTaskCount(chosenid),
+          'Completed': cBasedCompletdTaskCount(chosenid)
+        };
+      }
+    } else {
+      result = {
+        'Total': filterTotalTaskCount(chosenid),
+        'Completed': filterCompletedCount(chosenid)
+      };
+    }
+    //notifyListeners();
+    return result;
   }
 
   void setDateFilter(DateTime? d1, DateTime? d2) {
@@ -255,13 +309,13 @@ class AppViewModel extends ChangeNotifier {
   }
 
 //created when chip is selected
-  List<TaskModel> activeUsableList = [];
+/*   List<TaskModel> activeUsableList = [];
 
   void setList(List<TaskModel> li) {
     activeUsableList.clear();
     activeUsableList.addAll(li);
     notifyListeners();
-  }
+  } */
 
 //..........CONST COLORS................
   Color primclr1 = const Color(0xff011638);
@@ -274,17 +328,26 @@ class AppViewModel extends ChangeNotifier {
   Color iconclr4 = const Color(0xFF1C0800);
 
   double progressIndicatorValue(int choosenid) {
-    if (choosenid == 0) {
-      if (totalTaskCount == 0) {
-        return 0;
+    if (filterSelection == "") {
+      if (choosenid == 0) {
+        if (totalTaskCount == 0) {
+          return 0;
+        } else {
+          return completedCount / totalTaskCount;
+        }
       } else {
-        return completedCount / totalTaskCount;
+        if (cBasedTaskCount(choosenid) == 0) {
+          return 0;
+        } else {
+          return cBasedCompletdTaskCount(choosenid) /
+              cBasedTaskCount(choosenid);
+        }
       }
     } else {
-      if (cBasedTaskCount(choosenid) == 0) {
+      if (filterTotalTaskCount(choosenid) == 0) {
         return 0;
       } else {
-        return cBasedCompletdTaskCount(choosenid) / cBasedTaskCount(choosenid);
+        return filterCompletedCount(choosenid) / filterTotalTaskCount(choosenid);
       }
     }
   }

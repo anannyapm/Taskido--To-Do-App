@@ -59,10 +59,10 @@ class Repository {
     //rawQuery will return list of map value
     var dbClient = await database;
 
-    final _values =
+    final values =
         await dbClient.rawQuery('select * from ${userInstance.tableName}');
 
-    debugPrint(_values.toString());
+    debugPrint(values.toString());
 
     //studentListNotifier.value.clear();
 

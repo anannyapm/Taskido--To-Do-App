@@ -9,7 +9,6 @@ import 'package:todoapp/views/screens/profilehome.dart';
 import 'package:todoapp/views/screens/taskdetails.dart';
 import 'package:todoapp/views/widgets/bottomnavigationwidget.dart';
 
-import '../../models/categorymodel.dart';
 import '../widgets/bottomsheets/categorysheet.dart';
 import '../widgets/bottomsheets/tasksheet.dart';
 

@@ -64,11 +64,11 @@ class CategRepository {
 
     int curUserId = Repository.currentUserID;
 
-    final _values = await dbClient.rawQuery(
+    final values = await dbClient.rawQuery(
         'select * from ${categoryInstance.tableName} where ${categoryInstance.colFive}="$curUserId"');
 
-    debugPrint("Db getAlldata called: $_values");
-    final category = _values.map((e) => CategoryModel.fromMap(e)).toList();
+    debugPrint("Db getAlldata called: $values");
+    final category = values.map((e) => CategoryModel.fromMap(e)).toList();
 
     return category;
   }

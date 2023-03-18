@@ -22,19 +22,32 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
   Widget build(BuildContext context) {
     debugPrint("In show task details of ${widget.chosenId}");
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      int totalTaskCount = widget.chosenId == 0
+      /* int totalTaskCount = widget.chosenId == 0
           ? viewModel.totalTaskCount
           : viewModel.cBasedTaskCount(widget.chosenId);
       int completedCount = widget.chosenId == 0
           ? viewModel.completedCount
-          : viewModel.cBasedCompletdTaskCount(widget.chosenId);
+          : viewModel.cBasedCompletdTaskCount(widget.chosenId); */
+      int totalCount = viewModel.setCountValues(widget.chosenId)['Total']!;
+      int completedTaskCount = viewModel.setCountValues(widget.chosenId)['Completed']!;
+
       return Expanded(
           flex: 7,
           child: Container(
-            
-            margin: const EdgeInsets.only(top: 10, bottom: 10),
+            margin: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+
+            //margin: const EdgeInsets.only(top: 10, bottom: 10),
             child: ListView(
               children: [
+                viewModel.filterSelection != ""
+                    ? Container(
+                        margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text('${viewModel.displayFilterDetail}',
+                                style: TextStyle(fontSize: 18))),
+                      )
+                    : Container(height: 15),
                 Stack(children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
@@ -55,7 +68,7 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                     child: Align(
                         alignment: Alignment.bottomRight,
                         child: Text(
-                          '$completedCount/$totalTaskCount Completed ',
+                          '$completedTaskCount/$totalCount Completed ',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
@@ -64,7 +77,7 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                         )),
                   )
                 ]),
-                totalTaskCount == 0
+                totalCount == 0
                     ? const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Align(
@@ -74,11 +87,12 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                               fontSize: 18, fontWeight: FontWeight.w600),
                         )),
                       )
-                      //find a way to use usablelist
+                    //find a way to use usablelist
                     : ListWidget(
-                        futureList: 
-                        widget.chosenId==0?TaskRepository.getAllData(): TaskRepository.fetchDataWithId(
-                            widget.chosenId, Repository.currentUserID)),
+                        futureList: widget.chosenId == 0
+                            ? TaskRepository.getAllData()
+                            : TaskRepository.fetchDataWithId(
+                                widget.chosenId, Repository.currentUserID)),
                 const SizedBox(
                   height: 30,
                 ),
