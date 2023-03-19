@@ -30,25 +30,34 @@ class _ListWidgetState extends State<ListWidget> {
                 AsyncSnapshot<List<TaskModel>> snapshot) {
               if (snapshot.hasData) {
                 return ListView.separated(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemBuilder: ((context, index) {
-                    TaskModel data = snapshot.data![index];
-                    DateTime date = snapshot.data![index].task_date_time;
-                    bool overdue = false;
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemBuilder: ((context, index) {
+                      TaskModel data = snapshot.data![index];
+                      DateTime date = snapshot.data![index].task_date_time;
+                      bool overdue = false;
 
-                    if (date.isAfter(DateTime.now())) {
-                      overdue = true;
-                    }
-                    debugPrint(
-                        '$overdue $date is date ${DateTime.now()} is now}');
-                    bool ifCompleted =
-                        (snapshot.data![index].isCompleted == 1) ? true : false;
+                      if (date.isAfter(DateTime.now())) {
+                        overdue = true;
+                      }
+                      debugPrint(
+                          '$overdue $date is date ${DateTime.now()} is now}');
+                      bool ifCompleted =
+                          (snapshot.data![index].isCompleted == 1)
+                              ? true
+                              : false;
 
-                    if (viewModel.filterSelection != "") {
-                      debugPrint('Im here in filter');
-                      
-                      if (viewModel.filteredList.contains(data.tid)) {
+                      /* if (viewModel.filterSelection == "" &&
+                        viewModel.query.isEmpty) {
+                      return TaskTileWidget(
+                          ifcomplete: ifCompleted,
+                          data: data,
+                          date: date,
+                          overdue: overdue);
+                    } else if (viewModel.filterSelection != "" &&
+                        viewModel.query.isNotEmpty) {
+                      if (viewModel.filteredList.contains(data.tid) &&
+                          viewModel.queryResultList.contains(data.task_name)) {
                         return TaskTileWidget(
                             ifcomplete: ifCompleted,
                             data: data,
@@ -58,33 +67,102 @@ class _ListWidgetState extends State<ListWidget> {
                         return Container();
                       }
                     } else {
-                      return TaskTileWidget(
-                          ifcomplete: ifCompleted,
-                          data: data,
-                          date: date,
-                          overdue: overdue);
-                    }
-                  }),
-                  itemCount: snapshot.data!.length,
-                  separatorBuilder: (context, index) {
-                    if (viewModel.filterSelection != "") {
-                      if (viewModel.filteredList
-                          .contains(snapshot.data![index].tid)) {
-                        return const Divider(
-                          thickness: 1,
-                          height: 5,
-                        );
+                      if (viewModel.filteredList.contains(data.tid) ||
+                          viewModel.queryResultList.contains(data.task_name)) {
+                        return TaskTileWidget(
+                            ifcomplete: ifCompleted,
+                            data: data,
+                            date: date,
+                            overdue: overdue);
                       } else {
                         return Container();
                       }
-                    } else {
-                      return const Divider(
-                        thickness: 1,
-                        height: 5,
-                      );
-                    }
-                  },
-                );
+                    } */
+
+                      if (viewModel.filterSelection != "") {
+                        debugPrint('Im here in filter');
+
+                        if (viewModel.filteredList.contains(data.tid)) {
+                          if (viewModel.queryval != '') {
+                            if (viewModel.queryResultList
+                                .contains(data.task_name)) {
+                              return TaskTileWidget(
+                                  ifcomplete: ifCompleted,
+                                  data: data,
+                                  date: date,
+                                  overdue: overdue);
+                            } else {
+                              return Container();
+                            }
+                          }
+
+                          //else case
+                          return TaskTileWidget(
+                              ifcomplete: ifCompleted,
+                              data: data,
+                              date: date,
+                              overdue: overdue);
+                        } else {
+                          return Container();
+                        }
+                      } else {
+                        if (viewModel.queryval != '') {
+                          if (viewModel.queryResultList
+                              .contains(data.task_name)) {
+                            return TaskTileWidget(
+                                ifcomplete: ifCompleted,
+                                data: data,
+                                date: date,
+                                overdue: overdue);
+                          } else {
+                            return Container();
+                          }
+                        }
+
+                        return TaskTileWidget(
+                            ifcomplete: ifCompleted,
+                            data: data,
+                            date: date,
+                            overdue: overdue);
+                      }
+                    }),
+                    itemCount: snapshot.data!.length,
+                    separatorBuilder: (context, index) {
+                      if (viewModel.filterSelection != "") {
+                        if (viewModel.filteredList
+                            .contains(snapshot.data![index].tid)) {
+                          if (viewModel.queryval != '') {
+                            if (viewModel.queryResultList
+                                .contains(snapshot.data![index].task_name)) {
+                              return const Divider(
+                                thickness: 1,
+                                height: 5,
+                              );
+                            } else {
+                              return Container();
+                            }
+                          }
+                          return const Divider(
+                            thickness: 1,
+                            height: 5,
+                          );
+                        } else {
+                          return Container();
+                        }
+                      } else {
+                        if (viewModel.queryval != '') {
+                          if (viewModel.queryResultList
+                              .contains(snapshot.data![index].task_name)) {
+                            return const Divider(
+                              thickness: 1,
+                              height: 5,
+                            );
+                          }
+                        }
+
+                        return Container();
+                      }
+                    });
               } else {
                 return const Center(child: CircularProgressIndicator());
               }

@@ -21,19 +21,19 @@ class ScreenInitialSplash extends StatefulWidget {
 
 class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
   @override
-  void initState()  {
+  void initState() {
     // TODO: implement initState
     initdb();
     checkUserLogin();
-    
 
     super.initState();
   }
 
   void initdb() async {
+    await Repository.database;
     await CategRepository.database;
     await TaskRepository.database;
-    WidgetsBinding.instance.addPostFrameCallback((_)  {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<AppViewModel>(context, listen: false).addCategList();
       Provider.of<AppViewModel>(context, listen: false).addTaskList();
     });

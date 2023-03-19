@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:fluttericon/font_awesome_icons.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/constants/iconlist.dart';
@@ -9,6 +8,7 @@ import 'package:todoapp/viewmodel/appviewmodel.dart';
 
 import '../../../dbfunctions/categorydbrepo.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
+
 
 import '../../../models/categorymodel.dart';
 import '../../../models/taskmodel.dart';
@@ -21,6 +21,7 @@ class TaskSheetWidget extends StatefulWidget {
 }
 
 class _TaskSheetWidgetState extends State<TaskSheetWidget> {
+
   int selectedChoiceIndex = 1;
   int defaultChoiceIndex = 0;
   static final _formKey = GlobalKey<FormState>();
@@ -61,7 +62,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                           await addTasktoModel(context);
 
                           viewModel.addTaskList();
-                          viewModel.addCTaskList(selectedChoiceIndex);
+                          //viewModel.addCTaskList(selectedChoiceIndex);
                           //debugPrint("hiii"+viewModel.categModelList.toString());
 
                           Navigator.pop(context);
@@ -289,6 +290,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
     } else {
+      
       var snackBar = const SnackBar(
         content: Text(
           'Success',

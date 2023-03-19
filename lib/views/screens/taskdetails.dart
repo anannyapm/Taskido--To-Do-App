@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/models/categorymodel.dart';
 
 import 'package:todoapp/views/screens/searchscreen.dart';
+import 'package:todoapp/views/widgets/search.dart';
 
 import '../../constants/iconlist.dart';
 import '../../dbfunctions/categorydbrepo.dart';
@@ -69,10 +70,14 @@ class _ScreenTasksState extends State<ScreenTasks> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
+                            width: MediaQuery.of(context).size.width*0.6,
+                            height: 40,
+                            padding: EdgeInsets.all(0),
+                            decoration: BoxDecoration(border: Border.all(color: Colors.white),borderRadius: BorderRadius.circular(25)),
+                            margin: const EdgeInsets.fromLTRB(10, 20, 10, 15),
+                            child: SearchBar()
                             
-                            margin: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-                            child: //SearchWidget(searchID: chosenID)
-                                GestureDetector(
+                                /* GestureDetector(
                                     onTap: () {
                                       //viewModel.isSubmitted = true;
                                       showSearch(
@@ -99,10 +104,10 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                           ),
                                         ],
                                       ),
-                                    )),
+                                    )), */
                           ),
                           Container(
-                            margin: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+                            margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                             child: PopupMenuButton<String>(
                               icon: const Icon(Icons.filter_alt_outlined,
                                   color: Colors.white),
@@ -226,7 +231,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                             ? snapshot.data![index].category_name
                                             : '';
                                         chosenID = viewModel.getCategoryId(value);
-                                        await viewModel.addCTaskList(chosenID);
+                                        //await viewModel.addCTaskList(chosenID);
                                         //viewModel.setList(viewModel.cTaskList);
                                         //debugPrint(
                                            // "Active list${viewModel.activeUsableList}");

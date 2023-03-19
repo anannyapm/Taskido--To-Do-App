@@ -63,24 +63,6 @@ class AppViewModel extends ChangeNotifier {
     }).catchError((e) => debugPrint(e.toString()));
   }
 
-//task list based on category
-
-  List<TaskModel> cTaskList = <TaskModel>[];
-
-  Future<void> addCTaskList(int categID) async {
-    await TaskRepository.fetchDataWithId(categID, Repository.currentUserID)
-        .then((value) {
-      cTaskList.clear();
-      debugPrint("in add ctask");
-      for (var map in value) {
-        debugPrint(map.toString());
-
-        cTaskList.add(map);
-        notifyListeners();
-      }
-    }).catchError((e) => debugPrint(e.toString()));
-  }
-
   getCategoryId(String catName) {
     for (var val in categModelList) {
       debugPrint("in getcategid val " + val.category_name);
@@ -94,22 +76,6 @@ class AppViewModel extends ChangeNotifier {
     }
     debugPrint("outside if getcategid fun ");
     return 0;
-  }
-
-  TaskModel getCTaskListItem(int taskIndex) {
-    return cTaskList[taskIndex];
-  }
-
-  TaskModel getTaskListItem(int taskIndex) {
-    return taskModelList[taskIndex];
-  }
-
-  bool getCTaskValue(int taskIndex) {
-    if (cTaskList[taskIndex].isCompleted == 1) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   int cBasedTaskCount(int catId) {
@@ -130,12 +96,6 @@ class AppViewModel extends ChangeNotifier {
       }
     }
     return count;
-  }
-
-  Future<int> categoryBasedCompletedTaskCount(int catId) async {
-    final output = await TaskRepository.fetchCompletedCount(
-        catId, Repository.currentUserID);
-    return output[0]['count'];
   }
 
   int get totalTaskCount {
@@ -163,8 +123,6 @@ class AppViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //old task details
-
   int get completedCount {
     int counter = 0;
     for (var element in taskModelList) {
@@ -176,10 +134,34 @@ class AppViewModel extends ChangeNotifier {
     return counter;
   }
 
+  List queryResultList = [];
+  String queryval = '';
+  addToQueryList(String query) async {
+    queryResultList.clear();
+
+    if (query.isEmpty || query == '') {
+      // if the search field is empty or only contains white-space, we'll display all users
+      queryResultList.clear();
+    } else {
+      for (var element in taskModelList) {
+        if (element.task_name
+            .toLowerCase()
+            .contains(query.trim().toLowerCase())) {
+          queryResultList.add(element.task_name);
+        }
+      }
+      debugPrint("result" + queryResultList.toString());
+
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+    notifyListeners();
+  }
+
   String filterSelection = "";
   String displayFilterDetail = "";
   DateTime? date1;
   DateTime? date2;
+
   List<int> filteredList = [];
   void addToFilteredList() {
     if (filterSelection.contains('Today')) {
@@ -235,11 +217,11 @@ class AppViewModel extends ChangeNotifier {
     for (var listval in taskModelList) {
       if (chosenid != 0) {
         if (filteredList.contains(listval.tid) &&
-            listval.user_id == Repository.currentUserID && listval.category_id == chosenid) {
+            listval.user_id == Repository.currentUserID &&
+            listval.category_id == chosenid) {
           counter++;
         }
-      }
-      else{
+      } else {
         if (filteredList.contains(listval.tid) &&
             listval.user_id == Repository.currentUserID) {
           counter++;
@@ -252,21 +234,19 @@ class AppViewModel extends ChangeNotifier {
   int filterCompletedCount(int chosenid) {
     int counter = 0;
     for (var element in taskModelList) {
-      if(chosenid!=0){
+      if (chosenid != 0) {
         if (filteredList.contains(element.tid) &&
-           element.category_id == chosenid &&
-          element.isCompleted == 1 &&
-          element.user_id == Repository.currentUserID) {
-        counter++;
-      }
-      }
-      else{
+            element.category_id == chosenid &&
+            element.isCompleted == 1 &&
+            element.user_id == Repository.currentUserID) {
+          counter++;
+        }
+      } else {
         if (filteredList.contains(element.tid) &&
-          
-          element.isCompleted == 1 &&
-          element.user_id == Repository.currentUserID) {
-        counter++;
-      }
+            element.isCompleted == 1 &&
+            element.user_id == Repository.currentUserID) {
+          counter++;
+        }
       }
     }
     return counter;
@@ -308,25 +288,6 @@ class AppViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-//created when chip is selected
-/*   List<TaskModel> activeUsableList = [];
-
-  void setList(List<TaskModel> li) {
-    activeUsableList.clear();
-    activeUsableList.addAll(li);
-    notifyListeners();
-  } */
-
-//..........CONST COLORS................
-  Color primclr1 = const Color(0xff011638);
-  Color primclr2 = const Color(0xff00a9a5);
-  Color primclr3 = Colors.black;
-  Color primclr4 = Colors.white;
-  Color iconclr1 = const Color(0xffF96900);
-  Color iconclr2 = const Color(0xff00A9A5);
-  Color iconclr3 = Colors.blue;
-  Color iconclr4 = const Color(0xFF1C0800);
-
   double progressIndicatorValue(int choosenid) {
     if (filterSelection == "") {
       if (choosenid == 0) {
@@ -347,7 +308,8 @@ class AppViewModel extends ChangeNotifier {
       if (filterTotalTaskCount(choosenid) == 0) {
         return 0;
       } else {
-        return filterCompletedCount(choosenid) / filterTotalTaskCount(choosenid);
+        return filterCompletedCount(choosenid) /
+            filterTotalTaskCount(choosenid);
       }
     }
   }
