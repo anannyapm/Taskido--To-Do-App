@@ -49,16 +49,19 @@ class AppViewModel extends ChangeNotifier {
   List<TaskModel> taskModelList = <TaskModel>[];
 
   Future<void> addTaskList() async {
-    await TaskRepository.getAllData().then((value) {
+    await TaskRepository.getAllData(Repository.currentUserID).then((value) {
       taskModelList.clear();
       if (value.isEmpty) {
         notifyListeners();
       }
       for (var map in value) {
-        debugPrint(map.toString());
+        if(map.user_id==Repository.currentUserID){
+           debugPrint(map.toString());
 
         taskModelList.add(map);
         notifyListeners();
+        }
+       
       }
     }).catchError((e) => debugPrint(e.toString()));
   }

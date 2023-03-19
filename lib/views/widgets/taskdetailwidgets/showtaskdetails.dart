@@ -117,7 +117,7 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                     //find a way to use usablelist
                     : ListWidget(
                         futureList: widget.chosenId == 0
-                            ? TaskRepository.getAllData()
+                            ? TaskRepository.getAllData(Repository.currentUserID)
                             : TaskRepository.fetchDataWithId(
                                 widget.chosenId, Repository.currentUserID)),
                 const SizedBox(
