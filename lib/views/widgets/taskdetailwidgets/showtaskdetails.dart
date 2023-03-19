@@ -22,12 +22,7 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
   Widget build(BuildContext context) {
     debugPrint("In show task details of ${widget.chosenId}");
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      /* int totalTaskCount = widget.chosenId == 0
-          ? viewModel.totalTaskCount
-          : viewModel.cBasedTaskCount(widget.chosenId);
-      int completedCount = widget.chosenId == 0
-          ? viewModel.completedCount
-          : viewModel.cBasedCompletdTaskCount(widget.chosenId); */
+      
       int totalCount = viewModel.setCountValues(widget.chosenId)['Total']!;
       int completedTaskCount = viewModel.setCountValues(widget.chosenId)['Completed']!;
 
@@ -48,7 +43,8 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                                 style: TextStyle(fontSize: 18))),
                       )
                     : Container(height: 15),
-                Stack(children: [
+
+                viewModel.queryval==''?Stack(children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: LinearProgressIndicator(
@@ -56,11 +52,7 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                         backgroundColor: const Color.fromARGB(51, 0, 169, 166),
                         color: const Color(0xff00A9A5),
                         value: viewModel.progressIndicatorValue(widget.chosenId)
-                        /* viewModel.cBasedTaskCount(widget.chosenId) == 0
-                            ? 0
-                            : (viewModel
-                                    .cBasedCompletdTaskCount(widget.chosenId)) /
-                                viewModel.cBasedTaskCount(widget.chosenId) */
+                        
                         ),
                   ),
                   Padding(
@@ -76,7 +68,33 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                           ),
                         )),
                   )
-                ]),
+                ]):
+                Text('Search Result',style: TextStyle(fontSize: 16)),
+
+              (viewModel.queryResultList.isEmpty && viewModel.queryval!='')?Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 50, 10, 10),
+                                  child: Align(
+                                      child: Text(
+                                    "No results found",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  )),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child:
+                                      Image.asset('assets/images/notfound.png'),
+                                )
+                              ],
+                            ):
+
                 totalCount == 0
                     ? Column(
                       children: [

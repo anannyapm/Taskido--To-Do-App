@@ -9,7 +9,6 @@ import 'package:todoapp/viewmodel/appviewmodel.dart';
 import '../../../dbfunctions/categorydbrepo.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
 
-
 import '../../../models/categorymodel.dart';
 import '../../../models/taskmodel.dart';
 
@@ -21,7 +20,6 @@ class TaskSheetWidget extends StatefulWidget {
 }
 
 class _TaskSheetWidgetState extends State<TaskSheetWidget> {
-
   int selectedChoiceIndex = 1;
   int defaultChoiceIndex = 0;
   static final _formKey = GlobalKey<FormState>();
@@ -119,6 +117,15 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                           onTap: () async {
                             DateTime? pickdate = await showDatePicker(
                                 context: context,
+                                builder: (context, child) {
+                                  return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      colorScheme: ColorScheme.light(
+                                          primary: Color(0xff00a9a5)),
+                                    ),
+                                    child: child!,
+                                  );
+                                },
                                 initialDate: date ?? DateTime.now(),
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime(DateTime.now().year + 5));
@@ -155,6 +162,15 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                           onTap: () async {
                             TimeOfDay? picktime = await showTimePicker(
                               context: context,
+                              builder: (context, child) {
+                                return Theme(
+                                  data: Theme.of(context).copyWith(
+                                    colorScheme: ColorScheme.light(
+                                        primary: Color(0xff00a9a5)),
+                                  ),
+                                  child: child!,
+                                );
+                              },
                               initialTime:
                                   time ?? TimeOfDay(hour: 9, minute: 0),
                             );
@@ -163,7 +179,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                               _timeController.clear();
                             } else {
                               time = picktime;
-                              
 
                               setState(() {
                                 _timeController.text = picktime.format(context);
@@ -272,7 +287,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
         isCompleted: 0,
         category_id: _logoindex,
         user_id: _currUserId,
-        task_date_time: DateTime(date!.year,date!.month,date!.day,time!.hour,time!.minute));
+        task_date_time: DateTime(
+            date!.year, date!.month, date!.day, time!.hour, time!.minute));
 
     /* print("$_name $_email before calling savedata"); */
 
@@ -290,7 +306,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
     } else {
-      
       var snackBar = const SnackBar(
         content: Text(
           'Success',

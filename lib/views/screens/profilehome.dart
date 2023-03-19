@@ -79,15 +79,5 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
     });
   }
 
-/*   void addCategoryList() async {
-    await CategRepository.getAllData().then((value) {
-      setState(() {
-        for (var map in value) {
-          debugPrint(map.toString());
 
-          categList.add(map);
-        }
-      });
-    }).catchError((e) => debugPrint(e.toString()));
-  } */
 }

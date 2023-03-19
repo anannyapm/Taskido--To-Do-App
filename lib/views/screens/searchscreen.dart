@@ -1,4 +1,4 @@
-import 'dart:io';
+/* import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -125,3 +125,36 @@ class ScreenSearch extends SearchDelegate {
     });
   }
 }
+
+
+
+//call in task
+
+    /* GestureDetector(
+                                    onTap: () {
+                                      //viewModel.isSubmitted = true;
+                                      showSearch(
+                                        context: context,
+                                        delegate: ScreenSearch(),
+                                      );
+                                    },
+                                    child: Container(
+                                      //decoration: BoxDecoration(border: Border.all(color: Colors.white,),borderRadius: BorderRadius.circular(10)),
+                                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                      margin: const EdgeInsets.fromLTRB(
+                                          10, 20, 0, 10),
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.search,
+                                            color: Colors.white,
+                                          ),
+                                          Text(
+                                            '\tSearch',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
+                                    )), */ */

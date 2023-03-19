@@ -47,37 +47,7 @@ class _ListWidgetState extends State<ListWidget> {
                               ? true
                               : false;
 
-                      /* if (viewModel.filterSelection == "" &&
-                        viewModel.query.isEmpty) {
-                      return TaskTileWidget(
-                          ifcomplete: ifCompleted,
-                          data: data,
-                          date: date,
-                          overdue: overdue);
-                    } else if (viewModel.filterSelection != "" &&
-                        viewModel.query.isNotEmpty) {
-                      if (viewModel.filteredList.contains(data.tid) &&
-                          viewModel.queryResultList.contains(data.task_name)) {
-                        return TaskTileWidget(
-                            ifcomplete: ifCompleted,
-                            data: data,
-                            date: date,
-                            overdue: overdue);
-                      } else {
-                        return Container();
-                      }
-                    } else {
-                      if (viewModel.filteredList.contains(data.tid) ||
-                          viewModel.queryResultList.contains(data.task_name)) {
-                        return TaskTileWidget(
-                            ifcomplete: ifCompleted,
-                            data: data,
-                            date: date,
-                            overdue: overdue);
-                      } else {
-                        return Container();
-                      }
-                    } */
+                    
 
                       if (viewModel.filterSelection != "") {
                         debugPrint('Im here in filter');
@@ -157,10 +127,11 @@ class _ListWidgetState extends State<ListWidget> {
                               thickness: 1,
                               height: 5,
                             );
-                          }
+                          } 
                         }
-
-                        return Container();
+                        
+                            return Container();
+                          
                       }
                     });
               } else {
