@@ -68,12 +68,10 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14))
                       ],
-                      //viewModel.getCTaskListItem(index).task_name,
                     ))),
           subtitle: (widget.ifcomplete)
               ? Text(
                   DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
-                  //viewModel.getCTaskListItem(index).task_name,
                   style: const TextStyle(
                       color: Color.fromARGB(127, 0, 0, 0),
                       fontWeight: FontWeight.w400,

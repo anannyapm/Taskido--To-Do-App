@@ -83,12 +83,12 @@ class _ScreenTasksState extends State<ScreenTasks> {
                               color: Colors.white),
                           initialValue: selectedMenu,
                           // Callback that sets the selected popup menu item.
-                          onSelected: (String item) {
+                          onSelected: (String item) async {
                             setState(() {
                               selectedMenu = item;
                             });
                             if (selectedMenu == sampleItem[2]) {
-                              selectDateRange();
+                              await selectDateRange();
                               viewModel.setDateFilter(startDate, endDate);
                             }
 
@@ -239,7 +239,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
     });
   }
 
-  void selectDateRange() async {
+  Future<void> selectDateRange() async {
     final DateTime? pickedStartDate = await showDatePicker(
       helpText: 'Select Start Date',
       context: context,

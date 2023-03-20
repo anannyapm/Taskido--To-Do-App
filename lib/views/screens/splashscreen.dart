@@ -15,8 +15,10 @@ class _ScreenSplashState extends State<ScreenSplash> {
   Widget build(BuildContext context) {
     return SafeArea(
       //set background
-      child: SizedBox(
+      child: Container(
         height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+              color: Colors.white,),
 
         //Scaffold area
         child: Scaffold(

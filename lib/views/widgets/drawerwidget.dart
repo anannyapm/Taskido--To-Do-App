@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
+import 'package:todoapp/views/screens/privacypolicy.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../dbfunctions/repository.dart';
 import '../../viewmodel/appviewmodel.dart';
@@ -20,6 +22,8 @@ class DrawerWidget extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
+              margin: const EdgeInsets.all(0),
+
               decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/images/drawerbg.png'),
@@ -66,7 +70,7 @@ class DrawerWidget extends StatelessWidget {
               ),
               title: const Text('Privacy Policy'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: ((context) => PrivacyPolicy())));
               },
             ),
             ListTile(
@@ -83,8 +87,18 @@ class DrawerWidget extends StatelessWidget {
                 Icons.mail,
               ),
               title: const Text('Contact Us'),
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                String email = Uri.encodeComponent("anannyaanilpm@gmail.com.com");
+                      String subject = Uri.encodeComponent("Info about To Do App");
+                      String body = Uri.encodeComponent("Hi There!");
+                      debugPrint("Mail Subject:$subject"); 
+                      Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+                      if (await launchUrl(mail)) {
+                          //email app opened
+                      }else{
+                          //email app is not opened
+                      }
+                //Navigator.pop(context);
               },
             ),
             const AboutListTile(

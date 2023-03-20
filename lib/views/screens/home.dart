@@ -56,6 +56,7 @@ class _ScreenHomeState extends State<ScreenHome> {
             body: SafeArea(
               child: Builder(
                 builder: (context) {
+                  
                   return _pages[viewModel.selectedIndexNotifier];
                 },
               ),

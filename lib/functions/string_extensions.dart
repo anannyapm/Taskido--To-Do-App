@@ -1,9 +1,13 @@
 extension TitleCase on String {
   String toTitleCase() {
-    return toLowerCase().replaceAllMapped(RegExp(r'[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+'),
-        (Match match) {
-      
-      return "${match[0]![0].toUpperCase()}${match[0]!.substring(1).toLowerCase()}";
-    }).replaceAll(RegExp(r'(_|-)+'), ' ');
+
+    final List<String> splitStr = split(' ');
+    for (int i = 0; i < splitStr.length; i++) {
+      splitStr[i] =
+          '${splitStr[i][0].toUpperCase()}${splitStr[i].substring(1)}';
+    }
+    final output = splitStr.join(' ');
+    return output;
+   
   }
 }
