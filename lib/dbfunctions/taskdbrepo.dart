@@ -24,7 +24,7 @@ class TaskRepository {
     List<Map<String, dynamic>> result =
         await fetchData(task.task_name, task.user_id, task.category_id);
     if (result.isEmpty) {
-      debugPrint('inserting.....');
+      debugPrint('Inserting Task Data.....');
 
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
       task.tid = await dbClient.rawInsert(
@@ -121,7 +121,7 @@ class TaskRepository {
       String taskName, int userid, int catid) async {
     var dbClient = await database;
 
-    debugPrint("In delete data function");
+    debugPrint("Deletion in Process");
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'delete from ${taskInstance.tableName} where ${taskInstance.colTwo}="$taskName" AND ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid"');

@@ -160,7 +160,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
     final email = _emailController.text.trim();
 
     List<Map<String, dynamic>> out = await Repository.fetchData(email);
-    debugPrint(out.toString());
+    debugPrint("User Exists status on Login - ${out.toString()}");
     if (out.isNotEmpty) {
       Map val = out[0];
       await Repository.setCurrentUser(

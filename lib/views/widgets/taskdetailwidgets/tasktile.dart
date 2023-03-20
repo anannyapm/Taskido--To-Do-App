@@ -89,7 +89,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
           trailing: IconButton(
               onPressed: () {
                 popupDialogueBox(() async {
-                  debugPrint("delete pressed");
+                  debugPrint("Delete Pressed");
                   await deleteTask(
                       widget.data.task_name, widget.data.category_id, context);
                   await viewModel.addToTaskList();

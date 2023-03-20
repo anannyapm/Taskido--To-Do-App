@@ -22,7 +22,7 @@ class CategRepository {
 
     List<Map<String, dynamic>> result = await fetchData(category.category_name);
     if (result.isEmpty) {
-      debugPrint('inserting.....');
+      debugPrint('Inserting Category Data...');
 
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
       category.cid = await dbClient.rawInsert(
@@ -53,7 +53,7 @@ class CategRepository {
     final values = await dbClient.rawQuery(
         'select * from ${categoryInstance.tableName} where ${categoryInstance.colFive}="$curUserId"');
 
-    debugPrint("Db getAlldata called: $values");
+    
     final category = values.map((e) => CategoryModel.fromMap(e)).toList();
 
     return category;

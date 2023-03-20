@@ -56,7 +56,7 @@ class AppViewModel extends ChangeNotifier {
       }
       for (var map in value) {
         if (map.user_id == Repository.currentUserID) {
-          debugPrint(map.toString());
+          
 
           taskModelList.add(map);
           notifyListeners();
@@ -142,7 +142,7 @@ class AppViewModel extends ChangeNotifier {
           queryResultList.add(element.task_name);
         }
       }
-      debugPrint("result" + queryResultList.toString());
+      debugPrint("Query result contains: $queryResultList");
     }
     notifyListeners();
   }
@@ -161,7 +161,7 @@ class AppViewModel extends ChangeNotifier {
 
   void setFilterSelection(String value) {
     filterSelection = value;
-    debugPrint("Filter Enabled for$filterSelection");
+    debugPrint("Filter Enabled for $filterSelection");
     notifyListeners();
   }
 

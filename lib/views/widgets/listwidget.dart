@@ -39,15 +39,14 @@ class _ListWidgetState extends State<ListWidget> {
                       if (date.isAfter(DateTime.now())) {
                         overdue = true;
                       }
-                      debugPrint(
-                          '$overdue $date is date ${DateTime.now()} is now}');
+                      
                       bool ifCompleted =
                           (snapshot.data![index].isCompleted == 1)
                               ? true
                               : false;
 
                       if (viewModel.filterSelection != "") {
-                        debugPrint('Im here in filter');
+                        
 
                         if (viewModel.filteredList.contains(data.tid)) {
                           if (viewModel.queryval != '') {

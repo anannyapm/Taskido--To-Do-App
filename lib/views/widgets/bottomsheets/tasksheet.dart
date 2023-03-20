@@ -55,8 +55,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                     trailing: TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          debugPrint(
-                              'selected in onpressed $selectedChoiceIndex');
+                          
                           await addTasktoModel(context);
 
                           viewModel.addToTaskList();
@@ -242,8 +241,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                       defaultChoiceIndex =
                                           value ? index : defaultChoiceIndex;
 
-                                      debugPrint(
-                                          "selected $selectedChoiceIndex default $defaultChoiceIndex");
+                                     
                                     });
                                   },
                                   backgroundColor: Colors.transparent,
