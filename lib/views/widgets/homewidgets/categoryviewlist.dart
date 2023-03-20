@@ -7,7 +7,6 @@ import 'package:todoapp/views/widgets/popupdialogue.dart';
 import '../../../constants/iconlist.dart';
 import '../../../viewmodel/appviewmodel.dart';
 
-
 class CategoryViewWidget extends StatefulWidget {
   const CategoryViewWidget({super.key});
 
@@ -17,23 +16,10 @@ class CategoryViewWidget extends StatefulWidget {
 
 class _CategoryViewWidgetState extends State<CategoryViewWidget> {
   @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-  }
-  /* Future<Future<List<CategoryModel>>> _refreshProducts(BuildContext context) async {
-    return CategRepository.getAllData();
-  } */
-
-  @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      //debugPrint('HI');
-
       return Container(
         color: Colors.white,
-        //height: MediaQuery.of(context).size.height,
         margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
         child: FutureBuilder(
             future: CategRepository.getAllData(),
@@ -43,12 +29,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  //physics: const AlwaysScrollableScrollPhysics(),
                   itemBuilder: ((context, index) {
-                    //CategoryModel categItem =
-                    //viewModel.getCategoryListItem(index);
-
-                    //debugPrint("In listview");
                     return Card(
                       elevation: 1,
                       margin: const EdgeInsets.only(bottom: 10),
@@ -56,7 +37,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                           borderRadius: BorderRadius.circular(12.5)),
                       child: ListTile(
                           minLeadingWidth: 25,
-                          leading: IconList.Iconlist[
+                          leading: IconList.iconValueList[
                               snapshot.data![index].category_logo_value],
                           title: Text(
                             snapshot.data![index].category_name,
@@ -66,9 +47,8 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                           trailing: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              //placeholder 000 given
                               Text(
-                                  '${viewModel.cBasedTaskCount(snapshot.data![index].cid!)-viewModel.cBasedCompletdTaskCount(snapshot.data![index].cid!)} Tasks'),
+                                  '${viewModel.cBasedTaskCount(snapshot.data![index].cid!) - viewModel.cBasedCompletdTaskCount(snapshot.data![index].cid!)} Tasks'),
                               IconButton(
                                   onPressed: () {
                                     popupDialogueBox(() async {
@@ -76,8 +56,8 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                                       await deleteCategory(
                                           snapshot.data![index].category_name,
                                           context);
-                                      await viewModel.addCategList();
-                                      await viewModel.addTaskList();
+                                      await viewModel.addToCategList();
+                                      await viewModel.addToTaskList();
                                     }, context,
                                         'Do you want to delete ${snapshot.data![index].category_name} category?');
                                   },
@@ -92,7 +72,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                   itemCount: snapshot.data?.length,
                 );
               } else {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
             }),
       );
@@ -100,10 +80,6 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
   }
 
   Future<void> deleteCategory(String categoryname, BuildContext ctx) async {
-    /* dynamic out = await CategRepository.deleteData(categoryname);
-
-    debugPrint(out.toString()); */
-
     CategRepository.deleteData(categoryname).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text(

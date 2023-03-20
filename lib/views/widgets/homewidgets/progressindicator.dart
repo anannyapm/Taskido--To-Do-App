@@ -6,11 +6,9 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import '../../../viewmodel/appviewmodel.dart';
 
 class ProgressIndicatorWidget extends StatefulWidget {
-  /* final double progressVal;
-  final double maxVal; */
-  const ProgressIndicatorWidget(
-      {super.key, /* this.maxVal = 100, required this.progressVal */
-      });
+  const ProgressIndicatorWidget({
+    super.key,
+  });
 
   @override
   State<ProgressIndicatorWidget> createState() =>
@@ -21,7 +19,9 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      double max = viewModel.totalTaskCount.toDouble() == 0 ? 1 : viewModel.totalTaskCount.toDouble();
+      double max = viewModel.totalTaskCount.toDouble() == 0
+          ? 1
+          : viewModel.totalTaskCount.toDouble();
       double progressValue = viewModel.completedCount.toDouble();
       return Container(
         margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
@@ -39,14 +39,11 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                   axes: <RadialAxis>[
                     RadialAxis(
                         minimum: 0,
-                        //centerX: 0.28,
-                        //centerY: 0.3,
                         maximum: max,
                         showLabels: false,
                         showTicks: false,
                         startAngle: 270,
                         endAngle: 270,
-                        //radiusFactor: 0.4,
                         axisLineStyle: const AxisLineStyle(
                           thickness: 0.1,
                           cornerStyle: CornerStyle.bothFlat,

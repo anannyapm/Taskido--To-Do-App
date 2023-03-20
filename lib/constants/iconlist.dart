@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 
 class IconList {
-  static final List <Icon> Iconlist = [
+  static final List <Icon> iconValueList = [
     const Icon(
         FontAwesome.heart,
         color: Color(0xffF96900),

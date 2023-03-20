@@ -1,4 +1,3 @@
-
 class TaskModel {
   int? tid;
   final String task_name;
@@ -14,18 +13,8 @@ class TaskModel {
       required this.category_id,
       required this.user_id,
       required this.task_date_time,
-     // required this.task_time,
+      // required this.task_time,
       this.tid});
-
-  /* Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      'userid': id,
-      'username': name,
-      'email': email,
-      'photo': photo
-    };
-    return map;
-  } */
 
   static TaskModel fromMap(Map<String, dynamic> map) {
     final tid = map['tid'] as int;
@@ -34,7 +23,6 @@ class TaskModel {
     final category_id = map['category_id'] as int;
     final user_id = map['user_id'] as int;
     final task_date_time = map['task_date_time'] as String;
-    //final task_time = map['task_time'] as String;
 
     return TaskModel(
         task_name: task_name,
@@ -42,7 +30,6 @@ class TaskModel {
         category_id: category_id,
         user_id: user_id,
         task_date_time: DateTime.parse(task_date_time),
-        //task_time: DateTime.parse(task_time),
         tid: tid);
   }
 }

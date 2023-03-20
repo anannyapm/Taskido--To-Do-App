@@ -8,20 +8,6 @@ import 'package:todoapp/models/categorymodel.dart';
 class CategRepository {
   static Database? _database;
 
-  
-
-  //static late int currentCategoryID;
-
-  /* static Future<void> setCurrentCategID(String categName) async {
-    List<Map<String, dynamic>> result = await fetchData(categName);
-
-
-    currentCategoryID = result[0]['cid'];
-  
-
-    debugPrint(currentCategoryID.toString());
-  } */
-
   //check if database already exist; if yes return it else create a new db and return it.
   static Future<Database> get database async {
     if (_database != null) return _database!;
@@ -78,7 +64,6 @@ class CategRepository {
     var dbClient = await database;
     int curUserId = Repository.currentUserID;
 
-
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'select * from ${categoryInstance.tableName} where ${categoryInstance.colTwo}="$categName" and ${categoryInstance.colFive}="$curUserId"');
 
@@ -91,13 +76,11 @@ class CategRepository {
     var dbClient = await database;
     int curUserId = Repository.currentUserID;
 
-
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'select ${categoryInstance.colOne} from ${categoryInstance.tableName} where ${categoryInstance.colFive}="$curUserId" LIMIT 1');
 
     return result;
   }
-
 
   //DELETE DATA
 
@@ -106,7 +89,6 @@ class CategRepository {
 
     debugPrint("In delete repo");
     int curUserId = Repository.currentUserID;
-
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'delete from ${categoryInstance.tableName} where ${categoryInstance.colTwo}="$categName" and ${categoryInstance.colFive}="$curUserId"');

@@ -12,30 +12,29 @@ import '../dbfunctions/categorydbrepo.dart';
 import '../dbfunctions/taskdbrepo.dart';
 
 class AppViewModel extends ChangeNotifier {
-  //category actions
+  int selectedIndexNotifier = 0;
+  void notifyOnIndexChange(int index) {
+    selectedIndexNotifier = index;
+    notifyListeners();
+  }
+  //category operations
+
   List<CategoryModel> categModelList = <CategoryModel>[];
 
-  Future<void> addCategList() async {
+  //create category model list
+
+  Future<void> addToCategList() async {
     await CategRepository.getAllData().then((value) {
       categModelList.clear();
+      //notigying listner in case of no data in value
       if (value.isEmpty) {
-        debugPrint("category count=$categoryCount");
-        debugPrint("category completed count=$completedCount");
-
         notifyListeners();
       }
       for (var map in value) {
         categModelList.add(map);
-        debugPrint("category count=$categoryCount");
-        debugPrint("category completed count=$completedCount");
-
         notifyListeners();
       }
     }).catchError((e) => debugPrint(e.toString()));
-  }
-
-  CategoryModel getCategoryListItem(int catIndex) {
-    return categModelList[catIndex];
   }
 
   int get categoryCount {
@@ -48,36 +47,30 @@ class AppViewModel extends ChangeNotifier {
 
   List<TaskModel> taskModelList = <TaskModel>[];
 
-  Future<void> addTaskList() async {
+  //add to taskModel list
+  Future<void> addToTaskList() async {
     await TaskRepository.getAllData(Repository.currentUserID).then((value) {
       taskModelList.clear();
       if (value.isEmpty) {
         notifyListeners();
       }
       for (var map in value) {
-        if(map.user_id==Repository.currentUserID){
-           debugPrint(map.toString());
+        if (map.user_id == Repository.currentUserID) {
+          debugPrint(map.toString());
 
-        taskModelList.add(map);
-        notifyListeners();
+          taskModelList.add(map);
+          notifyListeners();
         }
-       
       }
     }).catchError((e) => debugPrint(e.toString()));
   }
 
   getCategoryId(String catName) {
     for (var val in categModelList) {
-      debugPrint("in getcategid val " + val.category_name);
-      debugPrint("in getcategid catname " + catName);
-      debugPrint("i am catgmodel" + val.toString());
-
       if (val.category_name == catName) {
-        debugPrint("in getcategid fun ${val.cid} ");
         return val.cid;
       }
     }
-    debugPrint("outside if getcategid fun ");
     return 0;
   }
 
@@ -111,21 +104,6 @@ class AppViewModel extends ChangeNotifier {
     return counter;
   }
 
-  Future<void> updateTaskValue(
-      int taskIndex, bool taskValue, int categoryIndex) async {
-    int taskval = 0;
-    if (taskValue == true) {
-      taskval = 1;
-    }
-
-    //call db function to update
-    final output = await TaskRepository.updateCompletedStatus(
-        taskIndex, categoryIndex, Repository.currentUserID, taskValue);
-    debugPrint("in update$output");
-    //addTaskList();
-    notifyListeners();
-  }
-
   int get completedCount {
     int counter = 0;
     for (var element in taskModelList) {
@@ -137,13 +115,24 @@ class AppViewModel extends ChangeNotifier {
     return counter;
   }
 
+  Future<void> updateTaskValue(
+      int taskIndex, bool taskValue, int categoryIndex) async {
+    //call db function to update
+    final output = await TaskRepository.updateCompletedStatus(
+        taskIndex, categoryIndex, Repository.currentUserID, taskValue);
+    debugPrint("Task update done! $output");
+
+    notifyListeners();
+  }
+
+  //Search anf Filter operations
+
   List queryResultList = [];
   String queryval = '';
   addToQueryList(String query) async {
     queryResultList.clear();
 
     if (query.isEmpty || query == '') {
-      // if the search field is empty or only contains white-space, we'll display all users
       queryResultList.clear();
     } else {
       for (var element in taskModelList) {
@@ -154,8 +143,6 @@ class AppViewModel extends ChangeNotifier {
         }
       }
       debugPrint("result" + queryResultList.toString());
-
-      // we use the toLowerCase() method to make it case-insensitive
     }
     notifyListeners();
   }
@@ -164,6 +151,19 @@ class AppViewModel extends ChangeNotifier {
   String displayFilterDetail = "";
   DateTime? date1;
   DateTime? date2;
+
+  void setDateFilter(DateTime? d1, DateTime? d2) {
+    date1 = d1;
+    date2 = d2;
+
+    notifyListeners();
+  }
+
+  void setFilterSelection(String value) {
+    filterSelection = value;
+    debugPrint("Filter Enabled for$filterSelection");
+    notifyListeners();
+  }
 
   List<int> filteredList = [];
   void addToFilteredList() {
@@ -179,7 +179,7 @@ class AppViewModel extends ChangeNotifier {
         }
       }
     } else if (filterSelection.contains('Tomorrow')) {
-      DateTime tomorrow = DateTime.now().add(Duration(days: 1));
+      DateTime tomorrow = DateTime.now().add(const Duration(days: 1));
       filteredList.clear();
       for (var data in taskModelList) {
         if (data.task_date_time.day == tomorrow.day &&
@@ -213,7 +213,6 @@ class AppViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-//active list is not correct
   int filterTotalTaskCount(int chosenid) {
     int counter = 0;
 
@@ -255,6 +254,7 @@ class AppViewModel extends ChangeNotifier {
     return counter;
   }
 
+  //set values to total and completed count values based on different conditions
   Map<String, int> setCountValues(int chosenid) {
     Map<String, int> result;
     if (filterSelection == "") {
@@ -272,23 +272,8 @@ class AppViewModel extends ChangeNotifier {
         'Completed': filterCompletedCount(chosenid)
       };
     }
-    //notifyListeners();
+
     return result;
-  }
-
-  void setDateFilter(DateTime? d1, DateTime? d2) {
-    date1 = d1;
-    date2 = d2;
-    //will be null if date panel closed
-    //debugPrint("date selection-" + date1!.toIso8601String()+" "+date2!.toIso8601String());
-
-    notifyListeners();
-  }
-
-  void setFilterSelection(String value) {
-    filterSelection = value;
-    debugPrint("filter selection-" + filterSelection);
-    notifyListeners();
   }
 
   double progressIndicatorValue(int choosenid) {

@@ -41,8 +41,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
               )),
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            //resizeToAvoidBottomInset:false,
-            //add singlechildscrollview
             body: Container(
                 height: MediaQuery.of(context).size.height,
                 //add height
@@ -51,12 +49,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      //height: (MediaQuery. of(context). size. height)*0.1,
-
                       margin: const EdgeInsets.only(top: 10),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          //borderRadius: BorderRadius.circular(50),
                           border: Border.all(
                               color: const Color.fromARGB(107, 51, 51, 51))),
                       child: IconButton(
@@ -65,10 +60,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(
-                              /* MaterialPageRoute(
-                            builder: (ctx) => const OnboardingHome()) */
-                              );
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -78,19 +70,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           height: (MediaQuery.of(context).size.height) * 0.75,
                           margin: const EdgeInsets.only(top: 50),
                           child: Column(
-                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
                               const HeadingMessage(
                                 heading: "Hello There!\n",
                                 subheading: "Let's get you onboarded.",
                               ),
-
-                              /*  const SizedBox(
-                              height: 30,
-                            ), */
-
                               Padding(
                                 padding:
                                     const EdgeInsets.only(bottom: 20, top: 20),
@@ -112,7 +97,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                           : CircleAvatar(
                                               radius: 35,
                                               backgroundColor:
-                                                  Color.fromARGB(255, 9, 9, 9),
+                                                  const Color.fromARGB(
+                                                      255, 9, 9, 9),
                                               child: CircleAvatar(
                                                 radius: 33,
                                                 backgroundImage: FileImage(File(
@@ -152,29 +138,19 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                               ),
                               Form(
                                 key: _formKey,
-
-                                //child: Expanded(
                                 child: Column(
-                                  //crossAxisAlignment: CrossAxisAlignment.start,
-                                  //mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     TextFieldWidget(
                                       hint: "Enter User Name",
                                       label: "User Name",
                                       textController: _usernameController,
                                     ),
-                                    /* const SizedBox(
-                                    height: 20,
-                                  ), */
                                     TextFieldWidget(
                                       hint: "Enter Email Address",
                                       label: "Email Address",
                                       textController: _emailController,
                                       typeValue: TextInputType.emailAddress,
                                     ),
-                                    /* const SizedBox(
-                                    height: 20,
-                                  ), */
                                     Align(
                                       child: GradientBox(
                                         colorStart: const Color.fromARGB(
@@ -200,7 +176,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                   ],
                                 ),
                               ),
-
                               Expanded(
                                 child: Align(
                                     alignment: Alignment.bottomCenter,
@@ -212,7 +187,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                                   const ScreenLogin())),
                                     )),
                               )
-                              //),
                             ],
                           ),
                         ),
@@ -240,7 +214,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
     final _userObject =
         UserModel(name: _name, email: _email, photo: _photo.path.toString());
 
-
     /* print("$_name $_email before calling savedata"); */
 
     dynamic out = await Repository.saveData(_userObject);
@@ -256,9 +229,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
       await _sharedPrefs.setString(SAVE_KEY_NAME, _email);
 
       Navigator.of(ctx).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const ScreenHome()),(route)=>false);
+          MaterialPageRoute(builder: (context) => const ScreenHome()),
+          (route) => false);
     } else {
-      var snackBar = SnackBar(
+      var snackBar = const SnackBar(
         content: Text(
           'This email id is already registered. Please Login back to continue!',
           style: TextStyle(color: Colors.white),

@@ -1,21 +1,11 @@
-
 class UserModel {
   int? uid;
   final String name;
   final String email;
   final String photo;
 
-  UserModel({required this.name, required this.email, required this.photo,this.uid});
-
-  /* Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      'userid': id,
-      'username': name,
-      'email': email,
-      'photo': photo
-    };
-    return map;
-  } */
+  UserModel(
+      {required this.name, required this.email, required this.photo, this.uid});
 
   UserModel fromMap(Map<String, dynamic> map) {
     final uid = map['uid'] as int;

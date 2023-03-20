@@ -29,7 +29,13 @@ class TaskRepository {
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
       task.tid = await dbClient.rawInsert(
           'INSERT INTO ${taskInstance.tableName}(${taskInstance.colTwo}, ${taskInstance.colThree}, ${taskInstance.colFour}, ${taskInstance.colFive}, ${taskInstance.colSix}) VALUES(?,?,?,?,?)',
-          [task.task_name, task.isCompleted, task.category_id, task.user_id, task.task_date_time.toIso8601String()]);
+          [
+            task.task_name,
+            task.isCompleted,
+            task.category_id,
+            task.user_id,
+            task.task_date_time.toIso8601String()
+          ]);
       getAllData(Repository.currentUserID);
 
       return true;
@@ -44,8 +50,8 @@ class TaskRepository {
     //rawQuery will return list of map value
     var dbClient = await database;
 
-    final _values =
-        await dbClient.rawQuery('select * from ${taskInstance.tableName} where ${taskInstance.colFive}="$userid"');
+    final _values = await dbClient.rawQuery(
+        'select * from ${taskInstance.tableName} where ${taskInstance.colFive}="$userid"');
 
     debugPrint("TASK TABLE CONTAINS : ${_values.toString()}");
     return _values.map((e) => TaskModel.fromMap(e)).toList();
@@ -63,8 +69,7 @@ class TaskRepository {
   }
 
   //FETCH DATA BASED ON CID,UID
-  static Future<List<TaskModel>> fetchDataWithId(
-      int catid, int userid) async {
+  static Future<List<TaskModel>> fetchDataWithId(int catid, int userid) async {
     var dbClient = await database;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
@@ -72,9 +77,6 @@ class TaskRepository {
 
     return result.map((e) => TaskModel.fromMap(e)).toList();
   }
-
-  
-
 
   //FETCH COUNT
 

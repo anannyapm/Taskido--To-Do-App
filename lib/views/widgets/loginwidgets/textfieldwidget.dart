@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class TextFieldWidget extends StatelessWidget {
   final String hint;
   final String label;
-  TextEditingController textController;
-  TextInputType typeValue;
+  final TextEditingController textController;
+  final TextInputType typeValue;
 
-  TextFieldWidget(
+  const TextFieldWidget(
       {super.key,
       required this.hint,
       required this.label,

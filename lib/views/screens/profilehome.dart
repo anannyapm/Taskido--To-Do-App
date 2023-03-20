@@ -44,7 +44,6 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                 backgroundColor: Colors.transparent,
                 endDrawer: const DrawerWidget(),
                 body: SingleChildScrollView(
-                  //physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
                       const TopPanelWidget(),
@@ -64,13 +63,24 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                       ),
                       viewModel.categoryCount == 0
                           ? Container(
-                            margin: EdgeInsets.all(10),
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(color: Color.fromARGB(255, 255, 255, 255)),
-                            child: Column(children: [
-                            Text('Add a category to start..',style: TextStyle(fontWeight: FontWeight.w700,fontSize: 18,color: Color.fromARGB(255, 1, 111, 110)),),
-                             Image.asset('assets/images/empty.png',scale: 3,),
-                          ]),)
+                              margin: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 255, 255)),
+                              child: Column(children: [
+                                const Text(
+                                  'Add a category to start..',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18,
+                                      color: Color.fromARGB(255, 1, 111, 110)),
+                                ),
+                                Image.asset(
+                                  'assets/images/empty.png',
+                                  scale: 3,
+                                ),
+                              ]),
+                            )
                           : const CategoryViewWidget(),
                     ],
                   ),
@@ -78,6 +88,4 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
               )));
     });
   }
-
-
 }

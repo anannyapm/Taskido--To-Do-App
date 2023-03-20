@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../viewmodel/appviewmodel.dart';
@@ -13,13 +12,13 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBarState extends State<SearchBar> {
-  TextEditingController _searchcontroller = TextEditingController();
+  final TextEditingController _searchcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return TextField(
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         textInputAction: TextInputAction.search,
         onChanged: (value) {
           viewModel.addToQueryList(value);
@@ -28,7 +27,6 @@ class _SearchBarState extends State<SearchBar> {
         },
         controller: _searchcontroller,
         decoration: InputDecoration(
-          
           border: InputBorder.none,
           suffixIcon: IconButton(
               onPressed: () {
@@ -37,25 +35,20 @@ class _SearchBarState extends State<SearchBar> {
                 viewModel.addToQueryList('');
                 FocusManager.instance.primaryFocus?.unfocus();
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.clear,
                 size: 20,
               )),
           suffixIconColor: Colors.white,
           fillColor: Colors.white,
-          floatingLabelBehavior:FloatingLabelBehavior.never,
-          labelStyle: TextStyle(color: Colors.white),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          labelStyle: const TextStyle(color: Colors.white),
           labelText: "Search",
-          /* hintStyle: TextStyle(color: Colors.white),
-          hintText: "Search", */
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.search,
             color: Colors.white,
             size: 20,
           ),
-          /* border: OutlineInputBorder(
-          
-            borderRadius: BorderRadius.all(Radius.circular(25.0))) */
         ),
       );
     });

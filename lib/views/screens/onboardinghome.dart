@@ -88,9 +88,6 @@ class OnboardingHome extends StatelessWidget {
                     ],
                   ),
                 ),
-                /* SizedBox(
-                  height: 30,
-                ), */
                 Expanded(
                   flex: 2,
                   child: Align(

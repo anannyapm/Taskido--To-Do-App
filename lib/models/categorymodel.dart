@@ -1,5 +1,3 @@
-
-
 class CategoryModel {
   int? cid;
   final String category_name;
@@ -7,24 +5,12 @@ class CategoryModel {
   final int isDeleted;
   final int user_id;
 
-
   CategoryModel(
       {required this.category_name,
       required this.category_logo_value,
       required this.isDeleted,
       required this.user_id,
-
       this.cid});
-
-  /* Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      'userid': id,
-      'username': name,
-      'email': email,
-      'photo': photo
-    };
-    return map;
-  } */
 
   static CategoryModel fromMap(Map<String, dynamic> map) {
     final cid = map['cid'] as int;
@@ -33,14 +19,11 @@ class CategoryModel {
     final isDeleted = map['isDeleted'] as int;
     final user_id = map['user_id'] as int;
 
-    
-
     return CategoryModel(
         category_name: category_name,
         category_logo_value: category_logo_value,
         isDeleted: isDeleted,
         user_id: user_id,
-
         cid: cid);
   }
 }

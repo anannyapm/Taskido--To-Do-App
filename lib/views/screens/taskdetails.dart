@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:todoapp/models/categorymodel.dart';
 
-import 'package:todoapp/views/screens/searchscreen.dart';
 import 'package:todoapp/views/widgets/search.dart';
 
 import '../../constants/iconlist.dart';
@@ -14,7 +13,7 @@ import '../../viewmodel/appviewmodel.dart';
 
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
 
-const List<String> SampleItem = ['Today', 'Tomorrow', 'Custom', 'Clear'];
+const List<String> sampleItem = ['Today', 'Tomorrow', 'Custom', 'Clear'];
 
 class ScreenTasks extends StatefulWidget {
   const ScreenTasks({super.key});
@@ -46,7 +45,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                       bottomLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25))),
               child: Container(
-                margin: EdgeInsets.only(bottom: 5),
+                margin: const EdgeInsets.only(bottom: 5),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(30),
@@ -57,26 +56,26 @@ class _ScreenTasksState extends State<ScreenTasks> {
                     colors: <Color>[
                       Color(0xff011638),
                       Color(0xff00a9a5),
-                      // Color.fromARGB(255, 178, 246, 244),
                     ],
                     stops: <double>[0, 1],
                   ),
                 ),
                 child: Column(children: [
-                  //searchbar
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      //searchbar
                       Container(
                           width: MediaQuery.of(context).size.width * 0.6,
                           height: 40,
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.white),
                               borderRadius: BorderRadius.circular(25)),
                           margin: const EdgeInsets.fromLTRB(10, 20, 10, 15),
-                          child: SearchBar()),
+                          child: const SearchBar()),
+
+                      //filter
                       Container(
                         margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                         child: PopupMenuButton<String>(
@@ -88,7 +87,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                             setState(() {
                               selectedMenu = item;
                             });
-                            if (selectedMenu == SampleItem[2]) {
+                            if (selectedMenu == sampleItem[2]) {
                               selectDateRange();
                               viewModel.setDateFilter(startDate, endDate);
                             }
@@ -99,19 +98,19 @@ class _ScreenTasksState extends State<ScreenTasks> {
                           itemBuilder: (BuildContext context) =>
                               <PopupMenuEntry<String>>[
                             PopupMenuItem<String>(
-                              value: SampleItem[0],
+                              value: sampleItem[0],
                               child: const Text('Today'),
                             ),
                             PopupMenuItem<String>(
-                              value: SampleItem[1],
+                              value: sampleItem[1],
                               child: const Text('Tomorrow'),
                             ),
                             PopupMenuItem<String>(
-                              value: SampleItem[2],
+                              value: sampleItem[2],
                               child: const Text('Custom Date'),
                             ),
                             PopupMenuItem<String>(
-                              value: SampleItem[3],
+                              value: sampleItem[3],
                               child: const Text('Clear Filter'),
                             ),
                           ],
@@ -120,18 +119,16 @@ class _ScreenTasksState extends State<ScreenTasks> {
                     ],
                   ),
 
-                  //Container(color: const Color.fromARGB(100, 0, 0, 0), height: 1),
-
                   //choicechip
                   Container(
                     margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                     height: 50,
-                    //margin: const EdgeInsets.only(top: 10, bottom: 20),
                     child: FutureBuilder(
                         future: CategRepository.getAllData(),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<CategoryModel>> snapshot) {
                           if (snapshot.hasData) {
+                            //set list to be used for chip
                             List<Widget> initialchip = [
                               ChoiceChip(
                                 label: const Text('All Tasks'),
@@ -149,7 +146,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                     const Color.fromARGB(255, 255, 255, 255),
                                 elevation: 0,
                                 onSelected: (bool selected) async {
-                                  await viewModel.addTaskList();
+                                  await viewModel.addToTaskList();
 
                                   setState(() {
                                     chosenValue = selected ? '' : '';
@@ -173,7 +170,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                   label: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      IconList.Iconlist[snapshot
+                                      IconList.iconValueList[snapshot
                                           .data![index].category_logo_value],
                                       const SizedBox(
                                         width: 5,
@@ -192,7 +189,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                   selected: chosenValue ==
                                       snapshot.data![index].category_name,
                                   onSelected: (bool selected) async {
-                                    await viewModel.addCategList();
+                                    await viewModel.addToCategList();
                                     String value = selected
                                         ? snapshot.data![index].category_name
                                         : '';
@@ -200,8 +197,6 @@ class _ScreenTasksState extends State<ScreenTasks> {
 
                                     setState(() {
                                       chosenValue = value;
-
-                                      debugPrint("$chosenValue $chosenID");
                                     });
                                   },
                                 );
@@ -233,6 +228,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
                 ]),
               ),
             ),
+
+            //list display
             chosenValue == ''
                 ? const ShowTaskDetail()
                 : ShowTaskDetail(chosenId: chosenID),
@@ -252,20 +249,21 @@ class _ScreenTasksState extends State<ScreenTasks> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(primary: Color(0xff00a9a5)),
+            colorScheme: const ColorScheme.light(primary: Color(0xff00a9a5)),
           ),
           child: child!,
         );
       },
     );
     if (pickedStartDate != null) {
+      // ignore: use_build_context_synchronously
       final DateTime? pickedEndDate = await showDatePicker(
         helpText: 'Select End Date',
         context: context,
         builder: (context, child) {
           return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: ColorScheme.light(primary: Color(0xff00a9a5)),
+              colorScheme: const ColorScheme.light(primary: Color(0xff00a9a5)),
             ),
             child: child!,
           );

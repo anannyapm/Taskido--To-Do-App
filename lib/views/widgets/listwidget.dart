@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/dbfunctions/taskdbrepo.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
-import 'package:todoapp/views/widgets/popupdialogue.dart';
+
 import 'package:todoapp/views/widgets/taskdetailwidgets/tasktile.dart';
 
 import '../../../models/taskmodel.dart';
@@ -46,8 +45,6 @@ class _ListWidgetState extends State<ListWidget> {
                           (snapshot.data![index].isCompleted == 1)
                               ? true
                               : false;
-
-                    
 
                       if (viewModel.filterSelection != "") {
                         debugPrint('Im here in filter');
@@ -127,11 +124,10 @@ class _ListWidgetState extends State<ListWidget> {
                               thickness: 1,
                               height: 5,
                             );
-                          } 
+                          }
                         }
-                        
-                            return Container();
-                          
+
+                        return Container();
                       }
                     });
               } else {

@@ -8,7 +8,7 @@ import '../models/usermodel.dart';
 class Repository {
   static Database? _database;
 
-  //DBConst userInstance = DBConst(tableName: 'user_table',colOne: 'id',colTwo: 'name',colThree: 'email',colFour: 'photo');
+  //DBConst userInstance ==> DBConst(tableName: 'user_table',colOne: 'id',colTwo: 'name',colThree: 'email',colFour: 'photo');
   static late int currentUserID;
   static late String currentUserName;
   static late String currentUserMail;
@@ -33,13 +33,9 @@ class Repository {
 
   static Future<bool> saveData(UserModel user) async {
     var dbClient = await database;
-    /* print("In saveData" + user.email);
-    print('all data-'); */
 
     List<Map<String, dynamic>> result = await fetchData(user.email);
     if (result.isEmpty) {
-      //bool res = true;
-      //if (result == false) {
       debugPrint('inserting.....');
       user.uid = await dbClient.rawInsert(
           'INSERT INTO ${userInstance.tableName}(${userInstance.colTwo}, ${userInstance.colThree}, ${userInstance.colFour}) VALUES(?, ?, ?)',
@@ -63,16 +59,6 @@ class Repository {
         await dbClient.rawQuery('select * from ${userInstance.tableName}');
 
     debugPrint(values.toString());
-
-    //studentListNotifier.value.clear();
-
-    /*  _values.forEach((map) {
-    final student = StudentModel.fromMap(map);
-    studentListNotifier.value.add(student);
-    studentListNotifier.notifyListeners();
-  }); */
-
-    //studentListNotifier.notifyListeners();
   }
 
   static Future<List<Map<String, dynamic>>> fetchData(String email) async {
@@ -82,22 +68,6 @@ class Repository {
         'select * from ${userInstance.tableName} where ${userInstance.colThree}="$email"');
 
     return result;
-    /* if (result.isNotEmpty) {
-
-      debugPrint('In FetchData');
-      debugPrint(result.toString());
-      
-      return true;
-
-      /* for (var res in res) {
-        if (res["email"] == email && res["password"] == password) {
-          currentUser = User.fromMap(res);
-        }
-      } */
-    } else {
-      debugPrint('no data');
-      return false;
-    }*/
   }
 
   static Future<List<Map<String, dynamic>>> fetchID(String email) async {

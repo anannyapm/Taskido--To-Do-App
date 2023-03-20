@@ -59,9 +59,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                               'selected in onpressed $selectedChoiceIndex');
                           await addTasktoModel(context);
 
-                          viewModel.addTaskList();
-                          //viewModel.addCTaskList(selectedChoiceIndex);
-                          //debugPrint("hiii"+viewModel.categModelList.toString());
+                          viewModel.addToTaskList();
 
                           Navigator.pop(context);
                         } else {
@@ -109,7 +107,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
 
                   Row(
                     children: [
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
                           readOnly: true,
@@ -120,7 +118,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                 builder: (context, child) {
                                   return Theme(
                                     data: Theme.of(context).copyWith(
-                                      colorScheme: ColorScheme.light(
+                                      colorScheme: const ColorScheme.light(
                                           primary: Color(0xff00a9a5)),
                                     ),
                                     child: child!,
@@ -139,7 +137,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                 _dateController.text =
                                     DateFormat('EEE, dd/MM/yyyy')
                                         .format(pickdate);
-                                //'${pickdate.weekday} ${pickdate.day}/${pickdate.month}/${pickdate.year}';
                               });
                             }
                           },
@@ -154,7 +151,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                         ),
                       ),
                       const SizedBox(width: 20),
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextFormField(
                           readOnly: true,
@@ -165,14 +162,14 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                               builder: (context, child) {
                                 return Theme(
                                   data: Theme.of(context).copyWith(
-                                    colorScheme: ColorScheme.light(
+                                    colorScheme: const ColorScheme.light(
                                         primary: Color(0xff00a9a5)),
                                   ),
                                   child: child!,
                                 );
                               },
                               initialTime:
-                                  time ?? TimeOfDay(hour: 9, minute: 0),
+                                  time ?? const TimeOfDay(hour: 9, minute: 0),
                             );
 
                             if (picktime == null) {
@@ -214,11 +211,9 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                       builder: (BuildContext context,
                           AsyncSnapshot<List<CategoryModel>> snapshot) {
                         if (snapshot.hasData) {
-                          //selectedChoiceIndex = snapshot.data![0].cid!;
                           return ListView(
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
-                            //crossAxisAlignment: CrossAxisAlignment.start,
                             children:
                                 List.generate(snapshot.data!.length, (index) {
                               return SizedBox(
@@ -228,7 +223,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        IconList.Iconlist[snapshot
+                                        IconList.iconValueList[snapshot
                                             .data![index].category_logo_value],
                                         //to add space between icon and taskname
                                         const SizedBox(
@@ -259,7 +254,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                             }),
                           );
                         } else {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
                       }),
                 ],
@@ -280,7 +276,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
         selectedChoiceIndex == 1 ? cidOut[0]['cid'] : selectedChoiceIndex;
 
     final _currUserId = Repository.currentUserID;
-    debugPrint("I am userid " + _currUserId.toString());
 
     final _taskObject = TaskModel(
         task_name: _taskname,
@@ -289,8 +284,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
         user_id: _currUserId,
         task_date_time: DateTime(
             date!.year, date!.month, date!.day, time!.hour, time!.minute));
-
-    /* print("$_name $_email before calling savedata"); */
 
     bool out = await TaskRepository.saveData(_taskObject);
 

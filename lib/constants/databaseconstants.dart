@@ -6,7 +6,7 @@ class DBConst {
   final String colFour;
   final String colFive;
   final String colSix;
-  //final String colSeven;
+
 
 
 
@@ -18,7 +18,7 @@ class DBConst {
       required this.colFour,
       this.colFive='',
       this.colSix='',
-      //this.colSeven=''
+      
       }
       );
 }
@@ -44,5 +44,5 @@ DBConst taskInstance = DBConst(
     colFour: 'category_id',
     colFive: 'user_id',
     colSix: 'task_date_time'
-    //colSeven: 'task_time'
+   
     );

@@ -14,7 +14,6 @@ popupDialogueBox(VoidCallback function, BuildContext ctx, String message) {
           actions: [
             TextButton(
               onPressed: () {
-                debugPrint('reached inpop');
                 function();
                 Navigator.of(context).pop();
               },

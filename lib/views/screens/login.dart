@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todoapp/dbfunctions/categorydbrepo.dart';
+
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/screens/home.dart';
@@ -37,7 +37,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
               )),
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            //resizeToAvoidBottomInset:false,
             body: Container(
                 margin: const EdgeInsets.all(20),
                 child: Column(
@@ -55,10 +54,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop(
-                              /* MaterialPageRoute(
-                            builder: (ctx) => const OnboardingHome()) */
-                              );
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -68,29 +64,22 @@ class _ScreenLoginState extends State<ScreenLogin> {
                     Expanded(
                       flex: 6,
                       child: SingleChildScrollView(
-                        child: Container(
+                        child: SizedBox(
                           height: (MediaQuery.of(context).size.height) * 0.75,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               const HeadingMessage(
                                 heading: "Welcome Back!\n",
                                 subheading:
                                     "Woo Hoo!\nIt's time to check back in",
                               ),
-
                               const SizedBox(
                                 height: 50,
                               ),
-
                               Form(
                                 key: _formKey,
-
-                                //child: Expanded(
                                 child: Column(
-                                  //crossAxisAlignment: CrossAxisAlignment.start,
-                                  //mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     TextFieldWidget(
                                       hint: "Enter Email Address",
@@ -98,10 +87,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                       textController: _emailController,
                                       typeValue: TextInputType.emailAddress,
                                     ),
-
-                                    /* const SizedBox(
-                                    height: 20,
-                                  ), */
                                     Align(
                                       child: GradientBox(
                                         colorStart: const Color.fromARGB(
@@ -114,8 +99,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                             bool result =
                                                 await checkIfUserExist(context);
                                             if (result == true) {
-                                              await viewModel.addCategList();
-                                              await viewModel.addTaskList();
+                                              await viewModel.addToCategList();
+                                              await viewModel.addToTaskList();
                                               Navigator.of(context)
                                                   .pushReplacement(
                                                       MaterialPageRoute(
@@ -135,7 +120,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                                   .showSnackBar(snackBar);
                                             }
                                           } else {
-                                            //print('Empty field found');
+                                            debugPrint('Empty field found');
                                           }
                                         },
                                         textVal: "Log In",
@@ -145,8 +130,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                   ],
                                 ),
                               ),
-                              //),
-
                               Expanded(
                                 flex: 1,
                                 child: Align(
@@ -157,7 +140,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                             .pushAndRemoveUntil(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const ScreenHome()),
+                                                        const ScreenSignUp()),
                                                 (route) => false))),
                               )
                             ],
@@ -174,17 +157,17 @@ class _ScreenLoginState extends State<ScreenLogin> {
   }
 
   Future<bool> checkIfUserExist(BuildContext ctx) async {
-    final _email = _emailController.text.trim();
+    final email = _emailController.text.trim();
 
-    List<Map<String, dynamic>> out = await Repository.fetchData(_email);
+    List<Map<String, dynamic>> out = await Repository.fetchData(email);
     debugPrint(out.toString());
     if (out.isNotEmpty) {
       Map val = out[0];
       await Repository.setCurrentUser(
           val['uid'], val['name'], val['email'], val['photo']);
       //setting value of savekeyname to true when credentials are correct.
-      final _sharedPrefs = await SharedPreferences.getInstance();
-      await _sharedPrefs.setString(SAVE_KEY_NAME, _email);
+      final sharedPrefs = await SharedPreferences.getInstance();
+      await sharedPrefs.setString(SAVE_KEY_NAME, email);
 
       await Repository.getAllUser();
 

@@ -5,7 +5,7 @@ import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/screens/initialsplashscreen.dart';
 
 
-const SAVE_KEY_NAME = 'UserLoggedIn'; //value of shared prefrence stored here ;ie it can be true or false for this key
+const SAVE_KEY_NAME = 'UserLoggedIn'; //value of shared prefrence stored here 
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -18,7 +18,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      /* initialRoute: 'onboardingScreen',
+   
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: GoogleFonts.poppins().fontFamily,
+      ),
+      home: const ScreenInitialSplash(),
+    );
+  }
+}
+
+
+
+
+
+
+
+//For Reference
+//Using routes
+   /* initialRoute: 'onboardingScreen',
   
   routes: {  
     'onboardingScreen':(context)=>OnboardingHome(),
@@ -30,13 +50,3 @@ class MyApp extends StatelessWidget {
     'profileScreen':(context) => ScreenProfileHome(),
     'taskScreen':(context) => ScreenTasks(),
   }, */
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: GoogleFonts.poppins().fontFamily,
-      ),
-      home: const ScreenInitialSplash(),
-    );
-  }
-}

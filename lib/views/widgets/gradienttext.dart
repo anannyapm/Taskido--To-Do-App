@@ -13,7 +13,7 @@ class GradientTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Shader _linearGradient = const LinearGradient(
+    final Shader linearGradient = const LinearGradient(
       colors: [Color(0xff011638), Color(0xff00a9a5)],
       begin: Alignment.centerLeft,
       end: Alignment.bottomRight,
@@ -24,7 +24,7 @@ class GradientTextWidget extends StatelessWidget {
       style: TextStyle(
           fontSize: textSize,
           fontWeight: weight,
-          foreground: Paint()..shader = _linearGradient),
+          foreground: Paint()..shader = linearGradient),
     );
   }
 }

@@ -14,7 +14,7 @@ import '../widgets/bottomsheets/tasksheet.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
-  static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
+  //static ValueNotifier<int> selectedIndexNotifier = ValueNotifier(0);
 
   @override
   State<ScreenHome> createState() => _ScreenHomeState();
@@ -41,7 +41,6 @@ class _ScreenHomeState extends State<ScreenHome> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      //viewModel.addCategoryList();
       return WillPopScope(
         onWillPop: () async {
           if (isDialOpen.value) {
@@ -55,12 +54,9 @@ class _ScreenHomeState extends State<ScreenHome> {
         child: Scaffold(
             bottomNavigationBar: const BottomNavWidget(),
             body: SafeArea(
-              child: ValueListenableBuilder(
-                valueListenable: ScreenHome.selectedIndexNotifier,
-                builder: (context, updatedIndex, _) {
-                  //CategRepository.addDatatoListNotifier();
-                  debugPrint(viewModel.categModelList.toString());
-                  return _pages[updatedIndex];
+              child: Builder(
+                builder: (context) {
+                  return _pages[viewModel.selectedIndexNotifier];
                 },
               ),
             ),
@@ -72,12 +68,11 @@ class _ScreenHomeState extends State<ScreenHome> {
               activeIcon: Icons.close,
               openCloseDial: isDialOpen,
               backgroundColor: const Color(0xff011638),
-              //animatedIcon: AnimatedIcons.menu_close,
               children: [
                 SpeedDialChild(
                     backgroundColor: const Color(0xff011638),
                     onTap: () async {
-                      await viewModel.addCategList();
+                      await viewModel.addToCategList();
                       if (viewModel.categoryCount == 0) {
                         var snackBar = const SnackBar(
                           content: Text(
@@ -91,7 +86,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
                         viewModel.bottomSheetBuilder(
-                            const TaskSheetWidget(), context);
+                            TaskSheetWidget(), context);
                       }
                     },
                     child: const Icon(

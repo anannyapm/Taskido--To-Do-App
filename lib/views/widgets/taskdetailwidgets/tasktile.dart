@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +14,11 @@ class TaskTileWidget extends StatefulWidget {
   final DateTime date;
   final bool overdue;
   const TaskTileWidget(
-      {super.key, required this.ifcomplete, required this.data,required this.date,required this.overdue});
+      {super.key,
+      required this.ifcomplete,
+      required this.data,
+      required this.date,
+      required this.overdue});
 
   @override
   State<TaskTileWidget> createState() => _TaskTileWidgetState();
@@ -27,7 +29,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return ListTile(
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(0),
           horizontalTitleGap: 2,
           leading: Checkbox(
             side: const BorderSide(width: 2),
@@ -36,12 +38,11 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
             onChanged: (value) async {
               viewModel.updateTaskValue(
                   widget.data.tid!, value!, widget.data.category_id);
-              viewModel.addTaskList();
+              viewModel.addToTaskList();
             },
           ),
           title: (widget.ifcomplete)
               ? Text(widget.data.task_name,
-                  //viewModel.getCTaskListItem(index).task_name,
                   style: const TextStyle(
                       color: Color.fromARGB(127, 0, 0, 0),
                       decoration: TextDecoration.lineThrough,
@@ -49,13 +50,12 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       fontWeight: FontWeight.w600))
               : (widget.overdue
                   ? Text(widget.data.task_name,
-                      //viewModel.getCTaskListItem(index).task_name,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontWeight: FontWeight.w600))
                   : RichText(
                       text: TextSpan(
-                      text: '${widget.data.task_name}',
+                      text: widget.data.task_name,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
                           fontWeight: FontWeight.w600,
@@ -71,7 +71,8 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       //viewModel.getCTaskListItem(index).task_name,
                     ))),
           subtitle: (widget.ifcomplete)
-              ? Text(DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
+              ? Text(
+                  DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
                   //viewModel.getCTaskListItem(index).task_name,
                   style: const TextStyle(
                       color: Color.fromARGB(127, 0, 0, 0),
@@ -79,7 +80,8 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       decoration: TextDecoration.lineThrough,
                       fontStyle: FontStyle.italic,
                       fontSize: 13))
-              : Text(DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
+              : Text(
+                  DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
                   style: const TextStyle(
                       color: Color(0xff011638),
                       fontWeight: FontWeight.w400,
@@ -88,9 +90,9 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               onPressed: () {
                 popupDialogueBox(() async {
                   debugPrint("delete pressed");
-                  await deleteTask(widget.data.task_name,
-                      widget.data.category_id, context);
-                  await viewModel.addTaskList();
+                  await deleteTask(
+                      widget.data.task_name, widget.data.category_id, context);
+                  await viewModel.addToTaskList();
                 }, context,
                     'Do you want to delete ${widget.data.task_name} category?');
               },
@@ -99,14 +101,10 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                 color: Colors.red,
               )));
     });
-    
   }
+
   Future<void> deleteTask(
       String taskname, int categid, BuildContext ctx) async {
-    /* dynamic out = await CategRepository.deleteData(categoryname);
-
-    debugPrint(out.toString()); */
-
     TaskRepository.deleteData(taskname, Repository.currentUserID, categid)
         .then((value) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

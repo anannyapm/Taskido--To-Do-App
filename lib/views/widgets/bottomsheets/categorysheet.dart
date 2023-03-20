@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/models/categorymodel.dart';
-import 'package:todoapp/views/widgets/popupdialogue.dart';
 
 import '../../../constants/iconlist.dart';
-
 
 class CategorySheetWidget extends StatefulWidget {
   const CategorySheetWidget({super.key});
@@ -50,12 +48,9 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                       if (_formKey.currentState!.validate()) {
                         await addCategorytoModel(defaultChoiceIndex, context);
 
-                        viewModel.addCategList();
-                        //debugPrint("hiii"+viewModel.categModelList.toString());
+                        viewModel.addToCategList();
 
                         Navigator.pop(context);
-
-                        
                       } else {
                         debugPrint('Empty fields found');
                       }
@@ -99,10 +94,10 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
                 //choice chip for select
                 Row(
-                  //crossAxisAlignment: CrossAxisAlignment.start,
-                  children: List.generate(IconList.Iconlist.length, (index) {
+                  children:
+                      List.generate(IconList.iconValueList.length, (index) {
                     return ChoiceChip(
-                      label: IconList.Iconlist[index],
+                      label: IconList.iconValueList[index],
                       selected: defaultChoiceIndex == index,
                       selectedColor: const Color.fromARGB(255, 220, 219, 219),
                       onSelected: (value) {
@@ -131,9 +126,10 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
     final _logoindex = choiceIndex;
 
     final _categoryObject = CategoryModel(
-        category_name: _name, category_logo_value: _logoindex, isDeleted: 0,user_id: Repository.currentUserID);
-
-    /* print("$_name $_email before calling savedata"); */
+        category_name: _name,
+        category_logo_value: _logoindex,
+        isDeleted: 0,
+        user_id: Repository.currentUserID);
 
     bool out = await CategRepository.saveData(_categoryObject);
 
@@ -147,17 +143,16 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
         padding: EdgeInsets.all(20),
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
-    }
-    else{
+    } else {
       var snackBar = const SnackBar(
-                          content: Text(
-                            'Success',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.green,
-                          padding: EdgeInsets.all(20),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        content: Text(
+          'Success',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+        padding: EdgeInsets.all(20),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
     debugPrint(out.toString());

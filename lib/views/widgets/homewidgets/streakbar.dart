@@ -5,10 +5,8 @@ import 'package:provider/provider.dart';
 import '../../../viewmodel/appviewmodel.dart';
 
 class StreakBarWidget extends StatefulWidget {
-  //final double streakval;
   const StreakBarWidget({
     super.key,
-    //required this.streakval
   });
 
   @override

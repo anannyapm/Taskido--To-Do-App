@@ -28,7 +28,6 @@ class GradientBox extends StatelessWidget {
           colors: <Color>[
             colorStart,
             colorEnd,
-            // Color.fromARGB(255, 178, 246, 244),
           ],
           stops: const <double>[0, 1],
         ),

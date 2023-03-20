@@ -51,10 +51,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                             )),
                 ),
                 Column(
-                  //text: const TextSpan(
                   crossAxisAlignment: CrossAxisAlignment.start,
-
-                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     const Text(
                       'Hey!',
@@ -65,9 +62,9 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                         color: Color(0xff011638),
                       ),
                     ),
-                     Text(
+                    Text(
                       Repository.currentUserName.toTitleCase(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 28,
                         height: 1.1,
                         fontWeight: FontWeight.w600,
