@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 import 'package:todoapp/views/widgets/gradienttext.dart';
@@ -13,6 +14,13 @@ class ScreenSplash extends StatefulWidget {
 class _ScreenSplashState extends State<ScreenSplash> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(
+         statusBarColor: Color.fromARGB(255, 255, 255, 255),
+         statusBarIconBrightness: Brightness.dark,
+         
+      )
+    );
     return SafeArea(
       //set background
       child: Container(

@@ -6,6 +6,7 @@ import 'package:todoapp/views/screens/initialsplashscreen.dart';
 
 
 const SAVE_KEY_NAME = 'UserLoggedIn'; //value of shared prefrence stored here 
+const SAVE_KEY_PROFILE = 'UserProfileImage'; //value of shared prefrence stored here 
 
 void main() {
   runApp(ChangeNotifierProvider(

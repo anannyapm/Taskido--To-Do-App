@@ -6,6 +6,7 @@ import '../../../dbfunctions/repository.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
 import '../../../models/taskmodel.dart';
 import '../../../viewmodel/appviewmodel.dart';
+import '../bottomsheets/updatetasksheet.dart';
 import '../popupdialogue.dart';
 
 class TaskTileWidget extends StatefulWidget {
@@ -84,20 +85,44 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       color: Color(0xff011638),
                       fontWeight: FontWeight.w400,
                       fontSize: 13)),
-          trailing: IconButton(
-              onPressed: () {
-                popupDialogueBox(() async {
-                  debugPrint("Delete Pressed");
-                  await deleteTask(
-                      widget.data.task_name, widget.data.category_id, context);
-                  await viewModel.addToTaskList();
-                }, context,
-                    'Do you want to delete ${widget.data.task_name} category?');
-              },
-              icon: const Icon(
-                Icons.delete_outline,
-                color: Colors.red,
-              )));
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: () {
+                  widget.ifcomplete?
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Task marked as Completed cannot be editted!',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.red,
+        padding: EdgeInsets.all(20),
+      )):
+                  viewModel.bottomSheetBuilder(UpdateTaskSheetWidget(taskName: widget.data.task_name, date: widget.data.task_date_time), context);
+                },
+                icon: const Icon(Icons.edit),
+                color:widget.ifcomplete?Color.fromARGB(127, 0, 0, 0): Color(0xff011638),
+                iconSize: 22,
+              ),
+              IconButton(
+                onPressed: () {
+                  popupDialogueBox(() async {
+                    debugPrint("Delete Pressed");
+                    await deleteTask(widget.data.task_name,
+                        widget.data.category_id, context);
+                    await viewModel.addToTaskList();
+                  }, context,
+                      'Do you want to delete ${widget.data.task_name} category?');
+                },
+                icon: const Icon(
+                  Icons.delete_outline,
+                  color: Colors.red,
+                ),
+                iconSize: 25,
+              )
+            ],
+          ));
     });
   }
 

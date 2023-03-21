@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,7 @@ import '../../main.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
 import '../widgets/loginwidgets/textfieldwidget.dart';
+import 'onboardinghome.dart';
 
 class ScreenLogin extends StatefulWidget {
   const ScreenLogin({super.key});
@@ -22,11 +24,20 @@ class ScreenLogin extends StatefulWidget {
 
 class _ScreenLoginState extends State<ScreenLogin> {
   final _emailController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+   
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+       SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(
+         statusBarColor: Color.fromARGB(255, 255, 255, 255),
+         statusBarIconBrightness: Brightness.dark,
+        
+      )
+    );
       return SafeArea(
+
         child: Container(
           decoration: const BoxDecoration(
               color: Colors.white,
@@ -54,7 +65,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>OnboardingHome()));
+
                         },
                       ),
                     ),
@@ -137,11 +149,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                     child: BottomTextButton(
                                         linkText: 'Sign Up',
                                         function: () => Navigator.of(context)
-                                            .pushAndRemoveUntil(
+                                            .pushReplacement(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         const ScreenSignUp()),
-                                                (route) => false))),
+                                    ))),
                               )
                             ],
                           ),
@@ -168,6 +180,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
       //setting value of savekeyname to true when credentials are correct.
       final sharedPrefs = await SharedPreferences.getInstance();
       await sharedPrefs.setString(SAVE_KEY_NAME, email);
+      
 
       await Repository.getAllUser();
 

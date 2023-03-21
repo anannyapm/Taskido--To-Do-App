@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/categorymodel.dart';
 
@@ -56,8 +57,6 @@ class AppViewModel extends ChangeNotifier {
       }
       for (var map in value) {
         if (map.user_id == Repository.currentUserID) {
-          
-
           taskModelList.add(map);
           notifyListeners();
         }
@@ -161,6 +160,7 @@ class AppViewModel extends ChangeNotifier {
 
   void setFilterSelection(String value) {
     filterSelection = value;
+
     debugPrint("Filter Enabled for $filterSelection");
     notifyListeners();
   }
@@ -168,6 +168,8 @@ class AppViewModel extends ChangeNotifier {
   List<int> filteredList = [];
   void addToFilteredList() {
     if (filterSelection.contains('Today')) {
+      setDateFilter(null, null);
+
       DateTime today = DateTime.now();
       filteredList.clear();
       for (var data in taskModelList) {
@@ -175,10 +177,12 @@ class AppViewModel extends ChangeNotifier {
             data.task_date_time.month == today.month &&
             data.task_date_time.year == today.year) {
           filteredList.add(data.tid!);
-          displayFilterDetail = DateFormat('EEE, M/d/y').format(today);
         }
       }
+      displayFilterDetail = DateFormat('EEE, M/d/y').format(today);
     } else if (filterSelection.contains('Tomorrow')) {
+            setDateFilter(null, null);
+
       DateTime tomorrow = DateTime.now().add(const Duration(days: 1));
       filteredList.clear();
       for (var data in taskModelList) {
@@ -186,9 +190,9 @@ class AppViewModel extends ChangeNotifier {
             data.task_date_time.month == tomorrow.month &&
             data.task_date_time.year == tomorrow.year) {
           filteredList.add(data.tid!);
-          displayFilterDetail = DateFormat('EEE, M/d/y').format(tomorrow);
         }
       }
+      displayFilterDetail = DateFormat('EEE, M/d/y').format(tomorrow);
     } else if (filterSelection.contains('Custom')) {
       filteredList.clear();
       for (var data in taskModelList) {
@@ -314,10 +318,15 @@ class AppViewModel extends ChangeNotifier {
   File? profilePhoto;
   Future<void> getPhoto() async {
     final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final directoryPath = await getExternalStorageDirectory();
+     final path = directoryPath!.path;
     if (photo == null) {
     } else {
+
       final photoTemp = File(photo.path);
-      profilePhoto = photoTemp;
+     final imageFile = await photoTemp.copy('$path/image1.png');
+
+      profilePhoto = imageFile;
       notifyListeners();
     }
   }

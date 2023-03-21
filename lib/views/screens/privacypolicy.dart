@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
@@ -7,10 +8,17 @@ class PrivacyPolicy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(
+         statusBarColor: Color.fromARGB(255, 255, 255, 255),
+         statusBarIconBrightness: Brightness.dark,
+         
+      )
+    );
     return SafeArea(
         child: Scaffold(
       body: Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: ListView(
           children: [
             Align(
@@ -19,7 +27,7 @@ class PrivacyPolicy extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: Icon(Icons.close)),
+                  icon: const Icon(Icons.close)),
             ),
             const Text('''
 Privacy Policy  

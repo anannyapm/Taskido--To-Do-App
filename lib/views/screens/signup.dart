@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/models/usermodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/login.dart';
+import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
 import '../../main.dart';
@@ -23,13 +25,21 @@ class ScreenSignUp extends StatefulWidget {
 }
 
 class _ScreenSignUpState extends State<ScreenSignUp> {
-  static final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+ 
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+       SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(
+         statusBarColor: Color.fromARGB(255, 255, 255, 255),
+         statusBarIconBrightness: Brightness.dark,
+        
+      )
+    );
       return SafeArea(
         child: Container(
           decoration: const BoxDecoration(
@@ -60,7 +70,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>OnboardingHome()));
                         },
                       ),
                     ),
@@ -182,7 +192,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                     child: BottomTextButton(
                                       linkText: 'Log In',
                                       function: () => Navigator.of(context)
-                                          .push(MaterialPageRoute(
+                                          .pushReplacement(MaterialPageRoute(
                                               builder: (context) =>
                                                   const ScreenLogin())),
                                     )),
@@ -227,6 +237,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
 
       final _sharedPrefs = await SharedPreferences.getInstance();
       await _sharedPrefs.setString(SAVE_KEY_NAME, _email);
+   
 
       Navigator.of(ctx).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const ScreenHome()),

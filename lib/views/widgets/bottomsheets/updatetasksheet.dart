@@ -12,22 +12,35 @@ import '../../../dbfunctions/taskdbrepo.dart';
 import '../../../models/categorymodel.dart';
 import '../../../models/taskmodel.dart';
 
-class TaskSheetWidget extends StatefulWidget {
-  const TaskSheetWidget({super.key});
+class UpdateTaskSheetWidget extends StatefulWidget {
+  final String taskName;
+  final DateTime date;
+
+
+  const UpdateTaskSheetWidget({super.key,required this.taskName,required this.date});
 
   @override
-  State<TaskSheetWidget> createState() => _TaskSheetWidgetState();
+  State<UpdateTaskSheetWidget> createState() => _UpdateTaskSheetWidgetState();
 }
 
-class _TaskSheetWidgetState extends State<TaskSheetWidget> {
-  int selectedChoiceIndex = 1;
-  int defaultChoiceIndex = 0;
+class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
+  
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _inputController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
-  final TextEditingController _timeController = TextEditingController();
+  TextEditingController _inputController = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
   DateTime? date;
   TimeOfDay? time;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     _inputController = TextEditingController(text: widget.taskName);
+  _dateController = TextEditingController(text: DateFormat('EEE, dd/MM/yyyy')
+                                        .format(widget.date));
+  _timeController = TextEditingController(text: DateFormat('hh:mm aaa').format(widget.date));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +68,10 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                     trailing: TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          
-                          await addTasktoModel(context);
+                          //change it to update
+                          /* await addTasktoModel(context);
 
-                          viewModel.addToTaskList();
+                          viewModel.addToTaskList(); */
 
                           Navigator.pop(context);
                         } else {
@@ -75,7 +88,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
 
                   //newtask
                   const Text(
-                    'Add New Task',
+                    'Update Task',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
 
@@ -83,14 +96,14 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter task name';
+                        return 'Please enter a task name';
                       } else {
                         return null;
                       }
                     },
                     controller: _inputController,
                     decoration:
-                        const InputDecoration(hintText: 'Enter Task Name'),
+                        const InputDecoration(hintText: 'Enter New Task Name'),
                   ),
 
                   //datepicker
@@ -98,7 +111,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                   Container(
                     margin: const EdgeInsets.only(top: 20, bottom: 10),
                     child: const Text(
-                      'Pick a Date and Time',
+                      'Add New Date and Time',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
@@ -124,7 +137,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                   );
                                 },
                                 initialDate: date ?? DateTime.now(),
-                                firstDate: DateTime.now(),
+                                firstDate: widget.date,
                                 lastDate: DateTime(DateTime.now().year + 5));
 
                             if (pickdate == null) {
@@ -168,7 +181,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                 );
                               },
                               initialTime:
-                                  time ?? const TimeOfDay(hour: 9, minute: 0),
+                                  time ??  TimeOfDay(hour: widget.date.hour, minute: widget.date.minute),
                             );
 
                             if (picktime == null) {
@@ -194,68 +207,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                     ],
                   ),
 
-                  //select category
-                  Container(
-                    margin: const EdgeInsets.only(top: 20, bottom: 10),
-                    child: const Text(
-                      'Select Category',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                  ),
+                  
 
-                  //choice chip for select
-                  FutureBuilder(
-                      future: CategRepository.getAllData(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<CategoryModel>> snapshot) {
-                        if (snapshot.hasData) {
-                          return ListView(
-                            shrinkWrap: true,
-                            physics: const ClampingScrollPhysics(),
-                            children:
-                                List.generate(snapshot.data!.length, (index) {
-                              return SizedBox(
-                                width: 200,
-                                child: ChoiceChip(
-                                  label: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        IconList.iconValueList[snapshot
-                                            .data![index].category_logo_value],
-                                        //to add space between icon and taskname
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Text(snapshot
-                                            .data![index].category_name),
-                                      ]),
-                                  selected: defaultChoiceIndex == index,
-                                  selectedColor:
-                                      const Color.fromARGB(255, 220, 219, 219),
-                                  onSelected: (value) {
-                                    selectedChoiceIndex =
-                                        snapshot.data![index].cid!;
-                                    setState(() {
-                                      defaultChoiceIndex =
-                                          value ? index : defaultChoiceIndex;
-
-                                     
-                                    });
-                                  },
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  padding: const EdgeInsets.all(8),
-                                ),
-                              );
-                            }),
-                          );
-                        } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-                      }),
                 ],
               ),
             ),
@@ -265,25 +218,17 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
     );
   }
 
-  Future<TaskModel> addTasktoModel(BuildContext ctx) async {
+  /* Future<TaskModel> updateTasktoModel(BuildContext ctx) async {
     final _taskname = _inputController.text.trim();
     final _date = _dateController.text.trim();
     final _time = _timeController.text.trim();
     final cidOut = await CategRepository.fetchFirstCid();
-    final _logoindex =
-        selectedChoiceIndex == 1 ? cidOut[0]['cid'] : selectedChoiceIndex;
-
+    
     final _currUserId = Repository.currentUserID;
 
-    final _taskObject = TaskModel(
-        task_name: _taskname,
-        isCompleted: 0,
-        category_id: _logoindex,
-        user_id: _currUserId,
-        task_date_time: DateTime(
-            date!.year, date!.month, date!.day, time!.hour, time!.minute));
+    final DateTime taskDateTime=DateTime(date!.year, date!.month, date!.day, time!.hour, time!.minute);
 
-    bool out = await TaskRepository.saveData(_taskObject);
+    bool out = await TaskRepository.updateData(widget., catid, userid, tname, datetime);
 
     if (out != true) {
       var snackBar = const SnackBar(
@@ -311,6 +256,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
 
     debugPrint(out.toString());
 
-    return _taskObject;
-  }
+    //return _taskObject;
+  } */
 }

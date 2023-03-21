@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
@@ -45,7 +46,7 @@ class _ScreenHomeState extends State<ScreenHome> {
         onWillPop: () async {
           if (isDialOpen.value) {
             isDialOpen.value = false;
-
+      
             return false;
           } else {
             return true;
@@ -53,10 +54,10 @@ class _ScreenHomeState extends State<ScreenHome> {
         },
         child: Scaffold(
             bottomNavigationBar: const BottomNavWidget(),
+            
             body: SafeArea(
               child: Builder(
                 builder: (context) {
-                  
                   return _pages[viewModel.selectedIndexNotifier];
                 },
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
@@ -32,6 +33,13 @@ class _ScreenTasksState extends State<ScreenTasks> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(
+         statusBarColor: Color.fromARGB(255, 1, 40, 56),
+         statusBarIconBrightness: Brightness.light,
+       
+      )
+    );
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return Scaffold(
         body: SafeArea(
@@ -91,6 +99,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                               await selectDateRange();
                               viewModel.setDateFilter(startDate, endDate);
                             }
+                           
 
                             viewModel.setFilterSelection(selectedMenu!);
                             viewModel.addToFilteredList();
@@ -240,7 +249,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
   }
 
   Future<void> selectDateRange() async {
-    final DateTime? pickedStartDate = await showDatePicker(
+    DateTime? pickedStartDate = await showDatePicker(
       helpText: 'Select Start Date',
       context: context,
       initialDate: DateTime.now(),
@@ -257,7 +266,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
     );
     if (pickedStartDate != null) {
       // ignore: use_build_context_synchronously
-      final DateTime? pickedEndDate = await showDatePicker(
+      DateTime? pickedEndDate = await showDatePicker(
         helpText: 'Select End Date',
         context: context,
         builder: (context, child) {
@@ -278,6 +287,14 @@ class _ScreenTasksState extends State<ScreenTasks> {
           endDate = pickedEndDate;
         });
       }
+      
+      
+    }
+    else{
+      setState(() {
+          startDate = null;
+          endDate = null;
+        });
     }
   }
 }

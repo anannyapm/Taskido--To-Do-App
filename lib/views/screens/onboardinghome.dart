@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/screens/signup.dart';
@@ -9,6 +10,13 @@ class OnboardingHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(
+         statusBarColor: Color.fromARGB(255, 255, 255, 255),
+         statusBarIconBrightness: Brightness.dark,
+         
+      )
+    );
     return SafeArea(
       child: Container(
           decoration: const BoxDecoration(

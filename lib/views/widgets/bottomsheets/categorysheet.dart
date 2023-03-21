@@ -18,7 +18,7 @@ class CategorySheetWidget extends StatefulWidget {
 class _CategorySheetWidgetState extends State<CategorySheetWidget> {
   int defaultChoiceIndex = 0;
 
-  static final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _inputController = TextEditingController();
 
   @override

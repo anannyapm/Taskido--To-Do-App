@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../dbfunctions/categorydbrepo.dart';
@@ -29,6 +30,13 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+         statusBarColor: Color.fromARGB(255, 255, 255, 255),
+         statusBarIconBrightness: Brightness.dark,
+      
+      )
+    );
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return SafeArea(
           child: Container(
@@ -73,7 +81,8 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 18,
-                                      color: Color.fromARGB(255, 1, 111, 110)),
+                                      color:
+                                          Color.fromARGB(255, 1, 111, 110)),
                                 ),
                                 Image.asset(
                                   'assets/images/empty.png',
