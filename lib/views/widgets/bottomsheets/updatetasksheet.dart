@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/constants/iconlist.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
+import 'package:todoapp/views/widgets/snackbar.dart';
 
 import '../../../dbfunctions/categorydbrepo.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
@@ -13,18 +14,15 @@ import '../../../models/categorymodel.dart';
 import '../../../models/taskmodel.dart';
 
 class UpdateTaskSheetWidget extends StatefulWidget {
-  final String taskName;
-  final DateTime date;
+  final TaskModel taskdata;
 
-
-  const UpdateTaskSheetWidget({super.key,required this.taskName,required this.date});
+  const UpdateTaskSheetWidget({super.key, required this.taskdata});
 
   @override
   State<UpdateTaskSheetWidget> createState() => _UpdateTaskSheetWidgetState();
 }
 
 class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
-  
   final _formKey = GlobalKey<FormState>();
   TextEditingController _inputController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
@@ -36,10 +34,12 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-     _inputController = TextEditingController(text: widget.taskName);
-  _dateController = TextEditingController(text: DateFormat('EEE, dd/MM/yyyy')
-                                        .format(widget.date));
-  _timeController = TextEditingController(text: DateFormat('hh:mm aaa').format(widget.date));
+    _inputController = TextEditingController(text: widget.taskdata.task_name);
+    _dateController = TextEditingController(
+        text: DateFormat('EEE, dd/MM/yyyy')
+            .format(widget.taskdata.task_date_time));
+    _timeController = TextEditingController(
+        text: DateFormat('hh:mm aaa').format(widget.taskdata.task_date_time));
   }
 
   @override
@@ -68,10 +68,16 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                     trailing: TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          //change it to update
-                          /* await addTasktoModel(context);
-
-                          viewModel.addToTaskList(); */
+                          if (widget.taskdata.task_name !=
+                                  _inputController.text.trim() ||
+                              date != null ||
+                              time != null) {
+                            await updateTasktoModel(context);
+                            viewModel.addToTaskList();
+                          } else {
+                            snackBarWidget(
+                                context, 'No Edits Made', Colors.amber);
+                          }
 
                           Navigator.pop(context);
                         } else {
@@ -86,13 +92,11 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                     ),
                   ),
 
-                  //newtask
                   const Text(
                     'Update Task',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
 
-                  //textfieldbar
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -137,11 +141,11 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                                   );
                                 },
                                 initialDate: date ?? DateTime.now(),
-                                firstDate: widget.date,
+                                firstDate: DateTime.now(),
                                 lastDate: DateTime(DateTime.now().year + 5));
 
                             if (pickdate == null) {
-                              _dateController.clear();
+                              //_dateController.clear();
                             } else {
                               date = pickdate;
 
@@ -180,12 +184,15 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                                   child: child!,
                                 );
                               },
-                              initialTime:
-                                  time ??  TimeOfDay(hour: widget.date.hour, minute: widget.date.minute),
+                              initialTime: time ??
+                                  TimeOfDay(
+                                      hour: widget.taskdata.task_date_time.hour,
+                                      minute: widget
+                                          .taskdata.task_date_time.minute),
                             );
 
                             if (picktime == null) {
-                              _timeController.clear();
+                              //_timeController.clear();
                             } else {
                               time = picktime;
 
@@ -206,9 +213,6 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                       ),
                     ],
                   ),
-
-                  
-
                 ],
               ),
             ),
@@ -218,44 +222,35 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
     );
   }
 
-  /* Future<TaskModel> updateTasktoModel(BuildContext ctx) async {
-    final _taskname = _inputController.text.trim();
-    final _date = _dateController.text.trim();
-    final _time = _timeController.text.trim();
-    final cidOut = await CategRepository.fetchFirstCid();
-    
-    final _currUserId = Repository.currentUserID;
+  Future<void> updateTasktoModel(BuildContext ctx) async {
+    final taskname = _inputController.text.trim();
 
-    final DateTime taskDateTime=DateTime(date!.year, date!.month, date!.day, time!.hour, time!.minute);
-
-    bool out = await TaskRepository.updateData(widget., catid, userid, tname, datetime);
-
-    if (out != true) {
-      var snackBar = const SnackBar(
-        content: Text(
-          'Oh Snap! Looks like task already exist!',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.all(20),
-        duration: Duration(seconds: 4),
-      );
-      ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+    final DateTime? taskDateTime;
+    TaskModel taskitem = widget.taskdata;
+    //final _currUserId = Repository.currentUserID;
+    if (date == null && time == null) {
+      taskDateTime = taskitem.task_date_time;
+    } else if (date == null) {
+      taskDateTime = DateTime(
+          taskitem.task_date_time.year,
+          taskitem.task_date_time.month,
+          taskitem.task_date_time.day,
+          time!.hour,
+          time!.minute);
     } else {
-      var snackBar = const SnackBar(
-        content: Text(
-          'Success',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.green,
-        padding: EdgeInsets.all(20),
-        duration: Duration(seconds: 4),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      taskDateTime = DateTime(date!.year, date!.month, date!.day,
+          taskitem.task_date_time.hour, taskitem.task_date_time.minute);
+    }
+
+    final out = await TaskRepository.updateData(taskitem.tid!,
+        taskitem.category_id, taskitem.user_id, taskname, taskDateTime);
+
+    if (out.isNotEmpty) {
+      snackBarWidget(ctx, 'Oh Snap!Something Went Wrong!', Colors.red);
+    } else {
+      snackBarWidget(ctx, 'Update Success!', Colors.green);
     }
 
     debugPrint(out.toString());
-
-    //return _taskObject;
-  } */
+  }
 }

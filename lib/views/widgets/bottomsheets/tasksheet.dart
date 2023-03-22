@@ -267,8 +267,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
 
   Future<TaskModel> addTasktoModel(BuildContext ctx) async {
     final _taskname = _inputController.text.trim();
-    final _date = _dateController.text.trim();
-    final _time = _timeController.text.trim();
+    
     final cidOut = await CategRepository.fetchFirstCid();
     final _logoindex =
         selectedChoiceIndex == 1 ? cidOut[0]['cid'] : selectedChoiceIndex;

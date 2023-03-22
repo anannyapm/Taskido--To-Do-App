@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/views/widgets/snackbar.dart';
 
 import '../../../dbfunctions/repository.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
@@ -91,15 +92,8 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               IconButton(
                 onPressed: () {
                   widget.ifcomplete?
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          'Task marked as Completed cannot be editted!',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.all(20),
-      )):
-                  viewModel.bottomSheetBuilder(UpdateTaskSheetWidget(taskName: widget.data.task_name, date: widget.data.task_date_time), context);
+                  snackBarWidget(context, 'Task marked as Completed cannot be editted!', Colors.red):
+                  viewModel.bottomSheetBuilder(UpdateTaskSheetWidget(taskdata: widget.data), context);
                 },
                 icon: const Icon(Icons.edit),
                 color:widget.ifcomplete?Color.fromARGB(127, 0, 0, 0): Color(0xff011638),
