@@ -70,11 +70,22 @@ class AppViewModel extends ChangeNotifier {
     pendingList.clear();
     var now = DateTime.now();
     taskModelList.forEach((element) {
-      if (element.task_date_time.isBefore(DateTime(now.year,now.month,now.day+1)) &&
+      if (element.task_date_time
+              .isBefore(DateTime(now.year, now.month, now.day + 1)) &&
           element.isCompleted == 0) {
         pendingList.add(element);
       }
     });
+  }
+
+  int pendingTodayCount(int catId) {
+    int count = 0;
+    for (var value in pendingList) {
+      if (value.category_id == catId) {
+        count++;
+      }
+    }
+    return count;
   }
 
   getCategoryId(String catName) {

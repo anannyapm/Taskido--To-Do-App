@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/functions/string_extensions.dart';
@@ -19,7 +17,7 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      return Container(
+      return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,9 +32,9 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                 ),
               ),
             ),
-            viewModel.pendingList.length != 0
+            viewModel.pendingList.isNotEmpty
                 ? Container(
-                  margin: EdgeInsets.only(left: 20),
+                    margin: const EdgeInsets.only(left: 20),
                     height: 140,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -56,29 +54,50 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                               borderRadius: BorderRadius.circular(20)),
                           margin: const EdgeInsets.fromLTRB(0, 10, 20, 5),
                           child: Container(
-                            //decoration: BoxDecoration(color: Color.fromARGB(26, 1, 22, 56)),
-                            //decoration: BoxDecoration(gradient: LinearGradient(colors: [Color.fromARGB(27, 18, 5, 82),Color.fromARGB(55, 0, 169, 166)])),
-                            decoration: BoxDecoration(gradient: LinearGradient(colors: [Color.fromARGB(12, 18, 5, 82),Color.fromARGB(33, 0, 169, 166)])),
-                            padding: const EdgeInsets.only(left: 20, right: 20,top: 5,bottom: 5),
+                            decoration: const BoxDecoration(
+                                gradient: LinearGradient(colors: [
+                              Color.fromARGB(12, 18, 5, 82),
+                              Color.fromARGB(33, 0, 169, 166)
+                            ])),
+                            padding: const EdgeInsets.only(
+                                left: 20, right: 20, top: 5, bottom: 5),
                             child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(categoryName.toTitleCase(),style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500,color: Color.fromARGB(255, 131, 130, 130)),),
-                                  Text(item.task_name.toTitleCase(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,color: Color.fromARGB(255, 0, 0, 0))),
+                                  Text(
+                                    categoryName.toTitleCase(),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color:
+                                            Color.fromARGB(255, 131, 130, 130)),
+                                  ),
+                                  Text(item.task_name.toTitleCase(),
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w800,
+                                          color: Color.fromARGB(255, 0, 0, 0))),
                                   Row(
                                     children: [
                                       Icon(Icons.circle,
                                           size: 10,
-                                          color: (item.task_date_time !=
-                                                  DateTime.now())
+                                          color: (item.task_date_time
+                                                  .isBefore(DateTime.now()))
                                               ? Colors.red
                                               : Colors.green),
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(DateFormat('dd/MM/yyyy hh:mm aaa')
-                                          .format(item.task_date_time),style: TextStyle(fontSize: 12,fontWeight: FontWeight.w500,color: Color.fromARGB(255, 147, 147, 147)))
+                                      Text(
+                                          DateFormat('dd/MM/yyyy hh:mm aaa')
+                                              .format(item.task_date_time),
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: Color.fromARGB(
+                                                  255, 147, 147, 147)))
                                     ],
                                   )
                                 ]),
@@ -90,7 +109,7 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                   )
                 : Align(
                     alignment: Alignment.center,
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 60,
                       child: Card(
@@ -100,16 +119,11 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                               borderRadius: BorderRadius.circular(12.5)),
                           color: const Color.fromARGB(13, 1, 22, 56),
                           margin: const EdgeInsets.all(10),
-                          child: Container(
-                              /* decoration: BoxDecoration(
-              gradient: LinearGradient(colors: [Color(0xff011638),Colors.black,Color(0xff00a9a5)])
-
-                    ), */
-                              child: const Center(
-                                  child: Text(
+                          child: const Center(
+                              child: Text(
                             'Yay! No PendingTasks...',
                             style: TextStyle(color: Color(0xff011638)),
-                          )))),
+                          ))),
                     ),
                   )
           ],

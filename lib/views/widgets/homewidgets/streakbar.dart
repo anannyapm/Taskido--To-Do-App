@@ -52,14 +52,10 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
                       return const LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Color(0xffFFFFFF), Color(0xffFF1F00)],
+                        colors: [Color(0xffFFFFFF), Color.fromARGB(255, 249, 186, 14)],
                       ).createShader(bounds);
                     },
-                    child: Icon(
-                      streakdata[1],
-                      color: Colors.white,
-                      size: 25,
-                    ),
+                    child: streakdata[1],
                   ),
                 ),
               ],
@@ -72,13 +68,29 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
 
   List streakMessage(double streakval) {
     if (streakval == 0) {
-      return ['Time to start with tasks!', FontAwesome5.smile_beam];
+      return ['Time to start with tasks!', Icon(
+                      FontAwesome5.smile_beam,
+                      color: Color.fromARGB(255, 248, 206, 0),
+                      size: 25,
+                    )];
     } else if (streakval <= 0.30) {
-      return ['You are lagging behind', FontAwesome5.sad_tear];
+      return ['You are lagging behind',Icon(
+                      FontAwesome5.sad_tear,
+                      color: Color.fromARGB(255, 246, 177, 137),
+                      size: 25,
+                    ) ];
     } else if (streakval <= 0.6) {
-      return ['Good Going my friend', FontAwesome5.smile_wink];
+      return ['Good Going my friend', Icon(
+                      FontAwesome5.smile_wink,
+                      color: Colors.white,
+                      size: 25,
+                    ) ];
     } else {
-      return ['You are on Streak', FontAwesome5.fire];
+      return ['You are on Streak', Icon(
+                      FontAwesome5.fire,
+                      color: Color.fromARGB(255, 255, 114, 71),
+                      size: 25,
+                    ) ];
     }
   }
 }

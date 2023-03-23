@@ -13,6 +13,14 @@ popupDialogueBox(VoidCallback function, BuildContext ctx, String message) {
           actionsOverflowButtonSpacing: 20,
           actions: [
             TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  "NO",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                )),
+            TextButton(
               onPressed: () {
                 function();
                 Navigator.of(context).pop();
@@ -21,14 +29,7 @@ popupDialogueBox(VoidCallback function, BuildContext ctx, String message) {
                   style: TextStyle(
                       color: Colors.red, fontWeight: FontWeight.w600)),
             ),
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  "NO",
-                  style: TextStyle(fontWeight: FontWeight.w600),
-                )),
+            
           ],
         );
       });
