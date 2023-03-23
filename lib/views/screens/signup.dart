@@ -9,6 +9,7 @@ import 'package:todoapp/models/usermodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
+import 'package:todoapp/views/widgets/avatarselector.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
 import '../../main.dart';
@@ -31,15 +32,11 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
 
   @override
   Widget build(BuildContext context) {
- 
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-       SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(
-         statusBarColor: Color.fromARGB(255, 255, 255, 255),
-         statusBarIconBrightness: Brightness.dark,
-        
-      )
-    );
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Color.fromARGB(255, 255, 255, 255),
+        statusBarIconBrightness: Brightness.dark,
+      ));
       return SafeArea(
         child: Container(
           decoration: const BoxDecoration(
@@ -70,7 +67,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                           color: Colors.black,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>OnboardingHome()));
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => OnboardingHome()));
                         },
                       ),
                     ),
@@ -93,7 +92,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                   child: Stack(
                                     alignment: Alignment.bottomRight,
                                     children: [
-                                      viewModel.profilePhoto?.path == null
+                                      viewModel.profilePhoto == ''
                                           ? const CircleAvatar(
                                               radius: 35,
                                               backgroundColor:
@@ -111,9 +110,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                                       255, 9, 9, 9),
                                               child: CircleAvatar(
                                                 radius: 33,
-                                                backgroundImage: FileImage(File(
+                                                backgroundImage: AssetImage(
                                                     viewModel
-                                                        .profilePhoto!.path)),
+                                                        .profilePhoto) /*  FileImage(File(
+                                                    viewModel
+                                                        .profilePhoto!.path)) */
+                                                ,
                                               ),
                                             ),
                                       Container(
@@ -137,7 +139,36 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                             ),
                                             padding: EdgeInsets.zero,
                                             onPressed: () {
-                                              viewModel.getPhoto();
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GridView.count(
+                                                      crossAxisCount: 2,
+                                                      children: List.generate(
+                                                          avatarImages.length,
+                                                          (index) {
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            viewModel.setProfile(
+                                                                avatarImages[
+                                                                    index]);
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: Card(
+                                                            child: Container(
+                                                              child: Image(
+                                                                  image: AssetImage(
+                                                                      avatarImages[
+                                                                          index])),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }),
+                                                    );
+                                                  });
+                                              //avatarSelector(context);
+                                              //viewModel.getPhoto();
                                             },
                                           ),
                                         ),
@@ -210,19 +241,18 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
     });
   }
 
-  Future<void> addUserToModel(File? profilephoto, BuildContext ctx) async {
+  Future<void> addUserToModel(String profilephoto, BuildContext ctx) async {
     final _name = _usernameController.text.trim();
     final _email = _emailController.text.trim();
-    File? _photo = File('assets/images/stacked-steps-haikei.png');
+    String _photo = 'assets/images/stacked-steps-haikei.png';
 
     final _image = profilephoto;
 
-    if (_image != null) {
+    if (_image != '') {
       _photo = _image;
     }
 
-    final _userObject =
-        UserModel(name: _name, email: _email, photo: _photo.path.toString());
+    final _userObject = UserModel(name: _name, email: _email, photo: _photo);
 
     /* print("$_name $_email before calling savedata"); */
 
@@ -232,12 +262,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
           await Repository.fetchID(_email);
       final _currentUserId = uidFetchOutput[0]['uid'];
       print(_currentUserId);
-      await Repository.setCurrentUser(
-          _currentUserId, _name, _email, _photo.path.toString());
+      await Repository.setCurrentUser(_currentUserId, _name, _email, _photo);
 
       final _sharedPrefs = await SharedPreferences.getInstance();
       await _sharedPrefs.setString(SAVE_KEY_NAME, _email);
-   
 
       Navigator.of(ctx).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const ScreenHome()),

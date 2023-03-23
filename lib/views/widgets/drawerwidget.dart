@@ -46,13 +46,13 @@ class DrawerWidget extends StatelessWidget {
                       fontWeight: FontWeight.w400, color: Color(0xff011638)),
                 ),
               ),
-              currentAccountPicture: viewModel.profilePhoto?.path == null
+              currentAccountPicture: viewModel.profilePhoto == ''
                   ? CircleAvatar(
                       backgroundImage: AssetImage(Repository.currentUserPhoto),
                     )
                   : CircleAvatar(
                       backgroundImage:
-                          FileImage(File(Repository.currentUserPhoto)),
+                          AssetImage(Repository.currentUserPhoto),
                     ),
             ),
             ListTile(

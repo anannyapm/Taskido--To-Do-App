@@ -359,7 +359,7 @@ class AppViewModel extends ChangeNotifier {
     );
   }
 
-  File? profilePhoto;
+  /*  File? profilePhoto;
   Future<void> getPhoto() async {
     final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
     final directoryPath = await getExternalStorageDirectory();
@@ -370,6 +370,14 @@ class AppViewModel extends ChangeNotifier {
       final imageFile = await photoTemp.copy('$path/image1.png');
 
       profilePhoto = imageFile;
+      notifyListeners();
+    }
+  } */
+
+  String profilePhoto = '';
+  void setProfile(String photo) {
+    if (photo.isNotEmpty) {
+      profilePhoto = photo;
       notifyListeners();
     }
   }

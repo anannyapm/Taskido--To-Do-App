@@ -32,7 +32,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                   child: SizedBox(
                       width: 75,
                       height: 75,
-                      child: viewModel.profilePhoto?.path == null
+                      child: viewModel.profilePhoto == ''
                           ? Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
@@ -45,8 +45,8 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   image: DecorationImage(
-                                      image: FileImage(
-                                          File(Repository.currentUserPhoto)),
+                                      image:AssetImage(Repository.currentUserPhoto) /* FileImage(
+                                          File(Repository.currentUserPhoto)) */,
                                       fit: BoxFit.cover)),
                             )),
                 ),
