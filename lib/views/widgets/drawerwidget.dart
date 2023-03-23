@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/screens/privacypolicy.dart';
+import 'package:todoapp/views/widgets/popupdialogue.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../dbfunctions/repository.dart';
@@ -23,7 +24,6 @@ class DrawerWidget extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               margin: const EdgeInsets.all(0),
-
               decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/images/drawerbg.png'),
@@ -70,7 +70,8 @@ class DrawerWidget extends StatelessWidget {
               ),
               title: const Text('Privacy Policy'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: ((context) => PrivacyPolicy())));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: ((context) => PrivacyPolicy())));
               },
             ),
             ListTile(
@@ -88,16 +89,18 @@ class DrawerWidget extends StatelessWidget {
               ),
               title: const Text('Contact Us'),
               onTap: () async {
-                String email = Uri.encodeComponent("anannyaanilpm@gmail.com.com");
-                      String subject = Uri.encodeComponent("Info about To Do App");
-                      String body = Uri.encodeComponent("Hi There!");
-                      debugPrint("Mail Subject:$subject"); 
-                      Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
-                      if (await launchUrl(mail)) {
-                          //email app opened
-                      }else{
-                          //email app is not opened
-                      }
+                String email =
+                    Uri.encodeComponent("anannyaanilpm@gmail.com.com");
+                String subject = Uri.encodeComponent("Info about To Do App");
+                String body = Uri.encodeComponent("Hi There!");
+                debugPrint("Mail Subject:$subject");
+                Uri mail =
+                    Uri.parse("mailto:$email?subject=$subject&body=$body");
+                if (await launchUrl(mail)) {
+                  //email app opened
+                } else {
+                  //email app is not opened
+                }
                 //Navigator.pop(context);
               },
             ),
@@ -120,12 +123,14 @@ class DrawerWidget extends StatelessWidget {
               ),
               title: const Text('Sign Out'),
               onTap: () async {
-                final _sharedPrefs = await SharedPreferences.getInstance();
-                await _sharedPrefs.clear();
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => const OnboardingHome()),
-                    (route) => false);
+                popupDialogueBox(() async {
+                  final _sharedPrefs = await SharedPreferences.getInstance();
+                  await _sharedPrefs.clear();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const OnboardingHome()),
+                      (route) => false);
+                }, context, 'Are you sure you want to Sign Out?');
               },
             ),
           ],

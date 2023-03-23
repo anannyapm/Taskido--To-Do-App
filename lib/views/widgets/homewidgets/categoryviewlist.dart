@@ -52,6 +52,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: ((ctx) => CategoryGraph(
+                                      totalTodayCount: viewModel.todayTotalTasks(catItem.cid!),
                                         categoryName: catItem.category_name,
                                         pendingTodayCount: viewModel.pendingTodayCount(catItem.cid!),
                                         completedCount: viewModel.cBasedCompletdTaskCount(catItem.cid!),

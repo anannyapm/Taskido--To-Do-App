@@ -25,9 +25,9 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
             Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                margin: const EdgeInsets.only(left: 25, right: 25, top: 15),
+                margin: const EdgeInsets.only(left: 25, right: 25, top: 20),
                 child: const Text(
-                  'Pending Tasks',
+                  'Today\'s Pending Tasks',
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                 ),
               ),
@@ -112,18 +112,24 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 60,
-                      child: Card(
+                      child:const Center(
+                              child: Text(
+                            'Yay! No PendingTasks',
+                            style: TextStyle(color: Color(0xff011638),fontSize: 16),
+                          )),
+                      /*  Card(
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.5)),
-                          color: const Color.fromARGB(13, 1, 22, 56),
+                          //color: const Color.fromARGB(13, 1, 22, 56),
+                          
                           margin: const EdgeInsets.all(10),
                           child: const Center(
                               child: Text(
                             'Yay! No PendingTasks...',
                             style: TextStyle(color: Color(0xff011638)),
-                          ))),
+                          ))), */
                     ),
                   )
           ],

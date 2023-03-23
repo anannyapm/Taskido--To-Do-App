@@ -53,6 +53,7 @@ class _ScreenHomeState extends State<ScreenHome> {
           }
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false ,
             bottomNavigationBar: const BottomNavWidget(),
             
             body: SafeArea(

@@ -93,7 +93,8 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                 ),
 
                 //choice chip for select
-                Row(
+                Wrap(
+
                   children:
                       List.generate(IconList.iconValueList.length, (index) {
                     return ChoiceChip(

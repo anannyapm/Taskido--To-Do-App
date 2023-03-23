@@ -10,7 +10,7 @@ import '../widgets/homewidgets/categoryviewlist.dart';
 import '../widgets/homewidgets/progressindicator.dart';
 import '../widgets/homewidgets/streakbar.dart';
 import '../widgets/homewidgets/toppannel.dart';
-import '../widgets/homewidgets/upcomingcard.dart';
+import '../widgets/homewidgets/upcomingtaskscard.dart';
 
 final GlobalKey<ScaffoldState> drawerkey = GlobalKey();
 
@@ -84,7 +84,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,
                                       color:
-                                          Color.fromARGB(255, 1, 111, 110)),
+                                          Color(0xff011638)),
                                 ),
                                 Image.asset(
                                   'assets/images/empty.png',

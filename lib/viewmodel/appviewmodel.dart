@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
+import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/models/categorymodel.dart';
 
 import 'package:todoapp/models/taskmodel.dart';
@@ -53,16 +54,17 @@ class AppViewModel extends ChangeNotifier {
     await TaskRepository.getAllData(Repository.currentUserID).then((value) {
       taskModelList.clear();
       if (value.isEmpty) {
+        pendingList.clear();
         notifyListeners();
       }
       for (var map in value) {
         if (map.user_id == Repository.currentUserID) {
           taskModelList.add(map);
+          setPendingList();
           notifyListeners();
         }
       }
     }).catchError((e) => debugPrint(e.toString()));
-    setPendingList();
   }
 
   List<TaskModel> pendingList = <TaskModel>[];
@@ -76,6 +78,22 @@ class AppViewModel extends ChangeNotifier {
         pendingList.add(element);
       }
     });
+    if (pendingList.isNotEmpty) {
+      pendingList.sort((a, b) => a.task_date_time.compareTo(b.task_date_time));
+    }
+  }
+
+  int todayTotalTasks(int catId) {
+    int count = 0;
+    var now = DateTime.now();
+    for (var value in taskModelList) {
+      if (value.task_date_time
+              .isBefore(DateTime(now.year, now.month, now.day + 1)) &&
+          value.category_id == catId) {
+        count++;
+      }
+    }
+    return count;
   }
 
   int pendingTodayCount(int catId) {
@@ -160,8 +178,10 @@ class AppViewModel extends ChangeNotifier {
     } else {
       for (var element in taskModelList) {
         if (element.task_name
+            .trim()
+            .removeAllWhitespace()
             .toLowerCase()
-            .contains(query.trim().toLowerCase())) {
+            .contains(query.trim().removeAllWhitespace().toLowerCase())) {
           queryResultList.add(element.task_name);
         }
       }

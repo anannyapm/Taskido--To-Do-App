@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 
 class IconList {
@@ -35,8 +36,28 @@ class IconList {
       )
     ,
     const Icon(
-        Icons.sports_gymnastics,
-        color: Color(0xFF1C0800),
+        FontAwesome5.walking,
+        color: Color.fromARGB(255, 88, 85, 255),
+        size: 20,
+      )
+    ,const Icon(
+        FontAwesome.book,
+        color: Color.fromARGB(255, 244, 20, 114),
+        size: 20,
+      )
+    ,const Icon(
+        FontAwesome5.shopping_cart,
+        color: Color.fromARGB(255, 0, 183, 255),
+        size: 20,
+      )
+    ,const Icon(
+        FontAwesome.code,
+        color: Color.fromARGB(255, 234, 140, 99),
+        size: 20,
+      )
+    ,const Icon(
+        FontAwesome.phone,
+        color: Color.fromARGB(255, 236, 174, 2),
         size: 20,
       )
     ,
