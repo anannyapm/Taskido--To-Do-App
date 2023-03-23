@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todoapp/constants/iconlist.dart';
-import 'package:todoapp/dbfunctions/repository.dart';
+
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/widgets/snackbar.dart';
 
-import '../../../dbfunctions/categorydbrepo.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
 
-import '../../../models/categorymodel.dart';
 import '../../../models/taskmodel.dart';
 
 class UpdateTaskSheetWidget extends StatefulWidget {
@@ -244,7 +241,7 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
 
     final out = await TaskRepository.updateData(taskitem.tid!,
         taskitem.category_id, taskitem.user_id, taskname, taskDateTime);
-
+    
     if (out.isNotEmpty) {
       snackBarWidget(ctx, 'Oh Snap!Something Went Wrong!', Colors.red);
     } else {

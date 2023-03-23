@@ -62,6 +62,19 @@ class AppViewModel extends ChangeNotifier {
         }
       }
     }).catchError((e) => debugPrint(e.toString()));
+    setPendingList();
+  }
+
+  List<TaskModel> pendingList = <TaskModel>[];
+  void setPendingList() {
+    pendingList.clear();
+    var now = DateTime.now();
+    taskModelList.forEach((element) {
+      if (element.task_date_time.isBefore(DateTime(now.year,now.month,now.day+1)) &&
+          element.isCompleted == 0) {
+        pendingList.add(element);
+      }
+    });
   }
 
   getCategoryId(String catName) {
@@ -181,7 +194,7 @@ class AppViewModel extends ChangeNotifier {
       }
       displayFilterDetail = DateFormat('EEE, M/d/y').format(today);
     } else if (filterSelection.contains('Tomorrow')) {
-            setDateFilter(null, null);
+      setDateFilter(null, null);
 
       DateTime tomorrow = DateTime.now().add(const Duration(days: 1));
       filteredList.clear();
@@ -319,12 +332,11 @@ class AppViewModel extends ChangeNotifier {
   Future<void> getPhoto() async {
     final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
     final directoryPath = await getExternalStorageDirectory();
-     final path = directoryPath!.path;
+    final path = directoryPath!.path;
     if (photo == null) {
     } else {
-
       final photoTemp = File(photo.path);
-     final imageFile = await photoTemp.copy('$path/image1.png');
+      final imageFile = await photoTemp.copy('$path/image1.png');
 
       profilePhoto = imageFile;
       notifyListeners();

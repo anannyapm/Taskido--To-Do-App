@@ -10,6 +10,7 @@ import '../widgets/homewidgets/categoryviewlist.dart';
 import '../widgets/homewidgets/progressindicator.dart';
 import '../widgets/homewidgets/streakbar.dart';
 import '../widgets/homewidgets/toppannel.dart';
+import '../widgets/homewidgets/upcomingcard.dart';
 
 final GlobalKey<ScaffoldState> drawerkey = GlobalKey();
 
@@ -40,13 +41,13 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return SafeArea(
           child: Container(
-              decoration: const BoxDecoration(
+             /*  decoration: const BoxDecoration(
                   color: Colors.white,
                   image: DecorationImage(
                     scale: 0.8,
-                    alignment: Alignment(0.95, -1.0),
+                    alignment: Alignment(0.99, -1.0),
                     image: AssetImage('assets/images/home_lineart.png'),
-                  )),
+                  )) */
               child: Scaffold(
                 key: drawerkey,
                 backgroundColor: Colors.transparent,
@@ -57,15 +58,16 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                       const TopPanelWidget(),
                       const StreakBarWidget(),
                       const ProgressIndicatorWidget(),
+                      const UpcomingTasksCard(),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
                           margin: const EdgeInsets.only(
                               left: 25, right: 25, top: 15),
                           child: const Text(
-                            'Tasks Dashboard',
+                            'My Categories',
                             style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 24),
+                                fontWeight: FontWeight.w700, fontSize: 20),
                           ),
                         ),
                       ),
@@ -73,26 +75,29 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                           ? Container(
                               margin: const EdgeInsets.all(10),
                               padding: const EdgeInsets.all(10),
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 255, 255, 255)),
+                              /* decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 255, 255)) */
                               child: Column(children: [
                                 const Text(
-                                  'Add a category to start..',
+                                  'Add a category to start',
                                   style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
                                       color:
                                           Color.fromARGB(255, 1, 111, 110)),
                                 ),
                                 Image.asset(
                                   'assets/images/empty.png',
-                                  scale: 3,
+                                  scale: 4,
                                 ),
                               ]),
                             )
                           : const CategoryViewWidget(),
+                          
                     ],
+                    
                   ),
+                  
                 ),
               )));
     });

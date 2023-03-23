@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
+import 'package:todoapp/functions/string_extensions.dart';
 
 import 'package:todoapp/models/categorymodel.dart';
 
@@ -185,7 +186,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                         width: 5,
                                       ),
                                       Text(
-                                        snapshot.data![index].category_name,
+                                        snapshot.data![index].category_name.toTitleCase(),
                                       )
                                     ],
                                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/widgets/snackbar.dart';
 
 import '../../../dbfunctions/repository.dart';
@@ -44,7 +45,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
             },
           ),
           title: (widget.ifcomplete)
-              ? Text(widget.data.task_name,
+              ? Text(widget.data.task_name.toTitleCase(),
                   style: const TextStyle(
                       color: Color.fromARGB(127, 0, 0, 0),
                       decoration: TextDecoration.lineThrough,

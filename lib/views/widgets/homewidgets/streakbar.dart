@@ -26,12 +26,14 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
         child: Container(
           constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.85),
-          height: 55,
+          height: 50,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(25),
                   bottomRight: Radius.circular(25)),
-              color: Color(0xff011638)),
+              //color: Color(0xff011638)
+              gradient: LinearGradient(colors: [Color(0xff00a9a5),Color(0xff011638),Colors.black])
+              ),
           child: Container(
             margin: const EdgeInsets.only(left: 25),
             child: Row(
@@ -40,7 +42,7 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
                   streakdata[0],
                   style: const TextStyle(
                       fontWeight: FontWeight.w700,
-                      fontSize: 22,
+                      fontSize: 20,
                       color: Colors.white),
                 ),
                 Container(
