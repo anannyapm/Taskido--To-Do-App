@@ -11,24 +11,29 @@ List avatarImages = [
   'assets/images/avatars08.png',
 ];
 
-avatarSelector(BuildContext ctx) {
+/* avatarSelector(BuildContext ctx) {
   return showDialog(
       context: ctx,
       builder: (context) {
-        return GridView.count(
-          crossAxisCount: 2,
-          children: List.generate(avatarImages.length, (index) {
-            return GestureDetector(
-              onTap: () {
+        return SimpleDialog(
+          backgroundColor: Colors.white,
+          children: [
+            GridView.count(
+              crossAxisCount: 2,
+              children: List.generate(avatarImages.length, (index) {
+                return GestureDetector(
+                  onTap: () {
+                    
+                  },
+                  child: Card(
+                    //clipBehavior: Clip.antiAliasWithSaveLayer,
                 
-              },
-              child: Card(
-                child: Container(
-                  child: Image(image: AssetImage(avatarImages[index])),
-                ),
-              ),
-            );
-          }),
-        );
+                    child: Image(image: AssetImage(avatarImages[index])),
+                  ),
+                );
+              }),
+            ),
+        ]);
       });
 }
+ */

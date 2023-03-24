@@ -379,6 +379,8 @@ class AppViewModel extends ChangeNotifier {
     if (photo.isNotEmpty) {
       profilePhoto = photo;
       notifyListeners();
+    } else {
+      profilePhoto = '';
     }
   }
 }

@@ -28,6 +28,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
             Row(
               children: [
                 Container(
+                  
                   margin: const EdgeInsets.all(15),
                   child: SizedBox(
                       width: 75,
@@ -36,6 +37,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                           ? Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
+                                  color: Colors.white,
                                   image: DecorationImage(
                                       image: AssetImage(
                                           Repository.currentUserPhoto),

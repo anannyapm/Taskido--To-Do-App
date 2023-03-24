@@ -69,7 +69,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => OnboardingHome()));
+                                  builder: (context) =>
+                                      const OnboardingHome()));
                         },
                       ),
                     ),
@@ -95,27 +96,21 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       viewModel.profilePhoto == ''
                                           ? const CircleAvatar(
                                               radius: 35,
-                                              backgroundColor:
-                                                  Color.fromARGB(255, 9, 9, 9),
+                                              backgroundColor:Color(0xFF565656),
                                               child: CircleAvatar(
-                                                radius: 33,
+                                                radius: 34,
                                                 backgroundImage: AssetImage(
                                                     'assets/images/stacked-steps-haikei.png'),
                                               ),
                                             )
                                           : CircleAvatar(
                                               radius: 35,
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                      255, 9, 9, 9),
+                                              backgroundColor:const Color(0xFF565656),
                                               child: CircleAvatar(
-                                                radius: 33,
+                                                radius: 34,
+                                                backgroundColor: Colors.white,
                                                 backgroundImage: AssetImage(
-                                                    viewModel
-                                                        .profilePhoto) /*  FileImage(File(
-                                                    viewModel
-                                                        .profilePhoto!.path)) */
-                                                ,
+                                                    viewModel.profilePhoto),
                                               ),
                                             ),
                                       Container(
@@ -141,34 +136,63 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                             onPressed: () {
                                               showDialog(
                                                   context: context,
-                                                  builder: (context) {
-                                                    return GridView.count(
-                                                      crossAxisCount: 2,
-                                                      children: List.generate(
-                                                          avatarImages.length,
-                                                          (index) {
-                                                        return GestureDetector(
-                                                          onTap: () {
-                                                            viewModel.setProfile(
-                                                                avatarImages[
-                                                                    index]);
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Card(
-                                                            child: Container(
-                                                              child: Image(
-                                                                  image: AssetImage(
-                                                                      avatarImages[
-                                                                          index])),
-                                                            ),
+                                                  builder: (BuildContext ctx) {
+                                                    return AlertDialog(
+                                                      title: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          const Text(
+                                                              'Select your Avatar'),
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                viewModel
+                                                                    .setProfile(
+                                                                        'assets/images/stacked-steps-haikei.png');
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              child: const Text('Clear')),
+                                                        ],
+                                                      ),
+                                                      content: SizedBox(
+                                                        height: MediaQuery.of(context).size.height*0.6,
+                                                        width: MediaQuery.of(context).size.width*0.8,
+                                                        child: GridView(
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              const ClampingScrollPhysics(),
+                                                          gridDelegate:
+                                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount: 2,
                                                           ),
-                                                        );
-                                                      }),
+                                                          children:
+                                                              List.generate(
+                                                                  avatarImages
+                                                                      .length,
+                                                                  (index) {
+                                                            return GestureDetector(
+                                                              onTap: () {
+                                                                viewModel.setProfile(
+                                                                    avatarImages[
+                                                                        index]);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: Card(
+                                                                child: Image(
+                                                                    image: AssetImage(
+                                                                        avatarImages[
+                                                                            index])),
+                                                              ),
+                                                            );
+                                                          }),
+                                                        ),
+                                                      ),
                                                     );
                                                   });
-                                              //avatarSelector(context);
-                                              //viewModel.getPhoto();
                                             },
                                           ),
                                         ),
@@ -206,6 +230,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
 
                                             _usernameController.text = '';
                                             _emailController.text = '';
+                                            viewModel.setProfile('');
+                                            debugPrint(
+                                                'Profile is ${viewModel.profilePhoto}');
                                           } else {
                                             debugPrint('Empty fields found');
                                           }
