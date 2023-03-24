@@ -57,7 +57,7 @@ class DrawerWidget extends StatelessWidget {
               leading: const Icon(
                 Icons.share,
               ),
-              title: const Text('Share To Do App'),
+              title: const Text('Share Taskido App'),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -89,7 +89,7 @@ class DrawerWidget extends StatelessWidget {
               onTap: () async {
                 String email =
                     Uri.encodeComponent("anannyaanilpm@gmail.com.com");
-                String subject = Uri.encodeComponent("Info about To Do App");
+                String subject = Uri.encodeComponent("Info about Taskido App");
                 String body = Uri.encodeComponent("Hi There!");
                 debugPrint("Mail Subject:$subject");
                 Uri mail =
@@ -109,7 +109,7 @@ class DrawerWidget extends StatelessWidget {
               applicationIcon: Icon(
                 Icons.local_play,
               ),
-              applicationName: 'To Do App',
+              applicationName: 'Taskido App',
               applicationVersion: '1.0',
               applicationLegalese: '© Anannya P M',
               aboutBoxChildren: [],

@@ -51,7 +51,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
                 child: Column(
                   children: const [
                     GradientTextWidget(
-                      textValue: 'To Do App',
+                      textValue: 'Taskido App',
                       textSize: 34,
                       weight: FontWeight.w700,
                     ),

@@ -1,5 +1,5 @@
 # todoapp
-This To Do App is created using flutter and SQFLITE as database.
+This Taskido App is created using flutter and SQFLITE as database.
 
 Provider is used for state management.
 

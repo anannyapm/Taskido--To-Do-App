@@ -51,7 +51,7 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
                   margin: const EdgeInsets.all(30),
                   child: const Center(
                     child: Text(
-                      "To Do App",
+                      "Taskido App",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
