@@ -69,9 +69,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
                     child: GradientBox(
                   colorStart: const Color(0xff011638),
                   colorEnd: const Color(0xff00A9A5),
-                  gradFunction: () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) => const OnboardingHome())),
+                  gradFunction: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>OnboardingHome()),(route)=>false),
+                      /* MaterialPageRoute(
+                          builder: (context) => const OnboardingHome()) */
                   textVal: "Let's Start",
                   textColor: Colors.white,
                 )),

@@ -19,13 +19,14 @@ class OnboardingHome extends StatelessWidget {
     );
     return SafeArea(
       child: Container(
-          decoration: const BoxDecoration(
+        color: Colors.white,
+          /* decoration: const BoxDecoration(
               color: Colors.white,
               image: DecorationImage(
                   alignment: Alignment.topCenter,
                   image: AssetImage('assets/images/screentwobg.png'),
                   scale: 0.9,
-                  fit: BoxFit.contain)),
+                  fit: BoxFit.contain)) */
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
@@ -33,9 +34,16 @@ class OnboardingHome extends StatelessWidget {
             body: Column(
               children: [
                 Expanded(
-                  flex: 9,
+                  flex: 10,
                   child: Container(
                     height: (MediaQuery.of(context).size.height) * 0.7,
+                    decoration: const BoxDecoration(
+              color: Colors.white,
+              image: DecorationImage(
+                  alignment: Alignment.topCenter,
+                  image: AssetImage('assets/images/screentwobg.png'),
+                  scale: 0.9,
+                  fit: BoxFit.contain))
                   ),
                 ),
                 Expanded(
@@ -104,52 +112,55 @@ class OnboardingHome extends StatelessWidget {
                     colorEnd: const Color.fromARGB(255, 4, 209, 206),
                     gradFunction: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                            builder: (context) => const ScreenSignUp())),
-                    textVal: "Sign Up",
+                            builder: (context) => const ScreenLogin())),
+                    textVal: "Log In",
                     textColor: const Color(0xff011638),
                   )),
                 ),
                 Expanded(
                   flex: 1,
-                  child: TextButton(
-                    onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const ScreenLogin())),
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: const TextSpan(
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w300,
-                          height: 1.5,
-                          color: Color(0xff000000),
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: TextButton(
+                      onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => const ScreenSignUp())),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                      ),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: const TextSpan(
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w300,
+                            height: 1.5,
+                            color: Color(0xff000000),
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'New to Taskido?',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w300,
+                                height: 1.5,
+                                color: Color(0xbf011638),
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' ',
+                            ),
+                            TextSpan(
+                              text: 'Sign Up',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                height: 1.5,
+                                color: Color(0xff011638),
+                              ),
+                            ),
+                          ],
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'Already have an account?',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300,
-                              height: 1.5,
-                              color: Color(0xbf011638),
-                            ),
-                          ),
-                          TextSpan(
-                            text: ' ',
-                          ),
-                          TextSpan(
-                            text: 'Log In',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              height: 1.5,
-                              color: Color(0xff011638),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ),

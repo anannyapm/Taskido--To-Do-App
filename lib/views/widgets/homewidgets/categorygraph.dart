@@ -82,48 +82,59 @@ class _CategoryGraphState extends State<CategoryGraph> {
                 ),
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'Today\'s Progress',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                Indicator(
-                    color1: Color(0xFF00576D),
-                    text1: 'Completed Count',
-                    text2: 'Pending Count',
-                    color2: Color(0xFF00B3FF))
-              ],
+            Padding(
+              padding: const EdgeInsets.only(top: 10,bottom: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'Today\'s Progress',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  Indicator(
+                      color1: Color(0xFF00576D),
+                      text1: 'Completed Count',
+                      text2: 'Pending Count',
+                      color2: Color(0xFF00B3FF))
+                ],
+              ),
             ),
-
-            //Chart One -- Todays Progress
+            
+           
+            
+            //Chart One -- Overall Progress
             widget.totalTodayCount==0?const Padding(
-              padding: EdgeInsets.all(100),
+              padding: EdgeInsets.all(50),
               child: Center(child:Text('No Tasks Found',style: TextStyle(fontSize: 18),)),
             ): Expanded(
               child:pieChartWidget(pendingTodayPercent,  const Color(0xFF00576D), const Color(0xFF00B3FF), 0)
 
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'Overall Status',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                ),
-                Indicator(
-                    color1: Color(0xFF06D4B2),
-                    text1: 'Completed Count',
-                    text2: 'Pending Count',
-                    color2: Color(0xFF015D5D))
-              ],
+
+             SizedBox(height: 30,),
+            Padding(
+                            padding: const EdgeInsets.only(top: 10,bottom: 20),
+
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const [
+                  Text(
+                    'Overall Status',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  Indicator(
+                      color1: Color(0xFF06D4B2),
+                      text1: 'Completed Count',
+                      text2: 'Pending Count',
+                      color2: Color(0xFF015D5D))
+                ],
+              ),
             ),
             Expanded(
               child:widget.totalCount==0?const Padding(
-              padding: EdgeInsets.all(100),
+              padding: EdgeInsets.all(50),
               child: Center(child:Text('No Tasks Found',style: TextStyle(fontSize: 18),)),
             ):pieChartWidget(completedPercent,const Color(0xFF015D5D), const Color(0xFF06D4B2),1)
              
@@ -136,53 +147,56 @@ class _CategoryGraphState extends State<CategoryGraph> {
 
   Widget pieChartWidget(
       double valuePercent, Color colorComplete, Color colorPending,int chartid) {
-    return PieChart(PieChartData(
-        centerSpaceRadius: 0,
-        startDegreeOffset: 180,
-        borderData: FlBorderData(show: false),
-        sectionsSpace: 1,
-        pieTouchData: PieTouchData(
-          touchCallback: (FlTouchEvent event, pieTouchResponse) {
-            setState(() {
-              if (!event.isInterestedForInteractions ||
-                  pieTouchResponse == null ||
-                  pieTouchResponse.touchedSection == null) {
-                progresstouchedIndex = -1;
-                return;
-              }
-              progresstouchedIndex =
-                  pieTouchResponse.touchedSection!.touchedSectionIndex;
-            });
-          },
-        ),
-        sections: [
-          PieChartSectionData(
-            value: valuePercent,
-            color: colorPending,
-            radius: (valuePercent == 50 || valuePercent == 100)
-                ? 100
-                : 80,
-            titlePositionPercentageOffset: 0.55,
-            title:chartid==0? '${widget.pendingTodayCount}':'${widget.completedCount}',
-            titleStyle: const TextStyle(color: Colors.white),
-            borderSide: progresstouchedIndex == 0
-                ? const BorderSide(color: Colors.white, width: 6)
-                : const BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: PieChart(PieChartData(
+          centerSpaceRadius: 0,
+          startDegreeOffset: 180,
+          borderData: FlBorderData(show: false),
+          sectionsSpace: 1,
+          pieTouchData: PieTouchData(
+            touchCallback: (FlTouchEvent event, pieTouchResponse) {
+              setState(() {
+                if (!event.isInterestedForInteractions ||
+                    pieTouchResponse == null ||
+                    pieTouchResponse.touchedSection == null) {
+                  progresstouchedIndex = -1;
+                  return;
+                }
+                progresstouchedIndex =
+                    pieTouchResponse.touchedSection!.touchedSectionIndex;
+              });
+            },
           ),
-          PieChartSectionData(
-            value: 100 - valuePercent,
-            color: colorComplete,
-            radius: (100 - valuePercent == 50 ||
-                    100 - valuePercent == 100)
-                ? 100
-                : 90,
-            titlePositionPercentageOffset: 0.55,
-            title: chartid==0?'${widget.totalTodayCount - widget.pendingTodayCount}':'${widget.totalCount-widget.completedCount}',
-            titleStyle: const TextStyle(color: Colors.white),
-            borderSide: progresstouchedIndex == 1
-                ? const BorderSide(color: Colors.white, width: 6)
-                : const BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
-          ),
-        ]));
+          sections: [
+            PieChartSectionData(
+              value: valuePercent,
+              color: colorPending,
+              radius: (valuePercent == 50 || valuePercent == 100)
+                  ? 80
+                  : 60,
+              titlePositionPercentageOffset: 0.55,
+              title:chartid==0? '${widget.pendingTodayCount}':'${widget.completedCount}',
+              titleStyle: const TextStyle(color: Colors.white),
+              borderSide: progresstouchedIndex == 0
+                  ? const BorderSide(color: Colors.white, width: 6)
+                  : const BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
+            ),
+            PieChartSectionData(
+              value: 100 - valuePercent,
+              color: colorComplete,
+              radius: (100 - valuePercent == 50 ||
+                      100 - valuePercent == 100)
+                  ? 80
+                  : 60,
+              titlePositionPercentageOffset: 0.55,
+              title: chartid==0?'${widget.totalTodayCount - widget.pendingTodayCount}':'${widget.totalCount-widget.completedCount}',
+              titleStyle: const TextStyle(color: Colors.white),
+              borderSide: progresstouchedIndex == 1
+                  ? const BorderSide(color: Colors.white, width: 6)
+                  : const BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
+            ),
+          ])),
+    );
   }
 }

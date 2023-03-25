@@ -52,64 +52,64 @@ class _ScreenHomeState extends State<ScreenHome> {
             return true;
           }
         },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false ,
-            bottomNavigationBar: const BottomNavWidget(),
-            
-            body: SafeArea(
-              child: Builder(
+        child: SafeArea(
+          child: Scaffold(
+            resizeToAvoidBottomInset: false ,
+              bottomNavigationBar: const BottomNavWidget(),
+              
+              body: Builder(
                 builder: (context) {
                   return _pages[viewModel.selectedIndexNotifier];
                 },
               ),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: SpeedDial(
-              elevation: 8,
-              icon: Icons.add,
-              activeIcon: Icons.close,
-              openCloseDial: isDialOpen,
-              backgroundColor: const Color(0xff011638),
-              children: [
-                SpeedDialChild(
-                    backgroundColor: const Color(0xff011638),
-                    onTap: () async {
-                      await viewModel.addToCategList();
-                      if (viewModel.categoryCount == 0) {
-                        var snackBar = const SnackBar(
-                          content: Text(
-                            'Oops!Please add a category to start adding tasks!!',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          backgroundColor: Colors.red,
-                          duration: Duration(seconds: 5),
-                          padding: EdgeInsets.all(20),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      } else {
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              floatingActionButton: SpeedDial(
+                elevation: 8,
+                icon: Icons.add,
+                activeIcon: Icons.close,
+                openCloseDial: isDialOpen,
+                backgroundColor: const Color(0xff011638),
+                children: [
+                  SpeedDialChild(
+                      backgroundColor: const Color(0xff011638),
+                      onTap: () async {
+                        await viewModel.addToCategList();
+                        if (viewModel.categoryCount == 0) {
+                          var snackBar = const SnackBar(
+                            content: Text(
+                              'Oops!Please add a category to start adding tasks!!',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            backgroundColor: Colors.red,
+                            duration: Duration(seconds: 5),
+                            padding: EdgeInsets.all(20),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } else {
+                          viewModel.bottomSheetBuilder(
+                              TaskSheetWidget(), context);
+                        }
+                      },
+                      child: const Icon(
+                        Icons.add_task,
+                        color: Colors.white,
+                      ),
+                      label: 'Add Tasks'),
+                  SpeedDialChild(
+                      backgroundColor: const Color(0xff011638),
+                      onTap: () {
                         viewModel.bottomSheetBuilder(
-                            TaskSheetWidget(), context);
-                      }
-                    },
-                    child: const Icon(
-                      Icons.add_task,
-                      color: Colors.white,
-                    ),
-                    label: 'Add Tasks'),
-                SpeedDialChild(
-                    backgroundColor: const Color(0xff011638),
-                    onTap: () {
-                      viewModel.bottomSheetBuilder(
-                          const CategorySheetWidget(), context);
-                    },
-                    child: const Icon(
-                      Icons.category,
-                      color: Colors.white,
-                    ),
-                    label: 'Add Category'),
-              ],
-            )),
+                            const CategorySheetWidget(), context);
+                      },
+                      child: const Icon(
+                        Icons.category,
+                        color: Colors.white,
+                      ),
+                      label: 'Add Category'),
+                ],
+              )),
+        ),
       );
     });
   }

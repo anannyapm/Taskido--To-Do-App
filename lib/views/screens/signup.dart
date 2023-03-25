@@ -182,10 +182,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                                                     context);
                                                               },
                                                               child: Card(
-                                                                child: Image(
-                                                                    image: AssetImage(
+                                                                child: Image.asset(
                                                                         avatarImages[
-                                                                            index])),
+                                                                            index]),
                                                               ),
                                                             );
                                                           }),

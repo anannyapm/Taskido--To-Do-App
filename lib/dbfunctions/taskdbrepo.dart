@@ -26,7 +26,6 @@ class TaskRepository {
     if (result.isEmpty) {
       debugPrint('Inserting Task Data.....');
 
-      
       task.tid = await dbClient.rawInsert(
           'INSERT INTO ${taskInstance.tableName}(${taskInstance.colTwo}, ${taskInstance.colThree}, ${taskInstance.colFour}, ${taskInstance.colFive}, ${taskInstance.colSix}) VALUES(?,?,?,?,?)',
           [
@@ -107,23 +106,23 @@ class TaskRepository {
   static Future<List<Map<String, dynamic>>> updateCompletedStatus(
       int taskid, int catid, int userid, bool statusVal) async {
     var dbClient = await database;
-
+    int status = statusVal == true ? 1 : 0;
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'update ${taskInstance.tableName} set ${taskInstance.colThree}=? where ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid" AND ${taskInstance.colOne}="$taskid"',
-        [statusVal]);
+        [status]);
 
     return result;
   }
 
-  //UPDATE DATA 
+  //UPDATE DATA
 
-  static Future<List<Map<String, dynamic>>> updateData(
-      int taskid, int catid, int userid, String tname,DateTime datetime) async {
+  static Future<List<Map<String, dynamic>>> updateData(int taskid, int catid,
+      int userid, String tname, DateTime datetime) async {
     var dbClient = await database;
-  
+
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'update ${taskInstance.tableName} set ${taskInstance.colTwo}=?,${taskInstance.colSix}=? where ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid" AND ${taskInstance.colOne}="$taskid"',
-        [tname,datetime.toIso8601String()]);
+        [tname, datetime.toIso8601String()]);
 
     return result;
   }
