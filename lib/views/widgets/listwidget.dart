@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/dbfunctions/taskdbrepo.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
+import 'package:todoapp/views/widgets/snackbar.dart';
 
 import 'package:todoapp/views/widgets/taskdetailwidgets/tasktile.dart';
 
@@ -39,15 +41,13 @@ class _ListWidgetState extends State<ListWidget> {
                       if (date.isAfter(DateTime.now())) {
                         overdue = true;
                       }
-                      
+
                       bool ifCompleted =
                           (snapshot.data![index].isCompleted == 1)
                               ? true
                               : false;
 
                       if (viewModel.filterSelection != "") {
-                        
-
                         if (viewModel.filteredList.contains(data.tid)) {
                           if (viewModel.queryval != '') {
                             if (viewModel.queryResultList
@@ -141,14 +141,7 @@ class _ListWidgetState extends State<ListWidget> {
       String taskname, int categid, BuildContext ctx) async {
     TaskRepository.deleteData(taskname, Repository.currentUserID, categid)
         .then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          'Deleted Task',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.all(20),
-      ));
+      snackBarWidget(context, 'Deleted Task', dangerColor);
     }).catchError((e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));

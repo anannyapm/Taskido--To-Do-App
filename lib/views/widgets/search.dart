@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 import '../../viewmodel/appviewmodel.dart';
 
@@ -18,7 +19,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return TextField(
-        style: const TextStyle(color: Colors.white),
+        style:  TextStyle(color: primaryclr4),
         textInputAction: TextInputAction.search,
         onChanged: (value) {
           viewModel.addToQueryList(value);
@@ -39,14 +40,14 @@ class _SearchBarState extends State<SearchBar> {
                 Icons.clear,
                 size: 20,
               )),
-          suffixIconColor: Colors.white,
-          fillColor: Colors.white,
+          suffixIconColor: primaryclr4,
+          fillColor: primaryclr4,
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          labelStyle: const TextStyle(color: Colors.white),
+          labelStyle:  TextStyle(color: primaryclr4),
           labelText: "Search",
-          prefixIcon: const Icon(
+          prefixIcon:  Icon(
             Icons.search,
-            color: Colors.white,
+            color: primaryclr4,
             size: 20,
           ),
         ),

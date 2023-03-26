@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/widgets/snackbar.dart';
-
 import '../../../dbfunctions/taskdbrepo.dart';
-
 import '../../../models/taskmodel.dart';
 
 class UpdateTaskSheetWidget extends StatefulWidget {
@@ -131,8 +128,8 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                                 builder: (context, child) {
                                   return Theme(
                                     data: Theme.of(context).copyWith(
-                                      colorScheme: const ColorScheme.light(
-                                          primary: Color(0xff00a9a5)),
+                                      colorScheme:  ColorScheme.light(
+                                          primary: primaryclr2),
                                     ),
                                     child: child!,
                                   );
@@ -175,8 +172,8 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                               builder: (context, child) {
                                 return Theme(
                                   data: Theme.of(context).copyWith(
-                                    colorScheme: const ColorScheme.light(
-                                        primary: Color(0xff00a9a5)),
+                                    colorScheme:
+                                        ColorScheme.light(primary: primaryclr2),
                                   ),
                                   child: child!,
                                 );
@@ -241,11 +238,11 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
 
     final out = await TaskRepository.updateData(taskitem.tid!,
         taskitem.category_id, taskitem.user_id, taskname, taskDateTime);
-    
+
     if (out.isNotEmpty) {
-      snackBarWidget(ctx, 'Oh Snap!Something Went Wrong!', Colors.red);
+      snackBarWidget(ctx, 'Oh Snap!Something Went Wrong!', dangerColor);
     } else {
-      snackBarWidget(ctx, 'Update Success!', Colors.green);
+      snackBarWidget(ctx, 'Update Success!', successColor);
     }
 
     debugPrint(out.toString());

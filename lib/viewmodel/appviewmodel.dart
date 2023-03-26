@@ -241,11 +241,21 @@ class AppViewModel extends ChangeNotifier {
       filteredList.clear();
       for (var data in taskModelList) {
         if (date1 != null && date2 != null) {
-          if (data.task_date_time.isAfter(date1!) &&
-              data.task_date_time.isBefore(date2!)) {
-            filteredList.add(data.tid!);
-            displayFilterDetail =
-                "${DateFormat('EEE, M/d/y').format(date1!)} to ${DateFormat('EEE, M/d/y').format(date2!)}";
+          if (date1 == date2) {
+            if (data.task_date_time.day == date1!.day &&
+                data.task_date_time.month == date1!.month &&
+                data.task_date_time.year == date1!.year) {
+              filteredList.add(data.tid!);
+              displayFilterDetail =
+                  "${DateFormat('EEE, M/d/y').format(date1!)}";
+            }
+          } else {
+            if (data.task_date_time.isAfter(date1!) &&
+                data.task_date_time.isBefore(date2!)) {
+              filteredList.add(data.tid!);
+              displayFilterDetail =
+                  "${DateFormat('EEE, M/d/y').format(date1!)} to ${DateFormat('EEE, M/d/y').format(date2!)}";
+            }
           }
         } else {
           displayFilterDetail = "No date range selected";
@@ -359,20 +369,7 @@ class AppViewModel extends ChangeNotifier {
     );
   }
 
-  /*  File? profilePhoto;
-  Future<void> getPhoto() async {
-    final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
-    final directoryPath = await getExternalStorageDirectory();
-    final path = directoryPath!.path;
-    if (photo == null) {
-    } else {
-      final photoTemp = File(photo.path);
-      final imageFile = await photoTemp.copy('$path/image1.png');
 
-      profilePhoto = imageFile;
-      notifyListeners();
-    }
-  } */
 
   String profilePhoto = '';
   void setProfile(String photo) {

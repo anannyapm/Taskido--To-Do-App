@@ -8,7 +8,9 @@ import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
+import 'package:todoapp/views/widgets/snackbar.dart';
 
+import '../../constants/colorconstants.dart';
 import '../../main.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
@@ -24,24 +26,19 @@ class ScreenLogin extends StatefulWidget {
 
 class _ScreenLoginState extends State<ScreenLogin> {
   final _emailController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-   
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-       SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(
-         statusBarColor: Color.fromARGB(255, 255, 255, 255),
-         statusBarIconBrightness: Brightness.dark,
-        
-      )
-    );
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Color.fromARGB(255, 255, 255, 255),
+        statusBarIconBrightness: Brightness.dark,
+      ));
       return SafeArea(
-
         child: Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              image: DecorationImage(
+          decoration: BoxDecoration(
+              color: primaryclr4,
+              image: const DecorationImage(
                 alignment: Alignment.topRight,
                 image: AssetImage('assets/images/Vector2.png'),
                 scale: 1.5,
@@ -60,13 +57,15 @@ class _ScreenLoginState extends State<ScreenLogin> {
                           border: Border.all(
                               color: const Color.fromARGB(107, 51, 51, 51))),
                       child: IconButton(
-                        icon: const Icon(
+                        icon:  Icon(
                           Icons.arrow_back_ios_outlined,
-                          color: Colors.black,
+                          color: primaryclr3,
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>OnboardingHome()));
-
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const OnboardingHome()));
                         },
                       ),
                     ),
@@ -101,10 +100,8 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                     ),
                                     Align(
                                       child: GradientBox(
-                                        colorStart: const Color.fromARGB(
-                                            255, 255, 255, 255),
-                                        colorEnd: const Color.fromARGB(
-                                            255, 4, 209, 206),
+                                        colorStart: primaryclr4,
+                                        colorEnd: pClr2Shade1,
                                         gradFunction: () async {
                                           if (_formKey.currentState!
                                               .validate()) {
@@ -119,24 +116,18 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                                           builder: (ctx) =>
                                                               const ScreenHome()));
                                             } else {
-                                              var snackBar = const SnackBar(
-                                                content: Text(
+                                              snackBarWidget(
+                                                  context,
                                                   'Oops!!Looks like you are not registered. Sign Up to continue :)',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                backgroundColor: Colors.red,
-                                                padding: EdgeInsets.all(20),
-                                              );
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(snackBar);
+                                                 dangerColor);
+                                              
                                             }
                                           } else {
                                             debugPrint('Empty field found');
                                           }
                                         },
                                         textVal: "Log In",
-                                        textColor: const Color(0xff011638),
+                                        textColor: primaryclr1,
                                       ),
                                     )
                                   ],
@@ -149,11 +140,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                     child: BottomTextButton(
                                         linkText: 'Sign Up',
                                         function: () => Navigator.of(context)
-                                            .pushReplacement(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ScreenSignUp()),
-                                    ))),
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const ScreenSignUp()),
+                                            ))),
                               )
                             ],
                           ),
@@ -180,7 +171,6 @@ class _ScreenLoginState extends State<ScreenLogin> {
       //setting value of savekeyname to true when credentials are correct.
       final sharedPrefs = await SharedPreferences.getInstance();
       await sharedPrefs.setString(SAVE_KEY_NAME, email);
-      
 
       await Repository.getAllUser();
 

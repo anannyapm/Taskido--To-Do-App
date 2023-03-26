@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 import '../../../viewmodel/appviewmodel.dart';
 
@@ -27,12 +28,12 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
           constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width * 0.85),
           height: 50,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+          decoration:  BoxDecoration(
+              borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(25),
                   bottomRight: Radius.circular(25)),
-              //color: Color(0xff011638)
-              gradient: LinearGradient(colors: [Color(0xff00a9a5),Color(0xff011638),Colors.black])
+              //color: primaryclr1
+              gradient: LinearGradient(colors: [ primaryclr2,primaryclr1,primaryclr3])
               ),
           child: Container(
             margin: const EdgeInsets.only(left: 25),
@@ -40,19 +41,19 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
               children: [
                 Text(
                   streakdata[0],
-                  style: const TextStyle(
+                  style:  TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 20,
-                      color: Colors.white),
+                      color: primaryclr4),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 10),
                   child: ShaderMask(
                     shaderCallback: (Rect bounds) {
-                      return const LinearGradient(
+                      return  LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Color(0xffFFFFFF), Color.fromARGB(255, 249, 186, 14)],
+                        colors: [primaryclr4, Color(0xFFF9BA0E)],
                       ).createShader(bounds);
                     },
                     child: streakdata[1],
@@ -68,27 +69,27 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
 
   List streakMessage(double streakval) {
     if (streakval == 0) {
-      return ['Time to start with tasks!', Icon(
+      return ['Time to start with tasks!', const Icon(
                       FontAwesome5.smile_beam,
-                      color: Color.fromARGB(255, 248, 206, 0),
+                      color: Color(0xFFF8CE00),
                       size: 25,
                     )];
     } else if (streakval <= 0.30) {
-      return ['You are lagging behind',Icon(
+      return ['You are lagging behind',const Icon(
                       FontAwesome5.sad_tear,
-                      color: Color.fromARGB(255, 246, 177, 137),
+                      color: Color(0xFFF6B189),
                       size: 25,
                     ) ];
     } else if (streakval <= 0.6) {
       return ['Good Going my friend', Icon(
                       FontAwesome5.smile_wink,
-                      color: Colors.white,
+                      color: primaryclr4,
                       size: 25,
                     ) ];
     } else {
-      return ['You are on Streak', Icon(
+      return ['You are on Streak', const Icon(
                       FontAwesome5.fire,
-                      color: Color.fromARGB(255, 255, 114, 71),
+                      color: Color(0xFFFF7247),
                       size: 25,
                     ) ];
     }

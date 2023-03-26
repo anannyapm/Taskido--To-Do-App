@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 class BottomTextButton extends StatelessWidget {
   final String linkText;
@@ -15,11 +16,11 @@ class BottomTextButton extends StatelessWidget {
       ),
       child: Text(
         linkText,
-        style: const TextStyle(
+        style:  TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
           height: 1.5,
-          color: Color(0xff011638),
+          color: primaryclr1,
         ),
       ),
     );

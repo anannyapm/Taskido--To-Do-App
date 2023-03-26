@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/dbfunctions/taskdbrepo.dart';
@@ -47,8 +48,8 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                           child: LinearProgressIndicator(
                               minHeight: 8,
                               backgroundColor:
-                                  const Color.fromARGB(51, 0, 169, 166),
-                              color: const Color(0xff00A9A5),
+                                  Color(0x3300A9A6),
+                              color:  primaryclr2,
                               value: viewModel
                                   .progressIndicatorValue(widget.chosenId)),
                         ),
@@ -58,17 +59,22 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                               alignment: Alignment.bottomRight,
                               child: Text(
                                 '$completedTaskCount/$totalCount Completed ',
-                                style: const TextStyle(
+                                style:  TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.black,
+                                  color: primaryclr3,
                                 ),
                               )),
                         )
                       ])
-                    : const Text('Search Result',
-                        style: TextStyle(fontSize: 16)),
-                (viewModel.queryResultList.isEmpty && viewModel.queryval != '')
+                    : Container(
+                      margin:  const EdgeInsets.only(top:10 ),
+                      
+                      child:  const Text('Search Results',
+                          style: TextStyle(fontSize: 16,decoration: TextDecoration.underline)),
+                    ),
+
+                ((viewModel.queryResultList.isEmpty && viewModel.queryval != '')||(viewModel.filteredList.isEmpty && viewModel.filterSelection!=''))
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -13,7 +13,7 @@ extension TitleCase on String {
 }
 
 extension ExtendedString on String {
-  /// The string without any whitespace.
+  // The string without any whitespace.
   String removeAllWhitespace() {
     // Remove all white space.
     return this.replaceAll(RegExp(r"\s+"), "");

@@ -1,10 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/widgets/homewidgets/indicator.dart';
 
-import '../../../viewmodel/appviewmodel.dart';
+import '../../../constants/colorconstants.dart';
+
 
 class CategoryGraph extends StatefulWidget {
   final int pendingTodayCount;
@@ -52,11 +53,11 @@ class _CategoryGraphState extends State<CategoryGraph> {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border:
-                      Border.all(color: const Color.fromARGB(107, 51, 51, 51))),
+                      Border.all(color:  pClr3Shade1)),
               child: IconButton(
-                icon: const Icon(
+                icon:  Icon(
                   Icons.arrow_back_ios_outlined,
-                  color: Colors.black,
+                  color: primaryclr3,
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -87,16 +88,16 @@ class _CategoryGraphState extends State<CategoryGraph> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children:  [
+                  const Text(
                     'Today\'s Progress',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   Indicator(
-                      color1: Color(0xFF00576D),
+                      color1: chart1Color1,
                       text1: 'Completed Count',
                       text2: 'Pending Count',
-                      color2: Color(0xFF00B3FF))
+                      color2: chart1Color2)
                 ],
               ),
             ),
@@ -108,27 +109,27 @@ class _CategoryGraphState extends State<CategoryGraph> {
               padding: EdgeInsets.all(50),
               child: Center(child:Text('No Tasks Found',style: TextStyle(fontSize: 18),)),
             ): Expanded(
-              child:pieChartWidget(pendingTodayPercent,  const Color(0xFF00576D), const Color(0xFF00B3FF), 0)
+              child:pieChartWidget(pendingTodayPercent,  chart1Color1, chart1Color2, 0)
 
             ),
 
-             SizedBox(height: 30,),
+             const SizedBox(height: 30,),
             Padding(
                             padding: const EdgeInsets.only(top: 10,bottom: 20),
 
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text(
+                children:  [
+                 const Text(
                     'Overall Status',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   Indicator(
-                      color1: Color(0xFF06D4B2),
+                      color1: chart2Color1,
                       text1: 'Completed Count',
                       text2: 'Pending Count',
-                      color2: Color(0xFF015D5D))
+                      color2: chart2Color2)
                 ],
               ),
             ),
@@ -136,7 +137,7 @@ class _CategoryGraphState extends State<CategoryGraph> {
               child:widget.totalCount==0?const Padding(
               padding: EdgeInsets.all(50),
               child: Center(child:Text('No Tasks Found',style: TextStyle(fontSize: 18),)),
-            ):pieChartWidget(completedPercent,const Color(0xFF015D5D), const Color(0xFF06D4B2),1)
+            ):pieChartWidget(completedPercent,chart2Color1, chart2Color2,1)
              
             ),
           ],
@@ -176,11 +177,11 @@ class _CategoryGraphState extends State<CategoryGraph> {
                   ? 80
                   : 60,
               titlePositionPercentageOffset: 0.55,
-              title:chartid==0? '${widget.pendingTodayCount}':'${widget.completedCount}',
-              titleStyle: const TextStyle(color: Colors.white),
+              title:chartid==0? '${widget.pendingTodayCount} Task':'${widget.completedCount} Task',
+              titleStyle:  TextStyle(color: primaryclr4),
               borderSide: progresstouchedIndex == 0
-                  ? const BorderSide(color: Colors.white, width: 6)
-                  : const BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
+                  ?  BorderSide(color: primaryclr4, width: 6)
+                  : const BorderSide(color: Color(0x00FFFFFF)),
             ),
             PieChartSectionData(
               value: 100 - valuePercent,
@@ -190,11 +191,11 @@ class _CategoryGraphState extends State<CategoryGraph> {
                   ? 80
                   : 60,
               titlePositionPercentageOffset: 0.55,
-              title: chartid==0?'${widget.totalTodayCount - widget.pendingTodayCount}':'${widget.totalCount-widget.completedCount}',
-              titleStyle: const TextStyle(color: Colors.white),
+              title: chartid==0?'${widget.totalTodayCount - widget.pendingTodayCount} Task':'${widget.totalCount-widget.completedCount} Task',
+              titleStyle:  TextStyle(color: primaryclr4),
               borderSide: progresstouchedIndex == 1
-                  ? const BorderSide(color: Colors.white, width: 6)
-                  : const BorderSide(color: Color.fromARGB(0, 255, 255, 255)),
+                  ?  BorderSide(color: primaryclr4, width: 6)
+                  :  const BorderSide(color: Color(0x00FFFFFF)),
             ),
           ])),
     );

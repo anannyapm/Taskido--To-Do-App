@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 Widget searchBox() {
   return Container(
     margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-    child: const TextField(
+    child:  TextField(
       decoration: InputDecoration(
           border: InputBorder.none,
           hintText: 'Search',
-          hintStyle: TextStyle(fontSize: 18),
-          contentPadding: EdgeInsets.all(0),
+          hintStyle:const TextStyle(fontSize: 18),
+          contentPadding: const EdgeInsets.all(0),
           prefixIcon: Icon(
             Icons.search,
             size: 25,
-            color: Colors.black,
+            color: primaryclr3,
           ),
-          prefixIconConstraints: BoxConstraints(maxHeight: 20, minWidth: 25)),
+          prefixIconConstraints:const BoxConstraints(maxHeight: 20, minWidth: 25)),
     ),
   );
 }

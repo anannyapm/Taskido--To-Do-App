@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/models/categorymodel.dart';
@@ -39,10 +40,10 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.5)),
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             gradient: LinearGradient(colors: [
-                          Color.fromARGB(57, 208, 208, 208),
-                          Color.fromARGB(88, 227, 226, 226)
+                          Color(0x39D0D0D0),
+                          Color(0x57E3E2E2)
                         ])),
                         child: ListTile(
                             minLeadingWidth: 25,
@@ -83,9 +84,9 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                                       }, context,
                                           'Do you want to delete \'${catItem.category_name.toTitleCase()}\' category?\n\nWarning! All Tasks Will be LOST!');
                                     },
-                                    icon: const Icon(
+                                    icon:  Icon(
                                       Icons.delete,
-                                      color: Colors.red,
+                                      color:dangerColor,
                                     )),
                               ],
                             )),
@@ -104,13 +105,13 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
 
   Future<void> deleteCategory(String categoryname, BuildContext ctx) async {
     CategRepository.deleteData(categoryname).then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
         content: Text(
           'Deleted Category',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: primaryclr4),
         ),
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.all(20),
+        backgroundColor:dangerColor,
+        padding: const EdgeInsets.all(20),
       ));
     }).catchError((e) {
       ScaffoldMessenger.of(context)

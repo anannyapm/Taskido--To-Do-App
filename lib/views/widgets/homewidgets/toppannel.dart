@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 
@@ -37,7 +38,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                           ? Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
-                                  color: Colors.white,
+                                  color: primaryclr4,
                                   image: DecorationImage(
                                       image: AssetImage(
                                           Repository.currentUserPhoto),
@@ -55,22 +56,22 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                     Text(
                       'Hey!',
                       style: TextStyle(
                         fontSize: 18,
                         //height: 0.5,
                         fontWeight: FontWeight.w400,
-                        color: Color(0xff011638),
+                        color: primaryclr1,
                       ),
                     ),
                     Text(
                       Repository.currentUserName.toTitleCase(),
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontSize: 28,
                         height: 1.1,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xff011638),
+                        color: primaryclr1,
                       ),
                     ),
                   ],

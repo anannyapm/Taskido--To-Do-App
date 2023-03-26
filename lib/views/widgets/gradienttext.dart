@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 class GradientTextWidget extends StatelessWidget {
   final String textValue;
@@ -13,8 +14,8 @@ class GradientTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Shader linearGradient = const LinearGradient(
-      colors: [Color(0xff011638), Color(0xff00a9a5)],
+    final Shader linearGradient =  LinearGradient(
+      colors: [primaryclr1, primaryclr2],
       begin: Alignment.centerLeft,
       end: Alignment.bottomRight,
     ).createShader(const Rect.fromLTWH(0.0, 0.0, 550.0, 80.0));

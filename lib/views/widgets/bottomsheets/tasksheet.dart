@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:todoapp/constants/iconlist.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
+import 'package:todoapp/views/widgets/snackbar.dart';
 
+import '../../../constants/colorconstants.dart';
 import '../../../dbfunctions/categorydbrepo.dart';
 import '../../../dbfunctions/taskdbrepo.dart';
 
@@ -55,7 +57,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                     trailing: TextButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          
                           await addTasktoModel(context);
 
                           viewModel.addToTaskList();
@@ -117,8 +118,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                 builder: (context, child) {
                                   return Theme(
                                     data: Theme.of(context).copyWith(
-                                      colorScheme: const ColorScheme.light(
-                                          primary: Color(0xff00a9a5)),
+                                      colorScheme:  ColorScheme.light(
+                                          primary: primaryclr2),
                                     ),
                                     child: child!,
                                   );
@@ -161,8 +162,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                               builder: (context, child) {
                                 return Theme(
                                   data: Theme.of(context).copyWith(
-                                    colorScheme: const ColorScheme.light(
-                                        primary: Color(0xff00a9a5)),
+                                    colorScheme:  ColorScheme.light(
+                                        primary: primaryclr2),
                                   ),
                                   child: child!,
                                 );
@@ -232,16 +233,13 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                             .data![index].category_name),
                                       ]),
                                   selected: defaultChoiceIndex == index,
-                                  selectedColor:
-                                      const Color.fromARGB(255, 220, 219, 219),
+                                  selectedColor: pClr4Shade1,
                                   onSelected: (value) {
                                     selectedChoiceIndex =
                                         snapshot.data![index].cid!;
                                     setState(() {
                                       defaultChoiceIndex =
                                           value ? index : defaultChoiceIndex;
-
-                                     
                                     });
                                   },
                                   backgroundColor: Colors.transparent,
@@ -266,50 +264,32 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
   }
 
   Future<TaskModel> addTasktoModel(BuildContext ctx) async {
-    final _taskname = _inputController.text.trim();
-    
+    final taskname = _inputController.text.trim();
     final cidOut = await CategRepository.fetchFirstCid();
-    final _logoindex =
+    final logoindex =
         selectedChoiceIndex == 1 ? cidOut[0]['cid'] : selectedChoiceIndex;
 
-    final _currUserId = Repository.currentUserID;
+    final currUserId = Repository.currentUserID;
 
-    final _taskObject = TaskModel(
-        task_name: _taskname,
+    final taskObject = TaskModel(
+        task_name: taskname,
         isCompleted: 0,
-        category_id: _logoindex,
-        user_id: _currUserId,
+        category_id: logoindex,
+        user_id: currUserId,
         task_date_time: DateTime(
             date!.year, date!.month, date!.day, time!.hour, time!.minute));
 
-    bool out = await TaskRepository.saveData(_taskObject);
+    bool out = await TaskRepository.saveData(taskObject);
 
     if (out != true) {
-      var snackBar = const SnackBar(
-        content: Text(
-          'Oh Snap! Looks like task already exist!',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.all(20),
-        duration: Duration(seconds: 4),
-      );
-      ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+      snackBarWidget(
+          ctx, 'Oh Snap! Looks like task already exist!', dangerColor);
     } else {
-      var snackBar = const SnackBar(
-        content: Text(
-          'Success',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.green,
-        padding: EdgeInsets.all(20),
-        duration: Duration(seconds: 4),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      snackBarWidget(ctx, 'Task Added', successColor);
     }
 
     debugPrint(out.toString());
 
-    return _taskObject;
+    return taskObject;
   }
 }

@@ -5,7 +5,9 @@ import 'package:todoapp/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/models/categorymodel.dart';
+import 'package:todoapp/views/widgets/snackbar.dart';
 
+import '../../../constants/colorconstants.dart';
 import '../../../constants/iconlist.dart';
 
 class CategorySheetWidget extends StatefulWidget {
@@ -94,13 +96,12 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
                 //choice chip for select
                 Wrap(
-
                   children:
                       List.generate(IconList.iconValueList.length, (index) {
                     return ChoiceChip(
                       label: IconList.iconValueList[index],
                       selected: defaultChoiceIndex == index,
-                      selectedColor: const Color.fromARGB(255, 220, 219, 219),
+                      selectedColor: primaryclr4,
                       onSelected: (value) {
                         setState(() {
                           defaultChoiceIndex =
@@ -123,41 +124,27 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
   Future<CategoryModel> addCategorytoModel(
       int choiceIndex, BuildContext ctx) async {
-    final _name = _inputController.text.trim();
-    final _logoindex = choiceIndex;
+    final name = _inputController.text.trim();
+    final logoindex = choiceIndex;
 
-    final _categoryObject = CategoryModel(
-        category_name: _name,
-        category_logo_value: _logoindex,
+    final categoryObject = CategoryModel(
+        category_name: name,
+        category_logo_value: logoindex,
         isDeleted: 0,
         user_id: Repository.currentUserID);
 
-    bool out = await CategRepository.saveData(_categoryObject);
+    bool out = await CategRepository.saveData(categoryObject);
 
     if (out != true) {
-      var snackBar = const SnackBar(
-        content: Text(
-          'Oh Snap! Catrgory already exist.',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.all(20),
-      );
-      ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+      snackBarWidget(ctx, 'Oh Snap! Catrgory already exist', dangerColor);
+     
     } else {
-      var snackBar = const SnackBar(
-        content: Text(
-          'Success',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.green,
-        padding: EdgeInsets.all(20),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      snackBarWidget(ctx, 'Category Added Successfully', successColor);
+
     }
 
     debugPrint(out.toString());
 
-    return _categoryObject;
+    return categoryObject;
   }
 }

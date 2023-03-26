@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/widgets/snackbar.dart';
 
@@ -47,20 +48,20 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
           title: (widget.ifcomplete)
               ? Text(widget.data.task_name.toTitleCase(),
                   style: const TextStyle(
-                      color: Color.fromARGB(127, 0, 0, 0),
+                      color: Color(0x7E000000),
                       decoration: TextDecoration.lineThrough,
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w600))
               : (widget.overdue
                   ? Text(widget.data.task_name,
                       style: const TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: Color(0xFF000000),
                           fontWeight: FontWeight.w600))
                   : RichText(
                       text: TextSpan(
                       text: widget.data.task_name,
                       style: const TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
+                          color: Color(0xFF000000),
                           fontWeight: FontWeight.w600,
                           fontSize: 18),
                       children: const [
@@ -76,15 +77,15 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               ? Text(
                   DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
                   style: const TextStyle(
-                      color: Color.fromARGB(127, 0, 0, 0),
+                      color: Color(0x7E000000),
                       fontWeight: FontWeight.w400,
                       decoration: TextDecoration.lineThrough,
                       fontStyle: FontStyle.italic,
                       fontSize: 13))
               : Text(
                   DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
-                  style: const TextStyle(
-                      color: Color(0xff011638),
+                  style: TextStyle(
+                      color: primaryclr1,
                       fontWeight: FontWeight.w400,
                       fontSize: 13)),
           trailing: Row(
@@ -92,12 +93,17 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
             children: [
               IconButton(
                 onPressed: () {
-                  widget.ifcomplete?
-                  snackBarWidget(context, 'Task marked as Completed cannot be editted!', Colors.red):
-                  viewModel.bottomSheetBuilder(UpdateTaskSheetWidget(taskdata: widget.data), context);
+                  widget.ifcomplete
+                      ? snackBarWidget(
+                          context,
+                          'Task marked as Completed cannot be editted!',
+                          dangerColor)
+                      : viewModel.bottomSheetBuilder(
+                          UpdateTaskSheetWidget(taskdata: widget.data),
+                          context);
                 },
                 icon: const Icon(Icons.edit),
-                color:widget.ifcomplete?Color.fromARGB(127, 0, 0, 0): Color(0xff011638),
+                color: widget.ifcomplete ? Color(0x7E000000) : primaryclr1,
                 iconSize: 22,
               ),
               IconButton(
@@ -110,9 +116,9 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                   }, context,
                       'Do you want to delete ${widget.data.task_name} category?');
                 },
-                icon: const Icon(
+                icon: Icon(
                   Icons.delete_outline,
-                  color: Colors.red,
+                  color: dangerColor,
                 ),
                 iconSize: 25,
               )
@@ -125,17 +131,10 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
       String taskname, int categid, BuildContext ctx) async {
     TaskRepository.deleteData(taskname, Repository.currentUserID, categid)
         .then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text(
-          'Deleted Task',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
-        padding: EdgeInsets.all(20),
-      ));
+      snackBarWidget(context, 'Deleted Task', dangerColor);
     }).catchError((e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+      debugPrint(e.toString());
+      snackBarWidget(context, 'OOPs!!Something Went Wrong', primaryclr3);
     });
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 import '../../../viewmodel/appviewmodel.dart';
 
@@ -56,9 +57,9 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                               width: 0.1,
                               sizeUnit: GaugeSizeUnit.factor,
                               cornerStyle: CornerStyle.startCurve,
-                              gradient: const SweepGradient(colors: <Color>[
+                              gradient:  SweepGradient(colors: <Color>[
                                 Color(0xFF00FFFF),
-                                Color(0xFF011638)
+                                primaryclr1
                               ], stops: <double>[
                                 0.25,
                                 0.75
@@ -68,7 +69,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                             markerType: MarkerType.circle,
                             markerHeight: 15,
                             markerWidth: 15,
-                            color: const Color(0xFF011638),
+                            color:  primaryclr1,
                           )
                         ],
                         annotations: <GaugeAnnotation>[
@@ -82,20 +83,20 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                                     TextSpan(
                                       text:
                                           '${((max == 0 ? 0 : (progressValue / max) * 100)).toStringAsFixed(0)}%\n',
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w600,
                                         height: 1.5,
-                                        color: Color(0xff011638),
+                                        color: primaryclr1,
                                       ),
                                     ),
-                                    const TextSpan(
+                                     TextSpan(
                                       text: 'Efficieny',
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                         height: 1.5,
-                                        color: Color(0xff011638),
+                                        color: primaryclr1,
                                       ),
                                     ),
                                   ],
@@ -114,20 +115,20 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                   TextSpan(
                     text:
                         '${viewModel.totalTaskCount - viewModel.completedCount} ',
-                    style: const TextStyle(
+                    style:  TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                       height: 1.5,
-                      color: Color(0xff011638),
+                      color: primaryclr1,
                     ),
                   ),
-                  const TextSpan(
-                    text: 'Live Task(s) awaiting',
+                   TextSpan(
+                    text: 'Live Task awaiting',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w300,
                       height: 1.5,
-                      color: Color(0xff011638),
+                      color: primaryclr1,
                     ),
                   ),
                 ],

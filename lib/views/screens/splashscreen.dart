@@ -4,6 +4,8 @@ import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 import 'package:todoapp/views/widgets/gradienttext.dart';
 
+import '../../constants/colorconstants.dart';
+
 class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
 
@@ -15,8 +17,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(
-         statusBarColor: Color.fromARGB(255, 255, 255, 255),
+        SystemUiOverlayStyle(
+         statusBarColor: primaryclr4,
          statusBarIconBrightness: Brightness.dark,
          
       )
@@ -25,8 +27,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
       //set background
       child: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-              color: Colors.white,),
+        decoration:  BoxDecoration(
+              color: primaryclr4,),
 
         //Scaffold area
         child: Scaffold(
@@ -49,8 +51,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
               Expanded(
                 flex: 2,
                 child: Column(
-                  children: const [
-                    GradientTextWidget(
+                  children:  [
+                    const GradientTextWidget(
                       textValue: 'Taskido App',
                       textSize: 34,
                       weight: FontWeight.w700,
@@ -58,7 +60,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
                     Text(
                       'Get your tasks done!',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 1, 22, 56), fontSize: 20),
+                          color: primaryclr1, fontSize: 20),
                     ),
                   ],
                 ),
@@ -67,13 +69,13 @@ class _ScreenSplashState extends State<ScreenSplash> {
                 flex: 2,
                 child: Align(
                     child: GradientBox(
-                  colorStart: const Color(0xff011638),
-                  colorEnd: const Color(0xff00A9A5),
-                  gradFunction: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>OnboardingHome()),(route)=>false),
+                  colorStart:  primaryclr1,
+                  colorEnd: primaryclr2,
+                  gradFunction: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const OnboardingHome()),(route)=>false),
                       /* MaterialPageRoute(
                           builder: (context) => const OnboardingHome()) */
                   textVal: "Let's Start",
-                  textColor: Colors.white,
+                  textColor: primaryclr4,
                 )),
               ),
             ],

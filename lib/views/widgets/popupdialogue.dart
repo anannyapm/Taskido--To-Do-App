@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 popupDialogueBox(VoidCallback function, BuildContext ctx, String message) {
   return showDialog(
@@ -8,8 +9,8 @@ popupDialogueBox(VoidCallback function, BuildContext ctx, String message) {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.5)),
           title: Text(message),
-          titleTextStyle: const TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.black, fontSize: 16),
+          titleTextStyle:  TextStyle(
+              fontWeight: FontWeight.bold, color: primaryclr3, fontSize: 16),
           actionsOverflowButtonSpacing: 20,
           actions: [
             TextButton(
@@ -25,9 +26,9 @@ popupDialogueBox(VoidCallback function, BuildContext ctx, String message) {
                 function();
                 Navigator.of(context).pop();
               },
-              child: const Text("YES",
+              child:  Text("YES",
                   style: TextStyle(
-                      color: Colors.red, fontWeight: FontWeight.w600)),
+                      color:dangerColor, fontWeight: FontWeight.w600)),
             ),
             
           ],

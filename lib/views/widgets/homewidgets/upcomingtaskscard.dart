@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/models/taskmodel.dart';
 
@@ -85,8 +86,8 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                                           size: 10,
                                           color: (item.task_date_time
                                                   .isBefore(DateTime.now()))
-                                              ? Colors.red
-                                              : Colors.green),
+                                              ?dangerColor
+                                              : successColor),
                                       const SizedBox(
                                         width: 5,
                                       ),
@@ -112,24 +113,12 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 60,
-                      child:const Center(
+                      child: Center(
                               child: Text(
                             'Yay! No PendingTasks',
-                            style: TextStyle(color: Color(0xff011638),fontSize: 16),
+                            style: TextStyle(color: primaryclr1,fontSize: 16),
                           )),
-                      /*  Card(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.5)),
-                          //color: const Color.fromARGB(13, 1, 22, 56),
-                          
-                          margin: const EdgeInsets.all(10),
-                          child: const Center(
-                              child: Text(
-                            'Yay! No PendingTasks...',
-                            style: TextStyle(color: Color(0xff011638)),
-                          ))), */
+                      
                     ),
                   )
           ],

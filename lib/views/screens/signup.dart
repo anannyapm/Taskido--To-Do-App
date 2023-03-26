@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -9,9 +7,9 @@ import 'package:todoapp/models/usermodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
-import 'package:todoapp/views/widgets/avatarselector.dart';
+import 'package:todoapp/constants/avatars.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
-
+import '../../constants/colorconstants.dart';
 import '../../main.dart';
 import '../../viewmodel/appviewmodel.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
@@ -33,15 +31,15 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Color.fromARGB(255, 255, 255, 255),
+      SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle(
+        statusBarColor: primaryclr4,
         statusBarIconBrightness: Brightness.dark,
       ));
       return SafeArea(
         child: Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              image: DecorationImage(
+          decoration:  BoxDecoration(
+              color: primaryclr4,
+              image: const DecorationImage(
                 alignment: Alignment.topRight,
                 image: AssetImage('assets/images/Vector2.png'),
                 scale: 1.5,
@@ -60,11 +58,11 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                              color: const Color.fromARGB(107, 51, 51, 51))),
+                              color: pClr3Shade1)),
                       child: IconButton(
-                        icon: const Icon(
+                        icon:  Icon(
                           Icons.arrow_back_ios_outlined,
-                          color: Colors.black,
+                          color: primaryclr3,
                         ),
                         onPressed: () {
                           Navigator.of(context).pushReplacement(
@@ -94,10 +92,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                     alignment: Alignment.bottomRight,
                                     children: [
                                       viewModel.profilePhoto == ''
-                                          ? const CircleAvatar(
+                                          ?  CircleAvatar(
                                               radius: 35,
-                                              backgroundColor:Color(0xFF565656),
-                                              child: CircleAvatar(
+                                              backgroundColor:pClr3Shade2,
+                                              child: const CircleAvatar(
                                                 radius: 34,
                                                 backgroundImage: AssetImage(
                                                     'assets/images/stacked-steps-haikei.png'),
@@ -105,10 +103,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                             )
                                           : CircleAvatar(
                                               radius: 35,
-                                              backgroundColor:const Color(0xFF565656),
+                                              backgroundColor:pClr3Shade2,
                                               child: CircleAvatar(
                                                 radius: 34,
-                                                backgroundColor: Colors.white,
+                                                backgroundColor: primaryclr4,
                                                 backgroundImage: AssetImage(
                                                     viewModel.profilePhoto),
                                               ),
@@ -116,21 +114,20 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       Container(
                                         height: 30,
                                         width: 30,
-                                        decoration: const BoxDecoration(
+                                        decoration:  BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Color.fromARGB(
-                                                255, 255, 255, 255)),
+                                            color: primaryclr4),
                                         padding: const EdgeInsets.all(2),
                                         child: Container(
-                                          decoration: const BoxDecoration(
+                                          decoration:  BoxDecoration(
                                               shape: BoxShape.circle,
                                               color:
-                                                  Color.fromARGB(255, 1, 1, 1)),
+                                                  primaryclr3),
                                           child: IconButton(
-                                            icon: const Icon(
+                                            icon: Icon(
                                               Icons.edit,
                                               size: 15,
-                                              color: Colors.white,
+                                              color: primaryclr4,
                                             ),
                                             padding: EdgeInsets.zero,
                                             onPressed: () {
@@ -217,9 +214,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                     ),
                                     Align(
                                       child: GradientBox(
-                                        colorStart: const Color.fromARGB(
-                                            255, 255, 255, 255),
-                                        colorEnd: const Color(0xFF04D1CE),
+                                        colorStart: primaryclr4,
+                                        colorEnd: pClr2Shade1,
                                         gradFunction: () {
                                           if (_formKey.currentState!
                                               .validate()) {
@@ -237,7 +233,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                           }
                                         },
                                         textVal: "Sign Up",
-                                        textColor: const Color(0xff011638),
+                                        textColor:  primaryclr1,
                                       ),
                                     )
                                   ],
@@ -297,12 +293,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
           MaterialPageRoute(builder: (context) => const ScreenHome()),
           (route) => false);
     } else {
-      var snackBar = const SnackBar(
+      var snackBar =  SnackBar(
         content: Text(
           'This email id is already registered. Please Login back to continue!',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: primaryclr4),
         ),
-        backgroundColor: Colors.red,
+        backgroundColor:dangerColor,
         padding: EdgeInsets.all(20),
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);

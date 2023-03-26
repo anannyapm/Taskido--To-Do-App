@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/screens/home.dart';
 import 'package:todoapp/views/screens/splashscreen.dart';
+import '../../constants/colorconstants.dart';
 import '../../dbfunctions/categorydbrepo.dart';
 import '../../dbfunctions/repository.dart';
 import '../../dbfunctions/taskdbrepo.dart';
@@ -19,7 +20,7 @@ class ScreenInitialSplash extends StatefulWidget {
 class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
   @override
   void initState() {
-    // TODO: implement initState
+ 
     initdb();
     checkUserLogin();
 
@@ -32,16 +33,12 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
     await TaskRepository.database;
   }
 
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Colors.black),
+      decoration:  BoxDecoration(color: primaryclr3),
       child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           body: Padding(
@@ -49,11 +46,11 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
               child: Container(
                   width: double.infinity,
                   margin: const EdgeInsets.all(30),
-                  child: const Center(
+                  child:  Center(
                     child: Text(
                       "Taskido App",
                       style: TextStyle(
-                          color: Colors.white,
+                          color: primaryclr4,
                           fontWeight: FontWeight.w600,
                           fontSize: 25),
                     ),
@@ -61,11 +58,6 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
     );
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 
   Future<void> gotoLogin() async {
     await Future.delayed(const Duration(seconds: 3));
@@ -90,7 +82,6 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
         Provider.of<AppViewModel>(context, listen: false).addToTaskList();
       });
 
-      //_userLoggedIn becomes true, so go to home page
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (ctx1) => const ScreenHome()));
     }

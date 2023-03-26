@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 import '../../viewmodel/appviewmodel.dart';
 
@@ -16,9 +17,9 @@ class BottomNavWidget extends StatelessWidget {
             onTap: (newIndex) {
               viewModel.notifyOnIndexChange(newIndex);
             },
-            backgroundColor: const Color.fromARGB(252, 246, 246, 246),
+            backgroundColor: const Color(0xFBF6F6F6),
             selectedItemColor: const Color(0xFF268585),
-            unselectedItemColor: const Color(0xFF011638),
+            unselectedItemColor:  primaryclr1,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(

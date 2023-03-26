@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 class TextFieldWidget extends StatelessWidget {
   final String hint;
@@ -22,7 +23,7 @@ class TextFieldWidget extends StatelessWidget {
         keyboardType: typeValue,
         decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.white,
+            fillColor: primaryclr4,
             border: OutlineInputBorder(
                 borderSide:
                     const BorderSide(width: 1, color: Color(0xbf011638)),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/screens/privacypolicy.dart';
@@ -33,8 +34,8 @@ class DrawerWidget extends StatelessWidget {
                 child: Text(
                   Repository.currentUserName.toTitleCase(),
                   maxLines: 2,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xff011638)),
+                  style:  TextStyle(
+                      fontWeight: FontWeight.bold, color: primaryclr1),
                 ),
               ),
               accountEmail: SizedBox(
@@ -42,13 +43,13 @@ class DrawerWidget extends StatelessWidget {
                 child: Text(
                   Repository.currentUserMail,
                   maxLines: 2,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400, color: Color(0xff011638)),
+                  style:  TextStyle(
+                      fontWeight: FontWeight.w400, color: primaryclr1),
                 ),
               ),
               currentAccountPicture: CircleAvatar(
                 
-                backgroundColor: Colors.white,
+                backgroundColor: primaryclr4,
                       backgroundImage: AssetImage(Repository.currentUserPhoto),
                     )
                   
@@ -122,8 +123,8 @@ class DrawerWidget extends StatelessWidget {
               title: const Text('Sign Out'),
               onTap: () async {
                 popupDialogueBox(() async {
-                  final _sharedPrefs = await SharedPreferences.getInstance();
-                  await _sharedPrefs.clear();
+                  final sharedPrefs = await SharedPreferences.getInstance();
+                  await sharedPrefs.clear();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (context) => const OnboardingHome()),

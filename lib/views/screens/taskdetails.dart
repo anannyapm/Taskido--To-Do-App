@@ -8,6 +8,7 @@ import 'package:todoapp/models/categorymodel.dart';
 
 import 'package:todoapp/views/widgets/search.dart';
 
+import '../../constants/colorconstants.dart';
 import '../../constants/iconlist.dart';
 import '../../dbfunctions/categorydbrepo.dart';
 import '../../models/taskmodel.dart';
@@ -34,13 +35,10 @@ class _ScreenTasksState extends State<ScreenTasks> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(
-         statusBarColor: Color.fromARGB(255, 1, 40, 56),
-         statusBarIconBrightness: Brightness.light,
-       
-      )
-    );
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Color(0xFF012838),
+      statusBarIconBrightness: Brightness.light,
+    ));
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return Scaffold(
         body: SafeArea(
@@ -55,16 +53,16 @@ class _ScreenTasksState extends State<ScreenTasks> {
                       bottomRight: Radius.circular(25))),
               child: Container(
                 margin: const EdgeInsets.only(bottom: 5),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(30),
                       bottomRight: Radius.circular(30)),
                   gradient: LinearGradient(
-                    begin: Alignment(1.392, 4.273),
-                    end: Alignment(-2.084, -18.136),
+                    begin: const Alignment(1.392, 4.273),
+                    end: const Alignment(-2.084, -18.136),
                     colors: <Color>[
-                      Color(0xff011638),
-                      Color(0xff00a9a5),
+                      primaryclr1,
+                       primaryclr2,
                     ],
                     stops: <double>[0, 1],
                   ),
@@ -79,7 +77,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                           height: 40,
                           padding: const EdgeInsets.all(0),
                           decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
+                              border: Border.all(color: primaryclr4),
                               borderRadius: BorderRadius.circular(25)),
                           margin: const EdgeInsets.fromLTRB(10, 20, 10, 15),
                           child: const SearchBar()),
@@ -88,8 +86,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
                       Container(
                         margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
                         child: PopupMenuButton<String>(
-                          icon: const Icon(Icons.filter_alt_outlined,
-                              color: Colors.white),
+                          icon: Icon(Icons.filter_alt_outlined,
+                              color: primaryclr4),
                           initialValue: selectedMenu,
                           // Callback that sets the selected popup menu item.
                           onSelected: (String item) async {
@@ -97,10 +95,9 @@ class _ScreenTasksState extends State<ScreenTasks> {
                               selectedMenu = item;
                             });
                             if (selectedMenu == sampleItem[2]) {
-                              await selectDateRange();
+                              await selectDateRange(context);
                               viewModel.setDateFilter(startDate, endDate);
                             }
-                           
 
                             viewModel.setFilterSelection(selectedMenu!);
                             viewModel.addToFilteredList();
@@ -144,16 +141,13 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                 label: const Text('All Tasks'),
                                 labelStyle: TextStyle(
                                     color: chosenValue == ''
-                                        ? Colors.black
-                                        : Colors.white),
+                                        ? primaryclr3
+                                        : primaryclr4),
                                 selected: chosenValue == '',
-                                shape: const StadiumBorder(
-                                    side: BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 255, 255, 255))),
-                                backgroundColor: const Color(0xff011638),
-                                selectedColor:
-                                    const Color.fromARGB(255, 255, 255, 255),
+                                shape: StadiumBorder(
+                                    side: BorderSide(color: primaryclr4)),
+                                backgroundColor: primaryclr1,
+                                selectedColor: primaryclr4,
                                 elevation: 0,
                                 onSelected: (bool selected) async {
                                   await viewModel.addToTaskList();
@@ -168,13 +162,10 @@ class _ScreenTasksState extends State<ScreenTasks> {
                               snapshot.data!.length,
                               (int index) {
                                 return ChoiceChip(
-                                  shape: const StadiumBorder(
-                                      side: BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 255, 255, 255))),
-                                  backgroundColor: const Color(0xff011638),
-                                  selectedColor:
-                                      const Color.fromARGB(255, 255, 255, 255),
+                                  shape: StadiumBorder(
+                                      side: BorderSide(color: primaryclr4)),
+                                  backgroundColor: primaryclr1,
+                                  selectedColor: primaryclr4,
                                   elevation: 0,
                                   padding: const EdgeInsets.all(5),
                                   label: Row(
@@ -186,7 +177,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                         width: 5,
                                       ),
                                       Text(
-                                        snapshot.data![index].category_name.toTitleCase(),
+                                        snapshot.data![index].category_name
+                                            .toTitleCase(),
                                       )
                                     ],
                                   ),
@@ -194,8 +186,8 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                       color: chosenValue ==
                                               snapshot
                                                   .data![index].category_name
-                                          ? Colors.black
-                                          : Colors.white),
+                                          ? primaryclr3
+                                          : primaryclr4),
                                   selected: chosenValue ==
                                       snapshot.data![index].category_name,
                                   onSelected: (bool selected) async {
@@ -249,53 +241,37 @@ class _ScreenTasksState extends State<ScreenTasks> {
     });
   }
 
-  Future<void> selectDateRange() async {
-    DateTime? pickedStartDate = await showDatePicker(
-      helpText: 'Select Start Date',
-      context: context,
-      initialDate: DateTime.now(),
+  Future<void> selectDateRange(BuildContext ctx) async {
+    final initialDateRange = DateTimeRange(
+      start: DateTime.now(),
+      end: DateTime.now().add(const Duration(hours: 24 * 3)),
+    );
+
+    final newDateRange = await showDateRangePicker(
+      context: ctx,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
+      initialDateRange: initialDateRange,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(primary: Color(0xff00a9a5)),
+            colorScheme:  ColorScheme.light(primary: primaryclr2),
           ),
           child: child!,
         );
       },
     );
-    if (pickedStartDate != null) {
-      // ignore: use_build_context_synchronously
-      DateTime? pickedEndDate = await showDatePicker(
-        helpText: 'Select End Date',
-        context: context,
-        builder: (context, child) {
-          return Theme(
-            data: Theme.of(context).copyWith(
-              colorScheme: const ColorScheme.light(primary: Color(0xff00a9a5)),
-            ),
-            child: child!,
-          );
-        },
-        initialDate: pickedStartDate,
-        firstDate: pickedStartDate,
-        lastDate: DateTime(2100),
-      );
-      if (pickedEndDate != null) {
-        setState(() {
-          startDate = pickedStartDate;
-          endDate = pickedEndDate;
-        });
-      }
-      
-      
-    }
-    else{
+    debugPrint(newDateRange.toString());
+    if (newDateRange == null) {
       setState(() {
-          startDate = null;
-          endDate = null;
-        });
+        startDate = null;
+        endDate = null;
+      });
+    } else {
+      setState(() {
+        startDate = newDateRange.start;
+        endDate = newDateRange.end;
+      });
     }
   }
 }

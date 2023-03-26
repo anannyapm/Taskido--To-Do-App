@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 
 class HeadingMessage extends StatelessWidget {
   final String heading;
@@ -10,21 +11,21 @@ class HeadingMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
         text: TextSpan(
-            style: const TextStyle(
+            style:  TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w500,
               height: 1.5,
-              color: Color(0xff011638),
+              color: primaryclr1,
             ),
             children: [
           TextSpan(text: heading),
           TextSpan(
             text: subheading,
-            style: const TextStyle(
+            style:  TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w300,
               height: 1.5,
-              color: Color(0xff011638),
+              color: primaryclr1,
             ),
           ),
         ]));

@@ -5,6 +5,8 @@ import 'package:todoapp/views/screens/login.dart';
 import 'package:todoapp/views/screens/signup.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
+import '../../constants/colorconstants.dart';
+
 class OnboardingHome extends StatelessWidget {
   const OnboardingHome({super.key});
 
@@ -19,14 +21,8 @@ class OnboardingHome extends StatelessWidget {
     );
     return SafeArea(
       child: Container(
-        color: Colors.white,
-          /* decoration: const BoxDecoration(
-              color: Colors.white,
-              image: DecorationImage(
-                  alignment: Alignment.topCenter,
-                  image: AssetImage('assets/images/screentwobg.png'),
-                  scale: 0.9,
-                  fit: BoxFit.contain)) */
+        color: primaryclr4,
+         
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.transparent,
@@ -37,9 +33,9 @@ class OnboardingHome extends StatelessWidget {
                   flex: 10,
                   child: Container(
                     height: (MediaQuery.of(context).size.height) * 0.7,
-                    decoration: const BoxDecoration(
-              color: Colors.white,
-              image: DecorationImage(
+                    decoration: BoxDecoration(
+              color: primaryclr4,
+              image: const DecorationImage(
                   alignment: Alignment.topCenter,
                   image: AssetImage('assets/images/screentwobg.png'),
                   scale: 0.9,
@@ -57,15 +53,15 @@ class OnboardingHome extends StatelessWidget {
                             height: 100,
                             child: RichText(
                               textAlign: TextAlign.center,
-                              text: const TextSpan(
+                              text:  TextSpan(
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w500,
                                   height: 1.5,
-                                  color: Color(0xff011638),
+                                  color: primaryclr1,
                                 ),
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text:
                                         'The secret of getting ahead is getting ',
                                   ),
@@ -75,7 +71,7 @@ class OnboardingHome extends StatelessWidget {
                                       fontSize: 22,
                                       fontWeight: FontWeight.w600,
                                       height: 1.5,
-                                      color: Color(0xff011638),
+                                      color: primaryclr1,
                                     ),
                                   ),
                                 ],
@@ -96,7 +92,7 @@ class OnboardingHome extends StatelessWidget {
                               fontFamily: GoogleFonts.poly().fontFamily,
                               fontSize: 130,
                               fontWeight: FontWeight.w500,
-                              color: const Color(0x11000000),
+                              color: primaryclr3,
                             ),
                           ),
                         ),
@@ -108,19 +104,19 @@ class OnboardingHome extends StatelessWidget {
                   flex: 2,
                   child: Align(
                       child: GradientBox(
-                    colorStart: const Color.fromARGB(255, 255, 255, 255),
-                    colorEnd: const Color.fromARGB(255, 4, 209, 206),
+                    colorStart: primaryclr4,
+                    colorEnd: pClr2Shade1,
                     gradFunction: () => Navigator.of(context).push(
                         MaterialPageRoute(
                             builder: (context) => const ScreenLogin())),
                     textVal: "Log In",
-                    textColor: const Color(0xff011638),
+                    textColor:  primaryclr1,
                   )),
                 ),
                 Expanded(
                   flex: 1,
                   child: Container(
-                    margin: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10),
                     child: TextButton(
                       onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(
@@ -130,12 +126,12 @@ class OnboardingHome extends StatelessWidget {
                       ),
                       child: RichText(
                         textAlign: TextAlign.center,
-                        text: const TextSpan(
-                          style: TextStyle(
+                        text:  TextSpan(
+                          style:  TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w300,
                             height: 1.5,
-                            color: Color(0xff000000),
+                            color: primaryclr3,
                           ),
                           children: [
                             TextSpan(
@@ -144,10 +140,10 @@ class OnboardingHome extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w300,
                                 height: 1.5,
-                                color: Color(0xbf011638),
+                                color: primaryclr1,
                               ),
                             ),
-                            TextSpan(
+                            const TextSpan(
                               text: ' ',
                             ),
                             TextSpan(
@@ -156,7 +152,7 @@ class OnboardingHome extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                                 height: 1.5,
-                                color: Color(0xff011638),
+                                color: primaryclr1,
                               ),
                             ),
                           ],

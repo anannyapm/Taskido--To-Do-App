@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:todoapp/constants/colorconstants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PrivacyPolicy extends StatelessWidget {
@@ -10,8 +11,8 @@ class PrivacyPolicy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color.fromARGB(255, 255, 255, 255),
+    SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle(
+      statusBarColor: primaryclr4,
       statusBarIconBrightness: Brightness.dark,
     ));
     return SafeArea(
@@ -28,35 +29,35 @@ class PrivacyPolicy extends StatelessWidget {
                   },
                   icon: const Icon(Icons.close)),
             ),
-            const Align(
+             Align(
               alignment: Alignment.center,
               child: Text(
                 'Taskido',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 20,
-                    color: Color(0xff011638)),
+                    color: primaryclr1),
               ),
             ),
-            const Align(
+             Align(
               alignment: Alignment.center,
               child: Text(
                 'Privacy Policy',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
-                    color: Color(0xff011638)),
+                    color: primaryclr1),
               ),
             ),
             Center(
               child: RichText(
-                  text: const TextSpan(
+                  text:  TextSpan(
                       text: '\nLast updated: ',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
-                          color: Colors.black,
+                          color: primaryclr3,
                           fontSize: 16),
-                      children: [
+                      children:const [
                     TextSpan(
                         text: 'March 19, 2023',
                         style: TextStyle(fontWeight: FontWeight.w600)),
@@ -67,9 +68,9 @@ class PrivacyPolicy extends StatelessWidget {
             ),
             RichText(
                 text: TextSpan(
-              style: const TextStyle(
+              style:  TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: Colors.black,
+                  color: primaryclr3,
                   fontSize: 15),
               text:
                   '''This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.
