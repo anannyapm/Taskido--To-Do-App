@@ -92,7 +92,7 @@ class OnboardingHome extends StatelessWidget {
                               fontFamily: GoogleFonts.poly().fontFamily,
                               fontSize: 130,
                               fontWeight: FontWeight.w500,
-                              color: primaryclr3,
+                              color:pClr3Shade3 ,
                             ),
                           ),
                         ),

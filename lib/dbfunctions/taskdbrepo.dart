@@ -49,11 +49,11 @@ class TaskRepository {
     //rawQuery will return list of map value
     var dbClient = await database;
 
-    final _values = await dbClient.rawQuery(
+    final values = await dbClient.rawQuery(
         'select * from ${taskInstance.tableName} where ${taskInstance.colFive}="$userid"');
 
-    debugPrint("TASK TABLE CONTAINS : ${_values.toString()}");
-    return _values.map((e) => TaskModel.fromMap(e)).toList();
+    debugPrint("TASK TABLE CONTAINS : ${values.toString()}");
+    return values.map((e) => TaskModel.fromMap(e)).toList();
   }
 
   //FETCH DATA BASED ON TASKNAME,UID,CID

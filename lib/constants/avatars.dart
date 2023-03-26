@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 List avatarImages = [
   'assets/images/avatars01.png',

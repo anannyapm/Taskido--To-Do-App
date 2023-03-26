@@ -53,7 +53,7 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
                       return  LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [primaryclr4, Color(0xFFF9BA0E)],
+                        colors: [primaryclr4, const Color(0xFFF9BA0E)],
                       ).createShader(bounds);
                     },
                     child: streakdata[1],

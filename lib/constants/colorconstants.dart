@@ -6,6 +6,7 @@ Color pClr2Shade1 = const Color(0xFF04D1CE);
 Color primaryclr3 = Colors.black;
 Color pClr3Shade1 = const Color(0x6B333333);
 Color pClr3Shade2 = const Color(0xFF565656);
+Color pClr3Shade3 = const Color(0x39D5D5D5);
 Color primaryclr4 = const Color(0xFFFFFFFF);
 Color pClr4Shade1 = const Color(0xFFDCDBDB);
 
@@ -30,6 +31,5 @@ Color successColor = Colors.green;
 //graph colors
 Color chart1Color1 = const Color(0xFF00576D);
 Color chart1Color2 = const Color(0xFF00B3FF);
-
-Color chart2Color1 = const Color(0xFF06D4B2);
-Color chart2Color2 = const Color(0xFF015D5D);
+Color chart2Color1 = const Color(0xFF015D5D);
+Color chart2Color2 = const Color(0xFF06D4B2);

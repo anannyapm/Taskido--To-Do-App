@@ -137,7 +137,7 @@ class _CategoryGraphState extends State<CategoryGraph> {
               child:widget.totalCount==0?const Padding(
               padding: EdgeInsets.all(50),
               child: Center(child:Text('No Tasks Found',style: TextStyle(fontSize: 18),)),
-            ):pieChartWidget(completedPercent,chart2Color1, chart2Color2,1)
+            ):pieChartWidget(completedPercent,chart2Color2, chart2Color1,1)
              
             ),
           ],
