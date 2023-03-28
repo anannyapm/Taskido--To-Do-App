@@ -48,7 +48,7 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                           child: LinearProgressIndicator(
                               minHeight: 8,
                               backgroundColor:
-                                  Color(0x3300A9A6),
+                                  const Color(0x3300A9A6),
                               color:  primaryclr2,
                               value: viewModel
                                   .progressIndicatorValue(widget.chosenId)),

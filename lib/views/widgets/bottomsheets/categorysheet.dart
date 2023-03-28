@@ -101,7 +101,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                     return ChoiceChip(
                       label: IconList.iconValueList[index],
                       selected: defaultChoiceIndex == index,
-                      selectedColor: primaryclr4,
+                      selectedColor: pClr4Shade1,
                       onSelected: (value) {
                         setState(() {
                           defaultChoiceIndex =

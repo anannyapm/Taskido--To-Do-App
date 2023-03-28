@@ -31,13 +31,13 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle(
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: primaryclr4,
         statusBarIconBrightness: Brightness.dark,
       ));
       return SafeArea(
         child: Container(
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
               color: primaryclr4,
               image: const DecorationImage(
                 alignment: Alignment.topRight,
@@ -57,10 +57,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                       margin: const EdgeInsets.only(top: 10),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(
-                              color: pClr3Shade1)),
+                          border: Border.all(color: pClr3Shade1)),
                       child: IconButton(
-                        icon:  Icon(
+                        icon: Icon(
                           Icons.arrow_back_ios_outlined,
                           color: primaryclr3,
                         ),
@@ -92,9 +91,9 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                     alignment: Alignment.bottomRight,
                                     children: [
                                       viewModel.profilePhoto == ''
-                                          ?  CircleAvatar(
+                                          ? CircleAvatar(
                                               radius: 35,
-                                              backgroundColor:pClr3Shade2,
+                                              backgroundColor: pClr3Shade2,
                                               child: const CircleAvatar(
                                                 radius: 34,
                                                 backgroundImage: AssetImage(
@@ -103,7 +102,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                             )
                                           : CircleAvatar(
                                               radius: 35,
-                                              backgroundColor:pClr3Shade2,
+                                              backgroundColor: pClr3Shade2,
                                               child: CircleAvatar(
                                                 radius: 34,
                                                 backgroundColor: primaryclr4,
@@ -114,15 +113,14 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       Container(
                                         height: 30,
                                         width: 30,
-                                        decoration:  BoxDecoration(
+                                        decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: primaryclr4),
                                         padding: const EdgeInsets.all(2),
                                         child: Container(
-                                          decoration:  BoxDecoration(
+                                          decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color:
-                                                  primaryclr3),
+                                              color: primaryclr3),
                                           child: IconButton(
                                             icon: Icon(
                                               Icons.edit,
@@ -151,12 +149,21 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                                                         context)
                                                                     .pop();
                                                               },
-                                                              child: const Text('Clear')),
+                                                              child: const Text(
+                                                                  'Clear')),
                                                         ],
                                                       ),
                                                       content: SizedBox(
-                                                        height: MediaQuery.of(context).size.height*0.6,
-                                                        width: MediaQuery.of(context).size.width*0.8,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height *
+                                                            0.6,
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.8,
                                                         child: GridView(
                                                           shrinkWrap: true,
                                                           physics:
@@ -180,8 +187,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                                               },
                                                               child: Card(
                                                                 child: Image.asset(
-                                                                        avatarImages[
-                                                                            index]),
+                                                                    avatarImages[
+                                                                        index]),
                                                               ),
                                                             );
                                                           }),
@@ -216,24 +223,24 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       child: GradientBox(
                                         colorStart: primaryclr4,
                                         colorEnd: pClr2Shade1,
-                                        gradFunction: () {
+                                        gradFunction: () async{
                                           if (_formKey.currentState!
                                               .validate()) {
-                                            addUserToModel(
+                                            await addUserToModel(
                                                 viewModel.profilePhoto,
                                                 context);
-
+                                           await viewModel.addToCategList();
+                                           await viewModel.addToTaskList(); 
                                             _usernameController.text = '';
                                             _emailController.text = '';
                                             viewModel.setProfile('');
-                                            debugPrint(
-                                                'Profile is ${viewModel.profilePhoto}');
+                                            
                                           } else {
                                             debugPrint('Empty fields found');
                                           }
                                         },
                                         textVal: "Sign Up",
-                                        textColor:  primaryclr1,
+                                        textColor: primaryclr1,
                                       ),
                                     )
                                   ],
@@ -264,42 +271,42 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   }
 
   Future<void> addUserToModel(String profilephoto, BuildContext ctx) async {
-    final _name = _usernameController.text.trim();
-    final _email = _emailController.text.trim();
-    String _photo = 'assets/images/stacked-steps-haikei.png';
+    final name = _usernameController.text.trim();
+    final email = _emailController.text.trim();
+    String photo = 'assets/images/stacked-steps-haikei.png';
 
-    final _image = profilephoto;
+    final image = profilephoto;
 
-    if (_image != '') {
-      _photo = _image;
+    if (image != '') {
+      photo = image;
     }
 
-    final _userObject = UserModel(name: _name, email: _email, photo: _photo);
+    final userObject = UserModel(name: name, email: email, photo: photo);
 
     /* print("$_name $_email before calling savedata"); */
 
-    dynamic out = await Repository.saveData(_userObject);
+    dynamic out = await Repository.saveData(userObject);
     if (out == true) {
       final List<Map<String, dynamic>> uidFetchOutput =
-          await Repository.fetchID(_email);
-      final _currentUserId = uidFetchOutput[0]['uid'];
-      print(_currentUserId);
-      await Repository.setCurrentUser(_currentUserId, _name, _email, _photo);
+          await Repository.fetchID(email);
+      final currentUserId = uidFetchOutput[0]['uid'];
+      debugPrint(currentUserId.toString());
+      await Repository.setCurrentUser(currentUserId, name, email, photo);
 
-      final _sharedPrefs = await SharedPreferences.getInstance();
-      await _sharedPrefs.setString(SAVE_KEY_NAME, _email);
+      final sharedPrefs = await SharedPreferences.getInstance();
+      await sharedPrefs.setString(SAVE_KEY_NAME, email);
 
       Navigator.of(ctx).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const ScreenHome()),
           (route) => false);
     } else {
-      var snackBar =  SnackBar(
+      var snackBar = SnackBar(
         content: Text(
           'This email id is already registered. Please Login back to continue!',
           style: TextStyle(color: primaryclr4),
         ),
-        backgroundColor:dangerColor,
-        padding: EdgeInsets.all(20),
+        backgroundColor: dangerColor,
+        padding: const EdgeInsets.all(20),
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
     }

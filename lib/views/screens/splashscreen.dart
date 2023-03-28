@@ -32,7 +32,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
 
         //Scaffold area
         child: Scaffold(
-          backgroundColor: Colors.transparent,
+          //backgroundColor: Colors.transparent,
           body: Column(
             children: [
               Expanded(
@@ -49,21 +49,21 @@ class _ScreenSplashState extends State<ScreenSplash> {
                 ),
               ),
               Expanded(
-                flex: 2,
-                child: Column(
+                flex: 3,
+                child:
+                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children:  [
-                    const GradientTextWidget(
-                      textValue: 'Taskido App',
-                      textSize: 34,
-                      weight: FontWeight.w700,
-                    ),
+                    
+                    Image.asset('assets/images/full_logo_light.png',),
                     Text(
-                      'Get your tasks done!',
+                      'GET YOUR TASKS DONE!',
                       style: TextStyle(
-                          color: primaryclr1, fontSize: 20),
+                        letterSpacing: 3,
+                          color: pClr3Shade2, fontSize: 16,fontWeight: FontWeight.w500)
                     ),
                   ],
-                ),
+                ), 
               ),
               Expanded(
                 flex: 2,

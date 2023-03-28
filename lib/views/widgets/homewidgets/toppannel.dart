@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +19,7 @@ class TopPanelWidget extends StatefulWidget {
 class _TopPanelWidgetState extends State<TopPanelWidget> {
   @override
   Widget build(BuildContext context) {
+    
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return Container(
         margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
@@ -34,8 +35,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                   child: SizedBox(
                       width: 75,
                       height: 75,
-                      child: viewModel.profilePhoto == ''
-                          ? Container(
+                      child: Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
                                   color: primaryclr4,
@@ -44,14 +44,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
                                           Repository.currentUserPhoto),
                                       fit: BoxFit.cover)),
                             )
-                          : Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  image: DecorationImage(
-                                      image:AssetImage(Repository.currentUserPhoto) /* FileImage(
-                                          File(Repository.currentUserPhoto)) */,
-                                      fit: BoxFit.cover)),
-                            )),
+                         ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

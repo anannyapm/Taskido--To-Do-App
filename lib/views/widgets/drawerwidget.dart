@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/constants/colorconstants.dart';
 import 'package:todoapp/functions/string_extensions.dart';
@@ -20,47 +23,57 @@ class DrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return Drawer(
+        backgroundColor: primaryclr4,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              margin: const EdgeInsets.all(0),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/drawerbg.png'),
-                      fit: BoxFit.fill)),
-              accountName: SizedBox(
-                width: (MediaQuery.of(context).size.width) * 0.3,
-                child: Text(
-                  Repository.currentUserName.toTitleCase(),
-                  maxLines: 2,
-                  style:  TextStyle(
-                      fontWeight: FontWeight.bold, color: primaryclr1),
+                margin: const EdgeInsets.all(0),
+                decoration: BoxDecoration(
+                    color: primaryclr4,
+                    boxShadow: [
+                      BoxShadow(
+                        color: pClr3Shade2,
+                        offset: const Offset(
+                          0,
+                          -4,
+                        ),
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                    image: const DecorationImage(
+                        image: AssetImage('assets/images/drawerbg.png'),
+                        fit: BoxFit.fill)),
+                accountName: SizedBox(
+                  width: (MediaQuery.of(context).size.width) * 0.3,
+                  child: Text(
+                    Repository.currentUserName.toTitleCase(),
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: primaryclr1),
+                  ),
                 ),
-              ),
-              accountEmail: SizedBox(
-                width: (MediaQuery.of(context).size.width) * 0.5,
-                child: Text(
-                  Repository.currentUserMail,
-                  maxLines: 2,
-                  style:  TextStyle(
-                      fontWeight: FontWeight.w400, color: primaryclr1),
+                accountEmail: SizedBox(
+                  width: (MediaQuery.of(context).size.width) * 0.5,
+                  child: Text(
+                    Repository.currentUserMail,
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400, color: primaryclr1),
+                  ),
                 ),
-              ),
-              currentAccountPicture: CircleAvatar(
-                
-                backgroundColor: primaryclr4,
-                      backgroundImage: AssetImage(Repository.currentUserPhoto),
-                    )
-                  
-            ),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: primaryclr4,
+                  backgroundImage: AssetImage(Repository.currentUserPhoto),
+                )),
             ListTile(
               leading: const Icon(
                 Icons.share,
               ),
               title: const Text('Share Taskido App'),
               onTap: () {
-                Navigator.pop(context);
+                Share.share(
+                    'Hey!Looking to be Productive?Checkout the Taskido app, a perfect solution to get things done.');
               },
             ),
             ListTile(
@@ -69,8 +82,10 @@ class DrawerWidget extends StatelessWidget {
               ),
               title: const Text('Privacy Policy'),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => PrivacyPolicy())));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: ((context) => const PrivacyPolicy())));
               },
             ),
             ListTile(
@@ -78,8 +93,9 @@ class DrawerWidget extends StatelessWidget {
                 Icons.star,
               ),
               title: const Text('Rate Us'),
-              onTap: () {
-                Navigator.pop(context);
+              onTap: () async {
+                openAppReview();
+                // InAppReview.instance.openStoreListing();
               },
             ),
             ListTile(
@@ -107,8 +123,11 @@ class DrawerWidget extends StatelessWidget {
               icon: Icon(
                 Icons.info,
               ),
-              applicationIcon: Icon(
-                Icons.local_play,
+              applicationIcon: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.task_alt,
+                ),
               ),
               applicationName: 'Taskido App',
               applicationVersion: '1.0',
@@ -125,6 +144,7 @@ class DrawerWidget extends StatelessWidget {
                 popupDialogueBox(() async {
                   final sharedPrefs = await SharedPreferences.getInstance();
                   await sharedPrefs.clear();
+
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (context) => const OnboardingHome()),
@@ -136,5 +156,13 @@ class DrawerWidget extends StatelessWidget {
         ),
       );
     });
+  }
+
+  void openAppReview() async {
+    final InAppReview inAppReview = InAppReview.instance;
+
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    }
   }
 }

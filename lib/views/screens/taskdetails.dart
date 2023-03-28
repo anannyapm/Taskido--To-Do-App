@@ -64,7 +64,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                       primaryclr1,
                        primaryclr2,
                     ],
-                    stops: <double>[0, 1],
+                    stops: const [0, 1],
                   ),
                 ),
                 child: Column(children: [
@@ -252,12 +252,23 @@ class _ScreenTasksState extends State<ScreenTasks> {
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
       initialDateRange: initialDateRange,
+      helpText: 'Selected Date Range',
       builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme:  ColorScheme.light(primary: primaryclr2),
+        return Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              
+              maxWidth: MediaQuery.of(context).size.width*0.85,
+              //maxHeight: MediaQuery.of(context).size.height*0.95,
+        
+              ),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme:  ColorScheme.light(primary: primaryclr2),
+              ),
+              child: child!,
+            ),
           ),
-          child: child!,
         );
       },
     );

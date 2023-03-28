@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +21,6 @@ class ScreenInitialSplash extends StatefulWidget {
 class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
   @override
   void initState() {
- 
     initdb();
     checkUserLogin();
 
@@ -33,12 +33,10 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
     await TaskRepository.database;
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:  BoxDecoration(color: primaryclr3),
+      decoration: BoxDecoration(color: primaryclr3),
       child: Scaffold(
           backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           body: Padding(
@@ -46,18 +44,36 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
               child: Container(
                   width: double.infinity,
                   margin: const EdgeInsets.all(30),
-                  child:  Center(
-                    child: Text(
-                      "Taskido App",
-                      style: TextStyle(
-                          color: primaryclr4,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 25),
+                  child: Center(
+                      child: SizedBox(
+                    child: DefaultTextStyle(
+                      style:  TextStyle(
+                        fontSize: 40.0,
+                        
+                        color: primaryclr4,
+                          fontWeight: FontWeight.w500
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Center(
+                          child: AnimatedTextKit(
+                            totalRepeatCount: 1,
+                            animatedTexts: [
+                              TyperAnimatedText(
+                                  'Taskido',
+                                  curve: Curves.easeIn,
+                                  speed: const Duration(milliseconds: 220)),
+                             
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  )))),
+                  )
+
+                      )))),
     );
   }
-
 
   Future<void> gotoLogin() async {
     await Future.delayed(const Duration(seconds: 3));

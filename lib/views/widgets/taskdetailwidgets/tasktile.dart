@@ -47,32 +47,50 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
           ),
           title: (widget.ifcomplete)
               ? Text(widget.data.task_name.toTitleCase(),
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       color: Color(0x7E000000),
                       decoration: TextDecoration.lineThrough,
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w600))
-              : (widget.overdue
+              : (!widget.overdue
                   ? Text(widget.data.task_name,
-                      style: const TextStyle(
-                          color: Color(0xFF000000),
+                  
+                      style:  TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                          color: primaryclr3,
                           fontWeight: FontWeight.w600))
-                  : RichText(
-                      text: TextSpan(
-                      text: widget.data.task_name,
-                      style: const TextStyle(
-                          color: Color(0xFF000000),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18),
-                      children: const [
-                        TextSpan(
-                            text: '\t\tOverdue',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 255, 3, 3),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14))
-                      ],
-                    ))),
+                  : Row(
+                    children: [
+                      Expanded(    
+                        flex: 2,
+                        child: Text(
+                          widget.data.task_name,
+                        style:  TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            color: primaryclr3,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18
+                            ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          '\t\tOverdue',
+                              style: TextStyle(
+                                  color: dangerColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14)
+                        ),
+                      )
+                    ],
+                  )
+                                  
+                    ),
+
+                    
+                    
           subtitle: (widget.ifcomplete)
               ? Text(
                   DateFormat('EEE, dd/MM/yyyy hh:mm aaa').format(widget.date),
@@ -103,7 +121,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                           context);
                 },
                 icon: const Icon(Icons.edit),
-                color: widget.ifcomplete ? Color(0x7E000000) : primaryclr1,
+                color: widget.ifcomplete ? const Color(0x7E000000) : primaryclr1,
                 iconSize: 22,
               ),
               IconButton(

@@ -61,8 +61,12 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                                                 ))));
                               },
                               child: Text(
+                                
                                 catItem.category_name
                                     .toTitleCase(),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w600, fontSize: 18),
                               ),

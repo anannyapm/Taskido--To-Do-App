@@ -38,7 +38,7 @@ class _ListWidgetState extends State<ListWidget> {
                       DateTime date = snapshot.data![index].task_date_time;
                       bool overdue = false;
 
-                      if (date.isAfter(DateTime.now())) {
+                      if (date.isBefore(DateTime.now())) {
                         overdue = true;
                       }
 

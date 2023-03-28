@@ -16,7 +16,7 @@ class DatabaseConnection {
   }
 
   static _onConfigure(Database database) async {
-    // Add support for cascade delete
+    // Add support for cascade 
     await database.execute("PRAGMA foreign_keys = ON");
   }
 

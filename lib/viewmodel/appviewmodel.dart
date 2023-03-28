@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:todoapp/dbfunctions/repository.dart';
 import 'package:todoapp/functions/string_extensions.dart';
 import 'package:todoapp/models/categorymodel.dart';
@@ -14,11 +10,13 @@ import '../dbfunctions/categorydbrepo.dart';
 import '../dbfunctions/taskdbrepo.dart';
 
 class AppViewModel extends ChangeNotifier {
+  //index value corresponding to bottom navigation
   int selectedIndexNotifier = 0;
   void notifyOnIndexChange(int index) {
     selectedIndexNotifier = index;
     notifyListeners();
   }
+
   //category operations
 
   List<CategoryModel> categModelList = <CategoryModel>[];
@@ -32,8 +30,8 @@ class AppViewModel extends ChangeNotifier {
       if (value.isEmpty) {
         notifyListeners();
       }
-      for (var map in value) {
-        categModelList.add(map);
+      for (var element in value) {
+        categModelList.add(element);
         notifyListeners();
       }
     }).catchError((e) => debugPrint(e.toString()));
@@ -57,9 +55,9 @@ class AppViewModel extends ChangeNotifier {
         pendingList.clear();
         notifyListeners();
       }
-      for (var map in value) {
-        if (map.user_id == Repository.currentUserID) {
-          taskModelList.add(map);
+      for (var element in value) {
+        if (element.user_id == Repository.currentUserID) {
+          taskModelList.add(element);
           setPendingList();
           notifyListeners();
         }
@@ -71,13 +69,14 @@ class AppViewModel extends ChangeNotifier {
   void setPendingList() {
     pendingList.clear();
     var now = DateTime.now();
-    taskModelList.forEach((element) {
+    for (var element in taskModelList) {
       if (element.task_date_time
               .isBefore(DateTime(now.year, now.month, now.day + 1)) &&
-          element.isCompleted == 0) {
+          element.isCompleted == 0 &&
+          element.user_id == Repository.currentUserID) {
         pendingList.add(element);
       }
-    });
+    }
     if (pendingList.isNotEmpty) {
       pendingList.sort((a, b) => a.task_date_time.compareTo(b.task_date_time));
     }
@@ -166,7 +165,7 @@ class AppViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Search anf Filter operations
+  //Search and Filter operations
 
   List queryResultList = [];
   String queryval = '';
@@ -246,16 +245,15 @@ class AppViewModel extends ChangeNotifier {
                 data.task_date_time.month == date1!.month &&
                 data.task_date_time.year == date1!.year) {
               filteredList.add(data.tid!);
-              displayFilterDetail =
-                  "${DateFormat('EEE, M/d/y').format(date1!)}";
             }
+            displayFilterDetail = DateFormat('EEE, M/d/y').format(date1!);
           } else {
             if (data.task_date_time.isAfter(date1!) &&
                 data.task_date_time.isBefore(date2!)) {
               filteredList.add(data.tid!);
-              displayFilterDetail =
-                  "${DateFormat('EEE, M/d/y').format(date1!)} to ${DateFormat('EEE, M/d/y').format(date2!)}";
             }
+            displayFilterDetail =
+                "${DateFormat('EEE, M/d/y').format(date1!)} to ${DateFormat('EEE, M/d/y').format(date2!)}";
           }
         } else {
           displayFilterDetail = "No date range selected";
@@ -368,8 +366,6 @@ class AppViewModel extends ChangeNotifier {
       },
     );
   }
-
-
 
   String profilePhoto = '';
   void setProfile(String photo) {

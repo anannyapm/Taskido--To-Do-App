@@ -9,6 +9,7 @@ import '../../constants/colorconstants.dart';
 
 class OnboardingHome extends StatelessWidget {
   const OnboardingHome({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class OnboardingHome extends StatelessWidget {
          
           child: Scaffold(
             resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.transparent,
+            backgroundColor: primaryclr4,
             //set background
             body: Column(
               children: [
@@ -37,7 +38,7 @@ class OnboardingHome extends StatelessWidget {
               color: primaryclr4,
               image: const DecorationImage(
                   alignment: Alignment.topCenter,
-                  image: AssetImage('assets/images/screentwobg.png'),
+                  image: AssetImage('assets/images/onboardbg.png'),
                   scale: 0.9,
                   fit: BoxFit.contain))
                   ),
@@ -114,9 +115,9 @@ class OnboardingHome extends StatelessWidget {
                   )),
                 ),
                 Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 20),
                     child: TextButton(
                       onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(

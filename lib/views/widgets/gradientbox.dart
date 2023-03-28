@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todoapp/constants/colorconstants.dart';
 
 class GradientBox extends StatelessWidget {
   final Color colorStart;

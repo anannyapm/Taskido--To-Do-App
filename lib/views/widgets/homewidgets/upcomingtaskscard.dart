@@ -36,7 +36,8 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
             viewModel.pendingList.isNotEmpty
                 ? Container(
                     margin: const EdgeInsets.only(left: 20),
-                    height: 140,
+                    height: 145,
+                    
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
@@ -55,6 +56,7 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                               borderRadius: BorderRadius.circular(20)),
                           margin: const EdgeInsets.fromLTRB(0, 10, 20, 5),
                           child: Container(
+                            width: 200,
                             decoration: const BoxDecoration(
                                 gradient: LinearGradient(colors: [
                               Color.fromARGB(12, 18, 5, 82),
@@ -76,6 +78,8 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                                             Color.fromARGB(255, 131, 130, 130)),
                                   ),
                                   Text(item.task_name.toTitleCase(),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
                                       style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w800,

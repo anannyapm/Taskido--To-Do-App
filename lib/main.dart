@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Taskido App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
       home: const ScreenInitialSplash(),

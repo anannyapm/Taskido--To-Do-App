@@ -58,9 +58,9 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                               sizeUnit: GaugeSizeUnit.factor,
                               cornerStyle: CornerStyle.startCurve,
                               gradient:  SweepGradient(colors: <Color>[
-                                Color(0xFF00FFFF),
+                                const Color(0xFF00FFFF),
                                 primaryclr1
-                              ], stops: <double>[
+                              ], stops: const [
                                 0.25,
                                 0.75
                               ])),
