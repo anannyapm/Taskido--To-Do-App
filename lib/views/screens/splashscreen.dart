@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
-import 'package:todoapp/views/widgets/gradienttext.dart';
+
 
 import '../../constants/colorconstants.dart';
 
@@ -32,7 +32,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
 
         //Scaffold area
         child: Scaffold(
-          //backgroundColor: Colors.transparent,
+          
           body: Column(
             children: [
               Expanded(
@@ -72,8 +72,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
                   colorStart:  primaryclr1,
                   colorEnd: primaryclr2,
                   gradFunction: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const OnboardingHome()),(route)=>false),
-                      /* MaterialPageRoute(
-                          builder: (context) => const OnboardingHome()) */
+                    
                   textVal: "Let's Start",
                   textColor: primaryclr4,
                 )),

@@ -26,7 +26,7 @@ class AppViewModel extends ChangeNotifier {
   Future<void> addToCategList() async {
     await CategRepository.getAllData().then((value) {
       categModelList.clear();
-      //notigying listner in case of no data in value
+      //notifying listner in case of no data in value
       if (value.isEmpty) {
         notifyListeners();
       }

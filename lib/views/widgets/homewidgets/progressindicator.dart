@@ -74,7 +74,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget> {
                         ],
                         annotations: <GaugeAnnotation>[
                           GaugeAnnotation(
-                              //positionFactor: 0,
+                         
                               angle: 90,
                               widget: RichText(
                                 textAlign: TextAlign.center,

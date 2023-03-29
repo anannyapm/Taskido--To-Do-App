@@ -5,7 +5,7 @@ class TaskModel {
   final int category_id;
   final int user_id;
   final DateTime task_date_time;
-  //final DateTime task_time;
+  
 
   TaskModel(
       {required this.task_name,
@@ -13,7 +13,7 @@ class TaskModel {
       required this.category_id,
       required this.user_id,
       required this.task_date_time,
-      // required this.task_time,
+      
       this.tid});
 
   static TaskModel fromMap(Map<String, dynamic> map) {

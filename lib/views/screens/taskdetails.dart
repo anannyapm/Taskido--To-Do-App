@@ -259,7 +259,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
             constraints: BoxConstraints(
               
               maxWidth: MediaQuery.of(context).size.width*0.85,
-              //maxHeight: MediaQuery.of(context).size.height*0.95,
+           
         
               ),
             child: Theme(

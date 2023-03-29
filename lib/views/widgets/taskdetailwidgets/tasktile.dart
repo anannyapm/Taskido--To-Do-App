@@ -61,9 +61,10 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                           color: primaryclr3,
                           fontWeight: FontWeight.w600))
                   : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(    
-                        flex: 2,
+                        
                         child: Text(
                           widget.data.task_name,
                         style:  TextStyle(
@@ -75,9 +76,9 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                         ),
                       ),
                       Expanded(
-                        flex: 1,
+                        
                         child: Text(
-                          '\t\tOverdue',
+                          'Overdue',
                               style: TextStyle(
                                   color: dangerColor,
                                   fontWeight: FontWeight.w600,

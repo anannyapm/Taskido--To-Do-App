@@ -221,7 +221,6 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
 
     final DateTime? taskDateTime;
     TaskModel taskitem = widget.taskdata;
-    //final _currUserId = Repository.currentUserID;
     if (date == null && time == null) {
       taskDateTime = taskitem.task_date_time;
     } else if (date == null) {

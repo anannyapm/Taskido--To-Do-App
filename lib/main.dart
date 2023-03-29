@@ -31,23 +31,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-
-
-
-
-
-//For Reference
-//Using routes
-   /* initialRoute: 'onboardingScreen',
-  
-  routes: {  
-    'onboardingScreen':(context)=>OnboardingHome(),
-    // When navigating to the "homeScreen" route, build the HomeScreen widget.
-    'homeScreen': (context) => ScreenHome(),
-    // When navigating to the "secondScreen" route, build the SecondScreen widget.
-    'loginScreen': (context) => ScreenLogin(),
-    'signupScreen':(context) => ScreenSignUp(),
-    'profileScreen':(context) => ScreenProfileHome(),
-    'taskScreen':(context) => ScreenTasks(),
-  }, */

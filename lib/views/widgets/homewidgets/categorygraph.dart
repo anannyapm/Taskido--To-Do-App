@@ -44,7 +44,7 @@ class _CategoryGraphState extends State<CategoryGraph> {
       body: SafeArea(
           child: Container(
         margin: const EdgeInsets.all(20),
-        //padding: const EdgeInsets.all(10),
+      
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

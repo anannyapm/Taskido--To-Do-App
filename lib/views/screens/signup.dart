@@ -283,8 +283,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
 
     final userObject = UserModel(name: name, email: email, photo: photo);
 
-    /* print("$_name $_email before calling savedata"); */
-
     dynamic out = await Repository.saveData(userObject);
     if (out == true) {
       final List<Map<String, dynamic>> uidFetchOutput =
