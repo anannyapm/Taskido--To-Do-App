@@ -26,7 +26,6 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
 
   @override
   void initState() {
-    
     super.initState();
     _inputController = TextEditingController(text: widget.taskdata.task_name);
     _dateController = TextEditingController(
@@ -93,9 +92,12 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
 
                   TextFormField(
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().isEmpty) {
                         return 'Please enter a task name';
                       } else {
+                        
                         return null;
                       }
                     },
@@ -128,7 +130,7 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                                 builder: (context, child) {
                                   return Theme(
                                     data: Theme.of(context).copyWith(
-                                      colorScheme:  ColorScheme.light(
+                                      colorScheme: ColorScheme.light(
                                           primary: primaryclr2),
                                     ),
                                     child: child!,
@@ -217,7 +219,7 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
   }
 
   Future<void> updateTasktoModel(BuildContext ctx) async {
-    final taskname = _inputController.text.trim();
+    final taskname = _inputController.text.trim().replaceAll(RegExp(r"\s+"), " ");
 
     final DateTime? taskDateTime;
     TaskModel taskitem = widget.taskdata;
@@ -243,7 +245,5 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
     } else {
       snackBarWidget(ctx, 'Update Success!', successColor);
     }
-
-  
   }
 }

@@ -212,6 +212,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       hint: "Enter User Name",
                                       label: "User Name",
                                       textController: _usernameController,
+                                      typeValue: TextInputType.name,
                                     ),
                                     TextFieldWidget(
                                       hint: "Enter Email Address",
@@ -223,18 +224,17 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                       child: GradientBox(
                                         colorStart: primaryclr4,
                                         colorEnd: pClr2Shade1,
-                                        gradFunction: () async{
+                                        gradFunction: () async {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             await addUserToModel(
                                                 viewModel.profilePhoto,
                                                 context);
-                                           await viewModel.addToCategList();
-                                           await viewModel.addToTaskList(); 
+                                            await viewModel.addToCategList();
+                                            await viewModel.addToTaskList();
                                             _usernameController.text = '';
                                             _emailController.text = '';
                                             viewModel.setProfile('');
-                                            
                                           } else {
                                             debugPrint('Empty fields found');
                                           }
@@ -271,12 +271,12 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   }
 
   Future<void> addUserToModel(String profilephoto, BuildContext ctx) async {
-    final name = _usernameController.text.trim();
+    final name = _usernameController.text.trim().replaceAll(RegExp(r"\s+"), " ");
     final email = _emailController.text.trim();
     String photo = 'assets/images/stacked-steps-haikei.png';
-
+   
     final image = profilephoto;
-
+    debugPrint(name + email);
     if (image != '') {
       photo = image;
     }
@@ -288,7 +288,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
       final List<Map<String, dynamic>> uidFetchOutput =
           await Repository.fetchID(email);
       final currentUserId = uidFetchOutput[0]['uid'];
-  
+
       await Repository.setCurrentUser(currentUserId, name, email, photo);
 
       final sharedPrefs = await SharedPreferences.getInstance();
@@ -308,6 +308,5 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
     }
-   
   }
 }

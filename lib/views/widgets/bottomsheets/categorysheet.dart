@@ -74,9 +74,13 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                 //textfieldbar
                 TextFormField(
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (value == null ||
+                        value.isEmpty ||
+                        value.trim().isEmpty) {
                       return 'Please enter category name';
-                    } else {
+                    } 
+                    
+                    else {
                       return null;
                     }
                   },
@@ -124,7 +128,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
   Future<CategoryModel> addCategorytoModel(
       int choiceIndex, BuildContext ctx) async {
-    final name = _inputController.text.trim();
+    final name = _inputController.text.trim().replaceAll(RegExp(r"\s+"), " ");
     final logoindex = choiceIndex;
 
     final categoryObject = CategoryModel(
@@ -137,12 +141,9 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
     if (out != true) {
       snackBarWidget(ctx, 'Oh Snap! Catrgory already exist', dangerColor);
-     
     } else {
       snackBarWidget(ctx, 'Category Added Successfully', successColor);
-
     }
-
 
     return categoryObject;
   }

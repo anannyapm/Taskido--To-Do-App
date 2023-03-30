@@ -130,7 +130,7 @@ class DrawerWidget extends StatelessWidget {
                 ),
               ),
               applicationName: 'Taskido App',
-              applicationVersion: '1.0',
+              applicationVersion: '1.0.0',
               applicationLegalese: '© Anannya P M',
               aboutBoxChildren: [],
               child: Text('About app'),

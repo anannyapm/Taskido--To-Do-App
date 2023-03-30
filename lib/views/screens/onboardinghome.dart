@@ -107,7 +107,7 @@ class OnboardingHome extends StatelessWidget {
                       child: GradientBox(
                     colorStart: primaryclr4,
                     colorEnd: pClr2Shade1,
-                    gradFunction: () => Navigator.of(context).push(
+                    gradFunction: () => Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                             builder: (context) => const ScreenLogin())),
                     textVal: "Log In",
@@ -119,7 +119,7 @@ class OnboardingHome extends StatelessWidget {
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 20),
                     child: TextButton(
-                      onPressed: () => Navigator.of(context).push(
+                      onPressed: () => Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                               builder: (context) => const ScreenSignUp())),
                       style: TextButton.styleFrom(

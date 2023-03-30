@@ -83,9 +83,13 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                   //textfieldbar
                   TextFormField(
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().isEmpty) {
                         return 'Please enter task name';
-                      } else {
+                      } 
+                      
+                      else {
                         return null;
                       }
                     },
@@ -118,7 +122,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                 builder: (context, child) {
                                   return Theme(
                                     data: Theme.of(context).copyWith(
-                                      colorScheme:  ColorScheme.light(
+                                      colorScheme: ColorScheme.light(
                                           primary: primaryclr2),
                                     ),
                                     child: child!,
@@ -126,7 +130,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                 },
                                 initialDate: date ?? DateTime.now(),
                                 firstDate: DateTime.now(),
-                                lastDate: DateTime(DateTime.now().year + 5));
+                                lastDate: DateTime(DateTime.now().year + 500));
 
                             if (pickdate == null) {
                               _dateController.clear();
@@ -162,14 +166,14 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                               builder: (context, child) {
                                 return Theme(
                                   data: Theme.of(context).copyWith(
-                                    colorScheme:  ColorScheme.light(
-                                        primary: primaryclr2),
+                                    colorScheme:
+                                        ColorScheme.light(primary: primaryclr2),
                                   ),
                                   child: child!,
                                 );
                               },
                               initialTime:
-                                  time ?? const TimeOfDay(hour: 9, minute: 0),
+                                  time ??  TimeOfDay.now(),
                             );
 
                             if (picktime == null) {
@@ -264,7 +268,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
   }
 
   Future<TaskModel> addTasktoModel(BuildContext ctx) async {
-    final taskname = _inputController.text.trim();
+    final taskname = _inputController.text.trim().replaceAll(RegExp(r"\s+"), " ");
     final cidOut = await CategRepository.fetchFirstCid();
     final logoindex =
         selectedChoiceIndex == 1 ? cidOut[0]['cid'] : selectedChoiceIndex;
@@ -287,8 +291,6 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
     } else {
       snackBarWidget(ctx, 'Task Added', successColor);
     }
-
-  
 
     return taskObject;
   }

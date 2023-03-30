@@ -39,58 +39,87 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
     );
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       return SafeArea(
-          child: Scaffold(
-            key: drawerkey,
-            backgroundColor: Colors.transparent,
-            endDrawer: const DrawerWidget(),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const TopPanelWidget(),
-                  const StreakBarWidget(),
-                  const ProgressIndicatorWidget(),
-                  const UpcomingTasksCard(),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 25, right: 25, top: 15),
-                      child: const Text(
-                        'My Categories',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 20),
+          child: WillPopScope(
+            onWillPop: _onWillPop,
+            child: Scaffold(
+              key: drawerkey,
+              backgroundColor: Colors.transparent,
+              endDrawer: const DrawerWidget(),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const TopPanelWidget(),
+                    const StreakBarWidget(),
+                    const ProgressIndicatorWidget(),
+                    const UpcomingTasksCard(),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 25, right: 25, top: 15),
+                        child: const Text(
+                          'My Categories',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 20),
+                        ),
                       ),
                     ),
-                  ),
-                  viewModel.categoryCount == 0
-                      ? Container(
-                          margin: const EdgeInsets.all(10),
-                          padding: const EdgeInsets.all(10),
-                          /* decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255)) */
-                          child: Column(children: [
-                             Text(
-                              'Add a category to start',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  color:
-                                      primaryclr1),
-                            ),
-                            Image.asset(
-                              'assets/images/empty.png',
-                              scale: 4,
-                            ),
-                          ]),
-                        )
-                      : const CategoryViewWidget(),
-                      
-                ],
+                    viewModel.categoryCount == 0
+                        ? Container(
+                            margin: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
+                            /* decoration: const BoxDecoration(
+                                color: Color.fromARGB(255, 255, 255, 255)) */
+                            child: Column(children: [
+                               Text(
+                                'Add a category to start',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16,
+                                    color:
+                                        primaryclr1),
+                              ),
+                              Image.asset(
+                                'assets/images/empty.png',
+                                scale: 4,
+                              ),
+                            ]),
+                          )
+                        : const CategoryViewWidget(),
+                        
+                  ],
+                  
+                ),
                 
               ),
-              
             ),
           ));
     });
   }
+  Future<bool> _onWillPop() async {
+  return (await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Are you sure? Do you want to exit App?'),
+          titleTextStyle:  TextStyle(
+              fontWeight: FontWeight.bold, color: primaryclr3, fontSize: 16),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false), 
+              child: const Text(
+                  "NO",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true), 
+              child: Text("YES",
+                  style: TextStyle(
+                      color:dangerColor, fontWeight: FontWeight.w600)),
+            ),
+          ],
+        ),
+      )) ??
+      false;
+}
 }

@@ -73,6 +73,17 @@ class _ScreenHomeState extends State<ScreenHome> {
                   SpeedDialChild(
                       backgroundColor: primaryclr1,
                       onTap: () {
+                        viewModel.bottomSheetBuilder(
+                            const CategorySheetWidget(), context);
+                      },
+                      child: Icon(
+                        Icons.category,
+                        color: primaryclr4,
+                      ),
+                      label: 'Add Category'),
+                  SpeedDialChild(
+                      backgroundColor: primaryclr1,
+                      onTap: () {
                         //await viewModel.addToCategList();
                         if (viewModel.categoryCount == 0) {
                           snackBarWidget(
@@ -90,17 +101,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                         color: primaryclr4,
                       ),
                       label: 'Add Tasks'),
-                  SpeedDialChild(
-                      backgroundColor: primaryclr1,
-                      onTap: () {
-                        viewModel.bottomSheetBuilder(
-                            const CategorySheetWidget(), context);
-                      },
-                      child: Icon(
-                        Icons.category,
-                        color: primaryclr4,
-                      ),
-                      label: 'Add Category'),
+                  
                 ],
               )),
         ),

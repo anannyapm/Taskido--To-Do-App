@@ -98,8 +98,8 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
         Provider.of<AppViewModel>(context, listen: false).addToTaskList();
       });
 
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (ctx1) => const ScreenHome()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (ctx1) => const ScreenHome()),(route)=>false);
     }
   }
 }
