@@ -128,7 +128,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
               IconButton(
                 onPressed: () {
                   popupDialogueBox(() async {
-                    debugPrint("Delete Pressed");
+                  
                     await deleteTask(widget.data.task_name,
                         widget.data.category_id, context);
                     await viewModel.addToTaskList();
@@ -152,7 +152,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
         .then((value) {
       snackBarWidget(context, 'Deleted Task', dangerColor);
     }).catchError((e) {
-      debugPrint(e.toString());
+   
       snackBarWidget(context, 'OOPs!!Something Went Wrong', primaryclr3);
     });
   }

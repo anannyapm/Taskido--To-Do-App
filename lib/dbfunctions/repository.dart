@@ -20,7 +20,7 @@ class Repository {
     currentUserMail = email;
     currentUserPhoto = photo;
 
-    debugPrint("Current User :$currentUserMail - $currentUserName");
+    
   }
 
   //check if database already exist; if yes return it else create a new db and return it.
@@ -36,7 +36,7 @@ class Repository {
 
     List<Map<String, dynamic>> result = await fetchData(user.email);
     if (result.isEmpty) {
-      debugPrint('Inserting User Data.....');
+   
       user.uid = await dbClient.rawInsert(
           'INSERT INTO ${userInstance.tableName}(${userInstance.colTwo}, ${userInstance.colThree}, ${userInstance.colFour}) VALUES(?, ?, ?)',
           [user.name, user.email, user.photo]);
@@ -58,7 +58,7 @@ class Repository {
     final values =
         await dbClient.rawQuery('select * from ${userInstance.tableName}');
 
-    debugPrint(values.toString());
+  
   }
 
   static Future<List<Map<String, dynamic>>> fetchData(String email) async {

@@ -288,7 +288,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
       final List<Map<String, dynamic>> uidFetchOutput =
           await Repository.fetchID(email);
       final currentUserId = uidFetchOutput[0]['uid'];
-      debugPrint(currentUserId.toString());
+  
       await Repository.setCurrentUser(currentUserId, name, email, photo);
 
       final sharedPrefs = await SharedPreferences.getInstance();
@@ -308,6 +308,6 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
       );
       ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
     }
-    debugPrint(out.toString());
+   
   }
 }

@@ -288,7 +288,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
       snackBarWidget(ctx, 'Task Added', successColor);
     }
 
-    debugPrint(out.toString());
+  
 
     return taskObject;
   }

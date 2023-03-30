@@ -272,7 +272,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
         );
       },
     );
-    debugPrint(newDateRange.toString());
+
     if (newDateRange == null) {
       setState(() {
         startDate = null;

@@ -20,7 +20,7 @@ class ShowTaskDetail extends StatefulWidget {
 class _ShowTaskDetailState extends State<ShowTaskDetail> {
   @override
   Widget build(BuildContext context) {
-    debugPrint("Task Details of Category ID - ${widget.chosenId}");
+   
     return Consumer<AppViewModel>(builder: (context, viewModel, child) {
       int totalCount = viewModel.setCountValues(widget.chosenId)['Total']!;
       int completedTaskCount =

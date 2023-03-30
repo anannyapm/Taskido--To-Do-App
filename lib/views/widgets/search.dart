@@ -24,7 +24,7 @@ class _SearchBarState extends State<SearchBar> {
         onChanged: (value) {
           viewModel.addToQueryList(value);
           viewModel.queryval = value;
-          debugPrint(viewModel.queryResultList.toString());
+         
         },
         controller: _searchcontroller,
         decoration: InputDecoration(

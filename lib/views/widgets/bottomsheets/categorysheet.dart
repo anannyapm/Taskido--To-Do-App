@@ -143,7 +143,6 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
     }
 
-    debugPrint(out.toString());
 
     return categoryObject;
   }

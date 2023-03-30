@@ -79,7 +79,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                                 IconButton(
                                     onPressed: () {
                                       popupDialogueBox(() async {
-                                        debugPrint("Delete Pressed");
+                                      
                                         await deleteCategory(
                                             catItem.category_name,
                                             context);

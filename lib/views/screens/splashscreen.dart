@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:todoapp/views/screens/onboardinghome.dart';
 import 'package:todoapp/views/widgets/gradientbox.dart';
 
-
 import '../../constants/colorconstants.dart';
 
 class ScreenSplash extends StatefulWidget {
@@ -16,23 +15,20 @@ class ScreenSplash extends StatefulWidget {
 class _ScreenSplashState extends State<ScreenSplash> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-         statusBarColor: primaryclr4,
-         statusBarIconBrightness: Brightness.dark,
-         
-      )
-    );
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: primaryclr4,
+      statusBarIconBrightness: Brightness.dark,
+    ));
     return SafeArea(
       //set background
       child: Container(
         height: MediaQuery.of(context).size.height,
-        decoration:  BoxDecoration(
-              color: primaryclr4,),
+        decoration: BoxDecoration(
+          color: primaryclr4,
+        ),
 
         //Scaffold area
         child: Scaffold(
-          
           body: Column(
             children: [
               Expanded(
@@ -50,29 +46,34 @@ class _ScreenSplashState extends State<ScreenSplash> {
               ),
               Expanded(
                 flex: 3,
-                child:
-                 Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children:  [
-                    
-                    Image.asset('assets/images/full_logo_light.png',),
-                    Text(
-                      'GET YOUR TASKS DONE!',
-                      style: TextStyle(
-                        letterSpacing: 3,
-                          color: pClr3Shade2, fontSize: 16,fontWeight: FontWeight.w500)
-                    ),
+                  children: [
+                    Container(
+                        margin: const EdgeInsets.only(top: 20),
+                       
+                        child: Image.asset(
+                          'assets/images/full_logo_light.png',height: 65,
+                        )),
+                    Text('GET YOUR TASKS DONE!',
+                        style: TextStyle(
+                            letterSpacing: 3,
+                            color: pClr3Shade2,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500)),
                   ],
-                ), 
+                ),
               ),
               Expanded(
                 flex: 2,
                 child: Align(
                     child: GradientBox(
-                  colorStart:  primaryclr1,
+                  colorStart: primaryclr1,
                   colorEnd: primaryclr2,
-                  gradFunction: () => Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>const OnboardingHome()),(route)=>false),
-                    
+                  gradFunction: () => Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const OnboardingHome()),
+                      (route) => false),
                   textVal: "Let's Start",
                   textColor: primaryclr4,
                 )),

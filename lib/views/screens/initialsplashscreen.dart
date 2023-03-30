@@ -90,7 +90,7 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
     } else {
       List<Map<String, dynamic>> out = await Repository.fetchData(userLoggedIn);
       Map val = out[0];
-      debugPrint("Checking User Login - User Fetch Output - ${out.toString()}");
+    
       await Repository.setCurrentUser(
           val['uid'], val['name'], val['email'], val['photo']);
       WidgetsBinding.instance.addPostFrameCallback((_) {

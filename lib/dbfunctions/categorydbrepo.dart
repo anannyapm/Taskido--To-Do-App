@@ -22,7 +22,7 @@ class CategRepository {
 
     List<Map<String, dynamic>> result = await fetchData(category.category_name);
     if (result.isEmpty) {
-      debugPrint('Inserting Category Data...');
+      
 
       //DBConst===>tableName: 'category_table',colOne: 'cid',colTwo: 'category_name',colThree: 'category_logo',colFour: 'isDeleted'
       category.cid = await dbClient.rawInsert(
@@ -87,7 +87,7 @@ class CategRepository {
   static Future<dynamic> deleteData(String categName) async {
     var dbClient = await database;
 
-    debugPrint("In delete repo");
+  
     int curUserId = Repository.currentUserID;
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(

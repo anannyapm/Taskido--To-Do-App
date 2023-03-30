@@ -160,7 +160,7 @@ class AppViewModel extends ChangeNotifier {
     //call db function to update
     final output = await TaskRepository.updateCompletedStatus(
         taskIndex, categoryIndex, Repository.currentUserID, taskValue);
-    debugPrint("Task update done! $output");
+   
 
     notifyListeners();
   }
@@ -184,7 +184,7 @@ class AppViewModel extends ChangeNotifier {
           queryResultList.add(element.task_name);
         }
       }
-      debugPrint("Query result contains: $queryResultList");
+   
     }
     notifyListeners();
   }
@@ -204,7 +204,6 @@ class AppViewModel extends ChangeNotifier {
   void setFilterSelection(String value) {
     filterSelection = value;
 
-    debugPrint("Filter Enabled for $filterSelection");
     notifyListeners();
   }
 

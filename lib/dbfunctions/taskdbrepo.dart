@@ -24,7 +24,7 @@ class TaskRepository {
     List<Map<String, dynamic>> result =
         await fetchData(task.task_name, task.user_id, task.category_id);
     if (result.isEmpty) {
-      debugPrint('Inserting Task Data.....');
+    
 
       task.tid = await dbClient.rawInsert(
           'INSERT INTO ${taskInstance.tableName}(${taskInstance.colTwo}, ${taskInstance.colThree}, ${taskInstance.colFour}, ${taskInstance.colFive}, ${taskInstance.colSix}) VALUES(?,?,?,?,?)',
@@ -52,7 +52,7 @@ class TaskRepository {
     final values = await dbClient.rawQuery(
         'select * from ${taskInstance.tableName} where ${taskInstance.colFive}="$userid"');
 
-    debugPrint("TASK TABLE CONTAINS : ${values.toString()}");
+    
     return values.map((e) => TaskModel.fromMap(e)).toList();
   }
 
@@ -133,7 +133,7 @@ class TaskRepository {
       String taskName, int userid, int catid) async {
     var dbClient = await database;
 
-    debugPrint("Deletion in Process");
+   
 
     List<Map<String, dynamic>> result = await dbClient.rawQuery(
         'delete from ${taskInstance.tableName} where ${taskInstance.colTwo}="$taskName" AND ${taskInstance.colFour}="$catid" AND ${taskInstance.colFive}="$userid"');
