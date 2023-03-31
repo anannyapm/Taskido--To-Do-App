@@ -19,7 +19,7 @@ class GradientBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 44,
+      height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12.5),
         gradient: LinearGradient(

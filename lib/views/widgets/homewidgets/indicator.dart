@@ -23,8 +23,8 @@ class Indicator extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 16,
-              height: 16,
+              width: 15,
+              height: 15,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: color1,
@@ -35,8 +35,9 @@ class Indicator extends StatelessWidget {
             ),
             Text(
               text1,
+              maxLines: 2,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: color1,
               ),
@@ -49,8 +50,8 @@ class Indicator extends StatelessWidget {
         Row(
           children: [
             Container(
-              width: 16,
-              height: 16,
+              width: 15,
+              height: 15,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: color2,
@@ -61,8 +62,9 @@ class Indicator extends StatelessWidget {
             ),
             Text(
               text2,
+              maxLines: 2,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: color2,
               ),

@@ -64,7 +64,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                       end: const Alignment(-2.084, -18.136),
                       colors: <Color>[
                         primaryclr1,
-                         primaryclr2,
+                        primaryclr2,
                       ],
                       stops: const [0, 1],
                     ),
@@ -83,7 +83,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                 borderRadius: BorderRadius.circular(25)),
                             margin: const EdgeInsets.fromLTRB(10, 20, 10, 15),
                             child: const SearchBar()),
-      
+
                         //filter
                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 10, 10, 10),
@@ -100,9 +100,10 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                 await selectDateRange(context);
                                 viewModel.setDateFilter(startDate, endDate);
                               }
-      
+
                               viewModel.setFilterSelection(selectedMenu!);
                               viewModel.addToFilteredList();
+                              selectedMenu = null;
                             },
                             itemBuilder: (BuildContext context) =>
                                 <PopupMenuEntry<String>>[
@@ -127,7 +128,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                         ),
                       ],
                     ),
-      
+
                     //choicechip
                     Container(
                       margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
@@ -153,7 +154,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                   elevation: 0,
                                   onSelected: (bool selected) async {
                                     await viewModel.addToTaskList();
-      
+
                                     setState(() {
                                       chosenValue = selected ? '' : '';
                                     });
@@ -198,7 +199,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                           ? snapshot.data![index].category_name
                                           : '';
                                       chosenID = viewModel.getCategoryId(value);
-      
+
                                       setState(() {
                                         chosenValue = value;
                                       });
@@ -206,12 +207,12 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                   );
                                 },
                               ).toList();
-      
+
                               List<Widget> finalChoiceList = [
                                 ...initialchip,
                                 ...chipList
                               ];
-      
+
                               return Align(
                                 alignment: Alignment.centerLeft,
                                 child: SingleChildScrollView(
@@ -232,7 +233,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                   ]),
                 ),
               ),
-      
+
               //list display
               chosenValue == ''
                   ? const ShowTaskDetail()
@@ -260,14 +261,11 @@ class _ScreenTasksState extends State<ScreenTasks> {
         return Center(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              
-              maxWidth: MediaQuery.of(context).size.width*0.85,
-           
-        
-              ),
+              maxWidth: MediaQuery.of(context).size.width * 0.85,
+            ),
             child: Theme(
               data: Theme.of(context).copyWith(
-                colorScheme:  ColorScheme.light(primary: primaryclr2),
+                colorScheme: ColorScheme.light(primary: primaryclr2),
               ),
               child: child!,
             ),
@@ -290,29 +288,29 @@ class _ScreenTasksState extends State<ScreenTasks> {
   }
 
   Future<bool> _onWillPop() async {
-  return (await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Are you sure? Do you want to exit App?'),
-          titleTextStyle:  TextStyle(
-              fontWeight: FontWeight.bold, color: primaryclr3, fontSize: 16),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false), 
-              child: const Text(
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Are you sure? Do you want to exit App?'),
+            titleTextStyle: TextStyle(
+                fontWeight: FontWeight.bold, color: primaryclr3, fontSize: 16),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text(
                   "NO",
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(true), 
-              child: Text("YES",
-                  style: TextStyle(
-                      color:dangerColor, fontWeight: FontWeight.w600)),
-            ),
-          ],
-        ),
-      )) ??
-      false;
-}
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text("YES",
+                    style: TextStyle(
+                        color: dangerColor, fontWeight: FontWeight.w600)),
+              ),
+            ],
+          ),
+        )) ??
+        false;
+  }
 }

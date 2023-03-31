@@ -232,9 +232,17 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
           taskitem.task_date_time.day,
           time!.hour,
           time!.minute);
-    } else {
+    } else if(time==null) {
       taskDateTime = DateTime(date!.year, date!.month, date!.day,
           taskitem.task_date_time.hour, taskitem.task_date_time.minute);
+    }
+    else{
+      taskDateTime = DateTime(
+          date!.year,
+          date!.month,
+          date!.day,
+          time!.hour,
+          time!.minute);
     }
 
     final out = await TaskRepository.updateData(taskitem.tid!,

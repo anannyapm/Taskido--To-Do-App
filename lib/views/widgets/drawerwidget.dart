@@ -94,8 +94,8 @@ class DrawerWidget extends StatelessWidget {
               ),
               title: const Text('Rate Us'),
               onTap: () async {
-                openAppReview();
-                // InAppReview.instance.openStoreListing();
+            
+                InAppReview.instance.openStoreListing();
               },
             ),
             ListTile(
@@ -158,11 +158,5 @@ class DrawerWidget extends StatelessWidget {
     });
   }
 
-  void openAppReview() async {
-    final InAppReview inAppReview = InAppReview.instance;
 
-    if (await inAppReview.isAvailable()) {
-      inAppReview.requestReview();
-    }
-  }
 }

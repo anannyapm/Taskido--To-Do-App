@@ -111,8 +111,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                               ),
                                             ),
                                       Container(
-                                        height: 30,
-                                        width: 30,
+                                        height: 34,
+                                        width: 34,
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: primaryclr4),
@@ -124,7 +124,7 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                           child: IconButton(
                                             icon: Icon(
                                               Icons.edit,
-                                              size: 15,
+                                              size: 18,
                                               color: primaryclr4,
                                             ),
                                             padding: EdgeInsets.zero,

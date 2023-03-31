@@ -48,7 +48,7 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
                       child: SizedBox(
                     child: DefaultTextStyle(
                       style:  TextStyle(
-                        fontSize: 40.0,
+                        fontSize: 50.0,
                         
                         color: primaryclr4,
                           fontWeight: FontWeight.w500

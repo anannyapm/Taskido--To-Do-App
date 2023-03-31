@@ -155,20 +155,7 @@ class _CategoryGraphState extends State<CategoryGraph> {
           startDegreeOffset: 180,
           borderData: FlBorderData(show: false),
           sectionsSpace: 1,
-          pieTouchData: PieTouchData(
-            touchCallback: (FlTouchEvent event, pieTouchResponse) {
-              setState(() {
-                if (!event.isInterestedForInteractions ||
-                    pieTouchResponse == null ||
-                    pieTouchResponse.touchedSection == null) {
-                  progresstouchedIndex = -1;
-                  return;
-                }
-                progresstouchedIndex =
-                    pieTouchResponse.touchedSection!.touchedSectionIndex;
-              });
-            },
-          ),
+          
           sections: [
             PieChartSectionData(
               value: valuePercent,

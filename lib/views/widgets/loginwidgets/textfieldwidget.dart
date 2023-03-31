@@ -35,7 +35,7 @@ class TextFieldWidget extends StatelessWidget {
             return '$label cannot be Empty!';
           } else {
             if (typeValue == TextInputType.emailAddress) {
-              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value.trim())) {
                 return 'Please enter a valid email id!!';
               } else {
                 return null;
@@ -43,7 +43,7 @@ class TextFieldWidget extends StatelessWidget {
             } 
 
             else if (typeValue == TextInputType.text || typeValue == TextInputType.name) {
-              if (!RegExp(r'^\S$|^\S[ \S]*\S$').hasMatch(value)) {
+              if (!RegExp(r'^\S$|^\S[ \S]*\S$').hasMatch(value.trim())) {
                 return 'Please enter a valid name!';
               } else {
                 return null;

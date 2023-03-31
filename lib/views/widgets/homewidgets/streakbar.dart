@@ -25,8 +25,7 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
       return Align(
         alignment: const Alignment(-1, 1),
         child: Container(
-          constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.85),
+          
           height: 50,
           decoration:  BoxDecoration(
               borderRadius: const BorderRadius.only(
@@ -36,6 +35,9 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
               gradient: LinearGradient(colors: [ primaryclr2,primaryclr1,primaryclr3])
               ),
           child: Container(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width * 0.5,
+              maxWidth: MediaQuery.of(context).size.width * 0.85),
             margin: const EdgeInsets.only(left: 25),
             child: Row(
               children: [
