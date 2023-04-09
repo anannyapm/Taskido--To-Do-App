@@ -73,7 +73,7 @@ class DrawerWidget extends StatelessWidget {
               title: const Text('Share Taskido App'),
               onTap: () {
                 Share.share(
-                    'Hey!Looking to be Productive?Checkout the Taskido app, a perfect solution to get things done.');
+                    'Hey!\nLooking to be Productive?Checkout the Taskido app, a perfect solution to get things done.\nhttps://play.google.com/store/apps/details?id=in.brototype.taskido');
               },
             ),
             ListTile(

@@ -10,7 +10,8 @@ dynamic snackBarWidget(BuildContext ctx,String message,Color colorVal){
         ),
         backgroundColor: colorVal,
         padding: const EdgeInsets.all(20),
-        duration: const Duration(seconds: 3),
+        duration: const Duration(seconds: 2),
+        behavior: SnackBarBehavior.floating,
       );
-      return ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
+      return ScaffoldMessenger.of(ctx)..removeCurrentSnackBar()..showSnackBar(snackBar);
 }
