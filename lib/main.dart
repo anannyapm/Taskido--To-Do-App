@@ -5,6 +5,8 @@ import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/views/screens/initialsplashscreen.dart';
 
 
+//converting to bloc
+
 const SAVE_KEY_NAME = 'UserLoggedIn'; //value of shared prefrence stored here 
 const SAVE_KEY_PROFILE = 'UserProfileImage'; //value of shared prefrence stored here 
 
