@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
-import 'package:todoapp/views/screens/initialsplashscreen.dart';
+import 'package:todoapp/features/presentation/pages/initialsplashscreen.dart';
 
 
 //converting to bloc

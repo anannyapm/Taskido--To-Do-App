@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todoapp/dbfunctions/repository.dart';
-import 'package:todoapp/functions/string_extensions.dart';
-import 'package:todoapp/models/categorymodel.dart';
+import 'package:todoapp/features/data/datasources/dbfunctions/repository.dart';
+import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
+import 'package:todoapp/features/data/models/categorymodel.dart';
 
-import 'package:todoapp/models/taskmodel.dart';
+import 'package:todoapp/features/data/models/taskmodel.dart';
 
-import '../dbfunctions/categorydbrepo.dart';
-import '../dbfunctions/taskdbrepo.dart';
+import '../features/data/datasources/dbfunctions/categorydbrepo.dart';
+import '../features/data/datasources/dbfunctions/taskdbrepo.dart';
 
 class AppViewModel extends ChangeNotifier {
   //index value corresponding to bottom navigation
