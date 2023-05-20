@@ -20,7 +20,7 @@ class AppViewModel extends ChangeNotifier {
   //category operations
 
   List<CategoryModel> categModelList = <CategoryModel>[];
-
+  
   //create category model list
 
   Future<void> addToCategList() async {

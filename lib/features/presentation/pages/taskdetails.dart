@@ -82,7 +82,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                 border: Border.all(color: primaryclr4),
                                 borderRadius: BorderRadius.circular(25)),
                             margin: const EdgeInsets.fromLTRB(10, 20, 10, 15),
-                            child: const SearchBar()),
+                            child: const SearchBarWidget()),
 
                         //filter
                         Container(

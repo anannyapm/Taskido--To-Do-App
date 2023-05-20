@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
+
 import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 
@@ -73,25 +73,25 @@ class _StreakBarWidgetState extends State<StreakBarWidget> {
   List streakMessage(double streakval) {
     if (streakval == 0) {
       return ['Time to start with tasks!', const Icon(
-                      FontAwesome5.smile_beam,
+                      Icons.sentiment_very_satisfied,
                       color: Color(0xFFF8CE00),
                       size: 25,
                     )];
     } else if (streakval <= 0.30) {
       return ['You are lagging behind',const Icon(
-                      FontAwesome5.sad_tear,
+                      Icons.sentiment_dissatisfied,
                       color: Color(0xFFF6B189),
                       size: 25,
                     ) ];
     } else if (streakval <= 0.6) {
       return ['Good Going my friend', Icon(
-                      FontAwesome5.smile_wink,
+                      Icons.sentiment_satisfied_alt,
                       color: primaryclr4,
                       size: 25,
                     ) ];
     } else {
       return ['You are on Streak', const Icon(
-                      FontAwesome5.fire,
+                      Icons.local_fire_department,
                       color: Color(0xFFFF7247),
                       size: 25,
                     ) ];

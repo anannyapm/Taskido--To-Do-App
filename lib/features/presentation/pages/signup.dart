@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/repository.dart';
 import 'package:todoapp/features/data/models/usermodel.dart';
+import 'package:todoapp/features/presentation/bloc/userbloc/user_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/userbloc/user_event.dart';
 import 'package:todoapp/features/presentation/pages/home.dart';
 import 'package:todoapp/features/presentation/pages/login.dart';
 import 'package:todoapp/features/presentation/pages/onboardinghome.dart';
 import 'package:todoapp/features/presentation/constants/avatars.dart';
 import 'package:todoapp/features/presentation/widgets/gradientbox.dart';
+import 'package:todoapp/features/presentation/widgets/snackbar.dart';
+import '../bloc/userbloc/user_state.dart';
 import '../constants/colorconstants.dart';
 import '../../../main.dart';
 import '../../../viewmodel/appviewmodel.dart';
@@ -204,46 +209,71 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                   ),
                                 ),
                               ),
-                              Form(
-                                key: _formKey,
-                                child: Column(
-                                  children: [
-                                    TextFieldWidget(
-                                      hint: "Enter User Name",
-                                      label: "User Name",
-                                      textController: _usernameController,
-                                      typeValue: TextInputType.name,
-                                    ),
-                                    TextFieldWidget(
-                                      hint: "Enter Email Address",
-                                      label: "Email Address",
-                                      textController: _emailController,
-                                      typeValue: TextInputType.emailAddress,
-                                    ),
-                                    Align(
-                                      child: GradientBox(
-                                        colorStart: primaryclr4,
-                                        colorEnd: pClr2Shade1,
-                                        gradFunction: () async {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            await addUserToModel(
-                                                viewModel.profilePhoto,
-                                                context);
-                                            await viewModel.addToCategList();
-                                            await viewModel.addToTaskList();
-                                            _usernameController.text = '';
-                                            _emailController.text = '';
-                                            viewModel.setProfile('');
-                                          } else {
-                                            debugPrint('Empty fields found');
-                                          }
-                                        },
-                                        textVal: "Sign Up",
-                                        textColor: primaryclr1,
+                              BlocListener<UserBloc, UserState>(
+                                listener: (context, state) {
+                                  if (state is SignupFailure) {
+                                    snackBarWidget(context, state.errorMessage,
+                                        Colors.red);
+                                  } else if (state is SignupSuccess) {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ScreenHome()),
+                                        (route) => false);
+                                  }
+                                },
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    children: [
+                                      TextFieldWidget(
+                                        hint: "Enter User Name",
+                                        label: "User Name",
+                                        textController: _usernameController,
+                                        typeValue: TextInputType.name,
                                       ),
-                                    )
-                                  ],
+                                      TextFieldWidget(
+                                        hint: "Enter Email Address",
+                                        label: "Email Address",
+                                        textController: _emailController,
+                                        typeValue: TextInputType.emailAddress,
+                                      ),
+                                      Align(
+                                        child: GradientBox(
+                                          colorStart: primaryclr4,
+                                          colorEnd: pClr2Shade1,
+                                          gradFunction: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              final name = _usernameController
+                                                  .text
+                                                  .trim()
+                                                  .replaceAll(
+                                                      RegExp(r"\s+"), " ");
+                                              final email =
+                                                  _emailController.text.trim();
+
+                                              BlocProvider.of<UserBloc>(context)
+                                                  .add(SignUpEvent(
+                                                      name: name,
+                                                      email: email,
+                                                      photo: viewModel
+                                                          .profilePhoto));
+                                              await viewModel.addToCategList();
+                                              await viewModel.addToTaskList();
+                                              _usernameController.text = '';
+                                              _emailController.text = '';
+                                              viewModel.setProfile('');
+                                            } else {
+                                              debugPrint('Empty fields found');
+                                            }
+                                          },
+                                          textVal: "Sign Up",
+                                          textColor: primaryclr1,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -268,45 +298,5 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
         ),
       );
     });
-  }
-
-  Future<void> addUserToModel(String profilephoto, BuildContext ctx) async {
-    final name = _usernameController.text.trim().replaceAll(RegExp(r"\s+"), " ");
-    final email = _emailController.text.trim();
-    String photo = 'assets/images/stacked-steps-haikei.png';
-   
-    final image = profilephoto;
-    debugPrint(name + email);
-    if (image != '') {
-      photo = image;
-    }
-
-    final userObject = UserModel(name: name, email: email, photo: photo);
-
-    dynamic out = await Repository.saveData(userObject);
-    if (out == true) {
-      final List<Map<String, dynamic>> uidFetchOutput =
-          await Repository.fetchID(email);
-      final currentUserId = uidFetchOutput[0]['uid'];
-
-      await Repository.setCurrentUser(currentUserId, name, email, photo);
-
-      final sharedPrefs = await SharedPreferences.getInstance();
-      await sharedPrefs.setString(SAVE_KEY_NAME, email);
-
-      Navigator.of(ctx).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const ScreenHome()),
-          (route) => false);
-    } else {
-      var snackBar = SnackBar(
-        content: Text(
-          'This email id is already registered. Please Login back to continue!',
-          style: TextStyle(color: primaryclr4),
-        ),
-        backgroundColor: dangerColor,
-        padding: const EdgeInsets.all(20),
-      );
-      ScaffoldMessenger.of(ctx).showSnackBar(snackBar);
-    }
   }
 }

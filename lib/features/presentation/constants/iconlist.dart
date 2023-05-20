@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
+
 
 import 'colorconstants.dart';
 
 class IconList {
   static final List <Icon> iconValueList = [
     Icon(
-        FontAwesome.heart,
+        Icons.favorite,
         color: iconclr1,
         size: 20,
       ),
     
      Icon(
-        FontAwesome.suitcase,
+        Icons.work,
         color: iconclr2,
         size: 20,
       )
     ,
     
       Icon(
-        FontAwesome.flight,
+        Icons.flight,
         color: iconclr3,
         size: 20,
       )
     ,
     Icon(
-        FontAwesome.money,
+        Icons.currency_rupee,
         color: iconclr4,
         size: 20,
       )
@@ -38,28 +37,28 @@ class IconList {
       )
     ,
      Icon(
-        FontAwesome5.walking,
+        Icons.health_and_safety,
         color: iconclr6,
         size: 20,
       )
     ,
     Icon(
-        FontAwesome.book,
+        Icons.book,
         color: iconclr7,
         size: 20,
       )
     ,Icon(
-        FontAwesome5.shopping_cart,
+        Icons.shopping_cart,
         color: iconclr8,
         size: 20,
       )
     ,Icon(
-        FontAwesome.code,
+        Icons.code,
         color: iconclr9,
         size: 20,
       )
     ,Icon(
-        FontAwesome.phone,
+        Icons.phone,
         color: iconclr10,
         size: 20,
       )

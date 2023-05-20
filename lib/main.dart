@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/features/presentation/bloc/categorybloc/category_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/userbloc/user_bloc.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/features/presentation/pages/initialsplashscreen.dart';
 
-
 //converting to bloc
 
-const SAVE_KEY_NAME = 'UserLoggedIn'; //value of shared prefrence stored here 
-const SAVE_KEY_PROFILE = 'UserProfileImage'; //value of shared prefrence stored here 
+const SAVE_KEY_NAME = 'UserLoggedIn'; //value of shared prefrence stored here
+const SAVE_KEY_PROFILE =
+    'UserProfileImage'; //value of shared prefrence stored here
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -20,16 +24,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-   
-      title: 'Taskido App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        fontFamily: GoogleFonts.poppins().fontFamily,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (context) => TaskBloc()),
+        BlocProvider(create: (context) => CategoryBloc()),
+      ],
+      child: MaterialApp(
+        title: 'Taskido App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+          fontFamily: GoogleFonts.poppins().fontFamily,
+        ),
+        home: const ScreenInitialSplash(),
       ),
-      home: const ScreenInitialSplash(),
     );
   }
 }
-

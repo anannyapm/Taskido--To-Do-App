@@ -30,7 +30,7 @@ class BottomNavWidget extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                   icon: Icon(
-                    FontAwesome5.tasks,
+                    Icons.task,
                   ),
                   label: 'Tasks'),
             ]);
