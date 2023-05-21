@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:provider/provider.dart';
+
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_state.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/repository.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/taskdbrepo.dart';
-import 'package:todoapp/viewmodel/appviewmodel.dart';
+
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
 import 'package:todoapp/features/presentation/widgets/taskdetailwidgets/tasktile.dart';
 
 import '../../data/models/taskmodel.dart';
+import '../bloc/taskbloc/task_bloc.dart';
+import '../bloc/taskbloc/task_event.dart';
 
 class ListWidget extends StatefulWidget {
   final Future<List<TaskModel>> futureList;
+  final String query;
 
-  const ListWidget({super.key, required this.futureList});
+  const ListWidget({super.key, required this.futureList,this.query=""});
 
   @override
   State<ListWidget> createState() => _ListWidgetState();
@@ -23,9 +28,10 @@ class ListWidget extends StatefulWidget {
 class _ListWidgetState extends State<ListWidget> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(
-      builder: (context, viewModel, child) {
-        return FutureBuilder(
+    return BlocBuilder<TaskBloc,TaskState>(
+      builder: (context, state) {
+        if(state is SearchFilterTaskState){
+          return FutureBuilder(
             future: widget.futureList,
             builder: (BuildContext context,
                 AsyncSnapshot<List<TaskModel>> snapshot) {
@@ -47,10 +53,10 @@ class _ListWidgetState extends State<ListWidget> {
                               ? true
                               : false;
 
-                      if (viewModel.filterSelection != "") {
-                        if (viewModel.filteredList.contains(data.tid)) {
-                          if (viewModel.queryval != '') {
-                            if (viewModel.queryResultList
+                      if (state.filtermessage != "") {
+                        if (state.filterList.contains(data.tid)) {
+                          if ( state.searchEnabled) {
+                            if (state.searchList
                                 .contains(data.task_name)) {
                               return TaskTileWidget(
                                   ifcomplete: ifCompleted,
@@ -72,8 +78,8 @@ class _ListWidgetState extends State<ListWidget> {
                           return Container();
                         }
                       } else {
-                        if (viewModel.queryval != '') {
-                          if (viewModel.queryResultList
+                        if (state.searchEnabled) {
+                          if (state.searchList
                               .contains(data.task_name)) {
                             return TaskTileWidget(
                                 ifcomplete: ifCompleted,
@@ -94,11 +100,11 @@ class _ListWidgetState extends State<ListWidget> {
                     }),
                     itemCount: snapshot.data!.length,
                     separatorBuilder: (context, index) {
-                      if (viewModel.filterSelection != "") {
-                        if (viewModel.filteredList
+                      if (state.filtermessage != "") {
+                        if (state.filterList
                             .contains(snapshot.data![index].tid)) {
-                          if (viewModel.queryval != '') {
-                            if (viewModel.queryResultList
+                          if (state.searchEnabled) {
+                            if (state.searchList
                                 .contains(snapshot.data![index].task_name)) {
                               return const Divider(
                                 thickness: 1,
@@ -116,8 +122,8 @@ class _ListWidgetState extends State<ListWidget> {
                           return Container();
                         }
                       } else {
-                        if (viewModel.queryval != '') {
-                          if (viewModel.queryResultList
+                        if (state.searchEnabled) {
+                          if (state.searchList
                               .contains(snapshot.data![index].task_name)) {
                             return const Divider(
                               thickness: 1,
@@ -133,6 +139,14 @@ class _ListWidgetState extends State<ListWidget> {
                 return const Center(child: CircularProgressIndicator());
               }
             });
+        }
+        else{
+          BlocProvider.of<TaskBloc>(context).add(SearchFilterTaskEvent(
+         
+          queryval: widget.query,
+        ));
+        return const CircularProgressIndicator();
+        }
       },
     );
   }

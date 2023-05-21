@@ -38,4 +38,13 @@ class CategoryFunctionRepo {
     count = categModelList.length;
     return count;
   }
+
+  static getCategoryId(String catName) {
+    for (var val in categModelList) {
+      if (val.category_name == catName) {
+        return val.cid;
+      }
+    }
+    return 0;
+  }
 }

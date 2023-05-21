@@ -15,7 +15,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskErrorState(errormsg: "Data Fetch Error"));
       } else {
         emit(TaskLoadingState(
-            taskList: taskData, pendingList: TaskFunctionRepo.pendingList,completedCount: TaskFunctionRepo.completedCount,totalTaskCount: TaskFunctionRepo.totalTaskCount));
+            taskList: taskData,
+            pendingList: TaskFunctionRepo.pendingList,
+            completedCount: TaskFunctionRepo.completedCount,
+            totalTaskCount: TaskFunctionRepo.totalTaskCount));
       }
     });
     on<AddTaskEvent>((event, emit) async {
@@ -25,9 +28,37 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskErrorState(
             errormsg: "Oh Snap! Looks like task already exist!"));
       } else {
-                emit(TaskCreateState());
-
+        emit(TaskCreateState());
       }
+    });
+    on<SearchFilterTaskEvent>((event, emit) async {
+      List searchlist = [];
+      List<int> filterlist =[];
+      bool enable = false;
+
+      if (event.queryval != "") {
+        searchlist =  TaskFunctionRepo.addToQueryList(event.queryval);
+        enable = true;
+      }
+      if (event.filterkey != "") {
+        TaskFunctionRepo.setDateFilter(event.date1, event.date2);
+        TaskFunctionRepo.setFilterSelection(event.filterkey);
+        filterlist = TaskFunctionRepo.addToFilteredList();
+      }
+
+    
+
+      emit(SearchFilterTaskState(
+          searchEnabled: enable,
+          progressIndicatorValue:
+              TaskFunctionRepo.progressIndicatorValue(event.chosedId),
+          filtermessage: TaskFunctionRepo.displayFilterDetail,
+          filterCompletedCount:
+              TaskFunctionRepo.setCountValues(event.chosedId)['Completed']!,
+          filterTotalCount:
+              TaskFunctionRepo.setCountValues(event.chosedId)['Total']!,
+          searchList: searchlist,
+          filterList: filterlist));
     });
 
     /* on<UpdateTaskEvent>(

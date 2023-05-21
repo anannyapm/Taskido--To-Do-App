@@ -13,8 +13,16 @@ class TaskLoadingState extends TaskState {
   List<TaskModel> pendingList = <TaskModel>[];
   int totalTaskCount;
   int completedCount;
+  
 
-  TaskLoadingState({required this.taskList, required this.pendingList,required this.completedCount,required this.totalTaskCount})
+
+  TaskLoadingState(
+      {required this.taskList,
+      required this.pendingList,
+      required this.completedCount,
+      required this.totalTaskCount,
+     
+      })
       : super();
 }
 /* class LoadPendingTaskState extends TaskState{
@@ -23,6 +31,24 @@ class TaskLoadingState extends TaskState {
 
 class TaskCreateState extends TaskState {
   TaskCreateState() : super();
+}
+
+class SearchFilterTaskState extends TaskState {
+  List<int> filterList = [];
+  List searchList = [];
+  int filterTotalCount = 0;
+  int filterCompletedCount = 0;
+  String filtermessage;
+  bool searchEnabled = false;
+  double progressIndicatorValue;
+  SearchFilterTaskState(
+      {this.filterCompletedCount = 0,
+      this.filterTotalCount = 0,
+      required this.searchList,
+      required this.filterList,
+      this.filtermessage = "",
+      this.searchEnabled = false,
+      this.progressIndicatorValue=0});
 }
 
 class TaskErrorState extends TaskState {

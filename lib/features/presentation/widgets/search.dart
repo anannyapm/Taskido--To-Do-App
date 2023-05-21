@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:provider/provider.dart';
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_state.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 
 import '../../../viewmodel/appviewmodel.dart';
+import '../bloc/taskbloc/task_event.dart';
 
 
 class SearchBarWidget extends StatefulWidget {
@@ -18,13 +22,15 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      return TextField(
+    return // BlocListener<TaskBloc,TaskState>(listener: (context, state) {
+      TextField(
         style:  TextStyle(color: primaryclr4),
         textInputAction: TextInputAction.search,
         onChanged: (value) {
-          viewModel.addToQueryList(value);
-          viewModel.queryval = value;
+          BlocProvider.of<TaskBloc>(context)
+              .add(SearchFilterTaskEvent(queryval: value));
+         /*  viewModel.addToQueryList(value);
+          viewModel.queryval = value; */
          
         },
         controller: _searchcontroller,
@@ -32,9 +38,11 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           border: InputBorder.none,
           suffixIcon: IconButton(
               onPressed: () {
-                viewModel.queryval = '';
+                //viewModel.queryval = '';
+                BlocProvider.of<TaskBloc>(context)
+              .add(SearchFilterTaskEvent(queryval: ""));
                 _searchcontroller.clear();
-                viewModel.addToQueryList('');
+              //  viewModel.addToQueryList('');
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               icon: const Icon(
@@ -53,6 +61,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
           ),
         ),
       );
-    });
+ //   }
+   // );
   }
 }
