@@ -33,6 +33,13 @@ class TaskCreateState extends TaskState {
   TaskCreateState() : super();
 }
 
+class TaskUpdateState extends TaskState {
+  TaskUpdateState() : super();
+}
+
+class UpdateCompletionState extends TaskState {
+  UpdateCompletionState() : super();
+}
 class SearchFilterTaskState extends TaskState {
   List<int> filterList = [];
   List searchList = [];

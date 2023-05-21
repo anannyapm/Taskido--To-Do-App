@@ -3,19 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/features/data/repositories/categoryfunctions.dart';
-import 'package:todoapp/features/presentation/bloc/categorybloc/category_bloc.dart';
-import 'package:todoapp/features/presentation/bloc/categorybloc/category_event.dart';
-import 'package:todoapp/features/presentation/bloc/categorybloc/category_state.dart';
+import 'package:todoapp/features/presentation/bloc/pagenavbloc/pagenav_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/pagenavbloc/pagenav_event.dart';
+import 'package:todoapp/features/presentation/bloc/pagenavbloc/pagenav_state.dart';
+
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/taskdbrepo.dart';
-import 'package:todoapp/viewmodel/appviewmodel.dart';
 
 import 'package:todoapp/features/presentation/pages/profilehome.dart';
 import 'package:todoapp/features/presentation/pages/taskdetails.dart';
 import 'package:todoapp/features/presentation/widgets/bottomnavigationwidget.dart';
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
+import '../widgets/bottomsheetbuilder.dart';
 import '../widgets/bottomsheets/categorysheet.dart';
 import '../widgets/bottomsheets/tasksheet.dart';
 
@@ -45,30 +46,36 @@ class _ScreenHomeState extends State<ScreenHome> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      return WillPopScope(
-        onWillPop: () async {
-          if (isDialOpen.value) {
-            isDialOpen.value = false;
+    return WillPopScope(
+      onWillPop: () async {
+        if (isDialOpen.value) {
+          isDialOpen.value = false;
 
-            return false;
-          } else {
-            return true;
-          }
-        },
-        child: SafeArea(
-          child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              bottomNavigationBar: const BottomNavWidget(),
-              body: Builder(
+          return false;
+        } else {
+          return true;
+        }
+      },
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          bottomNavigationBar: const BottomNavWidget(),
+          body: BlocBuilder<PageNavBloc, PageNavState>(
+            builder: (context, state) {
+             
+                return Builder(
                 builder: (context) {
-                  return _pages[viewModel.selectedIndexNotifier];
+                  return _pages[state.selectedIndexNotifier];
                 },
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              floatingActionButton: //BlocListener<CategoryBloc, CategoryState>(
-                /* listener: (context, state) {
+              );
+              
+             
+            },
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: //BlocListener<CategoryBloc, CategoryState>(
+              /* listener: (context, state) {
                   if (state is CategLoadingState) {
                     if (state.categCount == 0) {
                       snackBarWidget(
@@ -81,54 +88,49 @@ class _ScreenHomeState extends State<ScreenHome> {
                     }
                   }
                 }, */
-                //child: 
-                SpeedDial(
-                  elevation: 8,
-                  icon: Icons.add,
-                  activeIcon: Icons.close,
-                  openCloseDial: isDialOpen,
+              //child:
+              SpeedDial(
+            elevation: 8,
+            icon: Icons.add,
+            activeIcon: Icons.close,
+            openCloseDial: isDialOpen,
+            backgroundColor: primaryclr1,
+            children: [
+              SpeedDialChild(
                   backgroundColor: primaryclr1,
-                  children: [
-                    SpeedDialChild(
-                        backgroundColor: primaryclr1,
-                        onTap: () {
-                          viewModel.bottomSheetBuilder(
-                              const CategorySheetWidget(), context);
-                        },
-                        child: Icon(
-                          Icons.category,
-                          color: primaryclr4,
-                        ),
-                        label: 'Add Category'),
-                    SpeedDialChild(
-                        backgroundColor: primaryclr1,
-                        onTap: () {
-                         /*  BlocProvider.of<CategoryBloc>(context)
+                  onTap: () {
+                    bottomSheetBuilder(const CategorySheetWidget(), context);
+                  },
+                  child: Icon(
+                    Icons.category,
+                    color: primaryclr4,
+                  ),
+                  label: 'Add Category'),
+              SpeedDialChild(
+                  backgroundColor: primaryclr1,
+                  onTap: () {
+                    /*  BlocProvider.of<CategoryBloc>(context)
                               .add(LoadCategoryEvent()); */
-                          //await viewModel.addToCategList();
-                          if (CategoryFunctionRepo.categoryCount == 0) {
-                            snackBarWidget(
-                                context,
-                                'Oops!Please add a category to start adding tasks!!',
-                                dangerColor);
-                          } else {
-                            viewModel.bottomSheetBuilder(
-                                const TaskSheetWidget(), context);
-                          } 
-
-                          
-                        },
-                        child: Icon(
-                          Icons.add_task,
-                          color: primaryclr4,
-                        ),
-                        label: 'Add Tasks'),
-                  ],
-                ),
-            //  )
-              ),
+                    //await viewModel.addToCategList();
+                    if (CategoryFunctionRepo.categoryCount == 0) {
+                      snackBarWidget(
+                          context,
+                          'Oops!Please add a category to start adding tasks!!',
+                          dangerColor);
+                    } else {
+                      bottomSheetBuilder(const TaskSheetWidget(), context);
+                    }
+                  },
+                  child: Icon(
+                    Icons.add_task,
+                    color: primaryclr4,
+                  ),
+                  label: 'Add Tasks'),
+            ],
+          ),
+          //  )
         ),
-      );
-    });
+      ),
+    );
   }
 }

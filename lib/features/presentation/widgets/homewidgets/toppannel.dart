@@ -21,7 +21,7 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
   @override
   Widget build(BuildContext context) {
     
-    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+
       return Container(
         margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
         child: Row(
@@ -86,6 +86,6 @@ class _TopPanelWidgetState extends State<TopPanelWidget> {
           ],
         ),
       );
-    });
+ 
   }
 }

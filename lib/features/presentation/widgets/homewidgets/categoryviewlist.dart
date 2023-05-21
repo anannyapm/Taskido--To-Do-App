@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+
 import 'package:todoapp/features/data/repositories/taskfunctions.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_state.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
@@ -14,7 +14,7 @@ import 'package:todoapp/features/data/models/categorymodel.dart';
 import '../../bloc/categorybloc/category_bloc.dart';
 import '../../bloc/categorybloc/category_event.dart';
 import '../../constants/iconlist.dart';
-import '../../../../viewmodel/appviewmodel.dart';
+
 import '../popupdialogue.dart';
 import 'categorygraph.dart';
 

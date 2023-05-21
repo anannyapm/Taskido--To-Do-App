@@ -26,7 +26,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+
       return Padding(
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -142,7 +142,7 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
           ),
         ),
       );
-    });
+ 
   }
 
   /* Future<CategoryModel> addCategorytoModel(

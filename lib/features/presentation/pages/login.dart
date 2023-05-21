@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_event.dart';
 
 import 'package:todoapp/features/presentation/bloc/userbloc/user_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/userbloc/user_event.dart';
@@ -33,7 +35,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+ /*    return Consumer<AppViewModel>(builder: (context, viewModel, child) { */
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Color.fromARGB(255, 255, 255, 255),
         statusBarIconBrightness: Brightness.dark,
@@ -101,8 +103,11 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                     BlocProvider.of<CategoryBloc>(
                                                       context)
                                                   .add(LoadCategoryEvent());
+                                                  BlocProvider.of<TaskBloc>(
+                                                      context)
+                                                  .add(LoadTaskEvent());
                                   //  await viewModel.addToCategList();
-                                    await viewModel.addToTaskList();
+                                  //  await viewModel.addToTaskList();
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (ctx) =>
@@ -167,7 +172,7 @@ class _ScreenLoginState extends State<ScreenLogin> {
           ),
         ),
       );
-    });
+   /*  }); */
   }
 
 

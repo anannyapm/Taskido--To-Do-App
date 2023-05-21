@@ -33,11 +33,11 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     });
     on<SearchFilterTaskEvent>((event, emit) async {
       List searchlist = [];
-      List<int> filterlist =[];
+      List<int> filterlist = [];
       bool enable = false;
 
       if (event.queryval != "") {
-        searchlist =  TaskFunctionRepo.addToQueryList(event.queryval);
+        searchlist = TaskFunctionRepo.addToQueryList(event.queryval);
         enable = true;
       }
       if (event.filterkey != "") {
@@ -45,8 +45,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         TaskFunctionRepo.setFilterSelection(event.filterkey);
         filterlist = TaskFunctionRepo.addToFilteredList();
       }
-
-    
 
       emit(SearchFilterTaskState(
           searchEnabled: enable,
@@ -61,10 +59,22 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           filterList: filterlist));
     });
 
-    /* on<UpdateTaskEvent>(
+    on<UpdateTaskEvent>((event, emit) async {
+      final List output = await TaskFunctionRepo.updateTaskData(
+          event.taskName, event.taskobject, event.date, event.time);
+      if (output.isNotEmpty) {
+        emit(TaskErrorState(errormsg: "Oh Snap!Something Went Wrong!"));
+      } else {
+        emit(TaskUpdateState());
+      }
+    });
+    on<UpdateCompletionEvent>(
       (event, emit) {
-
+        TaskFunctionRepo.updateCompletionStatus(
+            event.taskIndex, event.taskValue, event.categoryIndex);
+        emit(TaskUpdateState());
+        
       },
-    ); */
+    );
   }
 }

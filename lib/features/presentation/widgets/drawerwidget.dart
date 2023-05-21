@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:provider/provider.dart';
+
 import 'package:share_plus/share_plus.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +14,7 @@ import 'package:todoapp/features/presentation/pages/privacypolicy.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/datasources/dbfunctions/repository.dart';
-import '../../../viewmodel/appviewmodel.dart';
+
 
 
 
@@ -23,7 +23,7 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+ 
       return Drawer(
         backgroundColor: primaryclr4,
         child: ListView(
@@ -157,7 +157,7 @@ class DrawerWidget extends StatelessWidget {
           ],
         ),
       );
-    });
+ 
   }
 
 

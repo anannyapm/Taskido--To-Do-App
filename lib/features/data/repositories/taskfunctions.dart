@@ -31,6 +31,42 @@ class TaskFunctionRepo {
     return out;
   }
 
+  static updateTaskData(String taskName, TaskModel taskItem, DateTime? date,
+      TimeOfDay? time) async {
+    final taskname = taskName.trim().replaceAll(RegExp(r"\s+"), " ");
+
+    final DateTime? taskDateTime;
+
+    if (date == null && time == null) {
+      taskDateTime = taskItem.task_date_time;
+    } else if (date == null) {
+      taskDateTime = DateTime(
+          taskItem.task_date_time.year,
+          taskItem.task_date_time.month,
+          taskItem.task_date_time.day,
+          time!.hour,
+          time.minute);
+    } else if (time == null) {
+      taskDateTime = DateTime(date.year, date.month, date.day,
+          taskItem.task_date_time.hour, taskItem.task_date_time.minute);
+    } else {
+      taskDateTime =
+          DateTime(date.year, date.month, date.day, time.hour, time.minute);
+    }
+
+    final out = await TaskRepository.updateData(taskItem.tid!,
+        taskItem.category_id, taskItem.user_id, taskname, taskDateTime);
+    return out;
+  }
+
+  static updateCompletionStatus(
+      int taskIndex, bool taskValue, int categoryIndex) async {
+    //call db function to update
+    await TaskRepository.updateCompletedStatus(
+        taskIndex, categoryIndex, Repository.currentUserID, taskValue);
+   
+  }
+
   static Future<dynamic> getTaskList() async {
     taskModelList.clear();
     final fetchdata = await TaskRepository.getAllData(Repository.currentUserID);
@@ -124,16 +160,11 @@ class TaskFunctionRepo {
     return counter;
   }
 
-  static updateTaskValue(
-      int taskIndex, bool taskValue, int categoryIndex) async {
-    //call db function to update
-  }
-
   //Search and Filter operations
 
   static List queryResultList = [];
   static String queryval = '';
-  static addToQueryList(String query)  {
+  static addToQueryList(String query) {
     queryResultList.clear();
 
     if (query.isEmpty || query == '') {

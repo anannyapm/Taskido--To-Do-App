@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_event.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_state.dart';
 import 'package:todoapp/features/presentation/constants/iconlist.dart';
 
-import 'package:todoapp/viewmodel/appviewmodel.dart';
+
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
 import '../../constants/colorconstants.dart';

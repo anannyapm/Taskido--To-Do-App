@@ -2,7 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todoapp/viewmodel/appviewmodel.dart';
+
 import 'package:todoapp/features/presentation/pages/home.dart';
 import 'package:todoapp/features/presentation/pages/splashscreen.dart';
 import '../constants/colorconstants.dart';
@@ -97,7 +97,7 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
    
 
        // Provider.of<AppViewModel>(context, listen: false).addToCategList();
-        Provider.of<AppViewModel>(context, listen: false).addToTaskList();
+       // Provider.of<AppViewModel>(context, listen: false).addToTaskList();
       });
 
       Navigator.of(context).pushAndRemoveUntil(

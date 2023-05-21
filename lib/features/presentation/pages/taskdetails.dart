@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/data/repositories/categoryfunctions.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
 import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
@@ -18,7 +17,7 @@ import '../constants/colorconstants.dart';
 import '../constants/iconlist.dart';
 import '../../data/datasources/dbfunctions/categorydbrepo.dart';
 import '../../data/models/taskmodel.dart';
-import '../../../viewmodel/appviewmodel.dart';
+
 
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
 
