@@ -22,7 +22,7 @@ class AppViewModel extends ChangeNotifier {
   List<CategoryModel> categModelList = <CategoryModel>[];
   
   //create category model list
-
+/* 
   Future<void> addToCategList() async {
     await CategRepository.getAllData().then((value) {
       categModelList.clear();
@@ -36,12 +36,12 @@ class AppViewModel extends ChangeNotifier {
       }
     }).catchError((e) => debugPrint(e.toString()));
   }
-
-  int get categoryCount {
+ */
+ /*  int get categoryCount {
     int count = 0;
     count = categModelList.length;
     return count;
-  }
+  } */
 
   //taskdetails
 
@@ -139,7 +139,7 @@ class AppViewModel extends ChangeNotifier {
     for (var listval in taskModelList) {
       if (listval.user_id == Repository.currentUserID) {
         counter++;
-      }
+      } 
     }
     return counter;
   }

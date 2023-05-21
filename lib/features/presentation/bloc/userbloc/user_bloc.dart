@@ -20,7 +20,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
         await sharedpref.setString(SAVE_KEY_NAME, event.email);
 
-        await Repository.getAllUser();
+        //await Repository.getAllUser();
 
         emit(LoginSucess());
       } else {

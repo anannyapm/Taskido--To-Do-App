@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_event.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_state.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
-import '../../../viewmodel/appviewmodel.dart';
 import '../../data/models/categorymodel.dart';
+import '../bloc/taskbloc/task_bloc.dart';
+import '../bloc/taskbloc/task_event.dart';
 import '../widgets/drawerwidget.dart';
 import '../widgets/homewidgets/categoryviewlist.dart';
 import '../widgets/homewidgets/progressindicator.dart';
@@ -31,6 +31,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
   void initState() {
     super.initState();
     BlocProvider.of<CategoryBloc>(context).add(LoadCategoryEvent());
+    BlocProvider.of<TaskBloc>(context).add(LoadTaskEvent());
   }
 
   @override
@@ -66,7 +67,11 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
               ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
-                
+                  print("in profile + $state");
+                  if (state is CategCreateState) {
+                    BlocProvider.of<CategoryBloc>(context)
+                        .add(LoadCategoryEvent());
+                  }
                   if (state is CategLoadingState) {
                     if (state.categCount == 0) {
                       return Container(
@@ -92,11 +97,15 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                   } else if (state is CategErrorState) {
                     return Text("Error");
                   } else {
-                    return CircularProgressIndicator();
+                    return Column(
+                      children: [
+                        Text("cat loading"),
+                        CircularProgressIndicator()
+                      ],
+                    );
                   }
                 },
               )
-           
             ],
           ),
         ),

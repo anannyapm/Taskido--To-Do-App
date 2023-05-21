@@ -12,6 +12,8 @@ import 'package:todoapp/features/presentation/pages/signup.dart';
 import 'package:todoapp/features/presentation/widgets/gradientbox.dart';
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
+import '../bloc/categorybloc/category_bloc.dart';
+import '../bloc/categorybloc/category_event.dart';
 import '../constants/colorconstants.dart';
 
 import '../widgets/loginwidgets/bottombarwidget.dart';
@@ -96,7 +98,10 @@ class _ScreenLoginState extends State<ScreenLogin> {
                                     snackBarWidget(context, state.errorMessage,
                                         dangerColor);
                                   } else if (state is LoginSucess) {
-                                    await viewModel.addToCategList();
+                                    BlocProvider.of<CategoryBloc>(
+                                                      context)
+                                                  .add(LoadCategoryEvent());
+                                  //  await viewModel.addToCategList();
                                     await viewModel.addToTaskList();
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(

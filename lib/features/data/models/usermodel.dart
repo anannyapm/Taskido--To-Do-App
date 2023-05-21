@@ -8,6 +8,7 @@ class UserModel {
       {required this.name, required this.email, required this.photo, this.uid});
 
   UserModel fromMap(Map<String, dynamic> map) {
+    // ignore: unused_local_variable
     final uid = map['uid'] as int;
     final name = map['name'] as String;
     final email = map['email'] as String;

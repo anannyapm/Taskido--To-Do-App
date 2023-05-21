@@ -9,7 +9,7 @@ class TaskFunctionRepo {
   static List<TaskModel> taskModelList = [];
   static List<TaskModel> pendingList = [];
 
-  static Future<dynamic> addTask(
+  static Future<bool> addTask(
       String task, int ind, DateTime date, TimeOfDay time) async {
     final taskname = task.trim().replaceAll(RegExp(r"\s+"), " ");
     final cidOut = await CategRepository.fetchFirstCid();
@@ -29,7 +29,7 @@ class TaskFunctionRepo {
     return out;
   }
 
-  static getTaskList() async {
+  static Future<dynamic> getTaskList() async {
     taskModelList.clear();
     final fetchdata=await TaskRepository.getAllData(Repository.currentUserID);
       for (var element in fetchdata) {
@@ -61,10 +61,73 @@ class TaskFunctionRepo {
     }
   }
 
+  
+  static int todayTotalTasks(int catId) {
+    int count = 0;
+    var now = DateTime.now();
+    for (var value in taskModelList) {
+      if (value.task_date_time
+              .isBefore(DateTime(now.year, now.month, now.day + 1)) &&
+          value.category_id == catId) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  static int pendingTodayCount(int catId) {
+    int count = 0;
+    for (var value in pendingList) {
+      if (value.category_id == catId) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  static int cBasedTaskCount(int catId) {
+    int count = 0;
+    for (var value in taskModelList) {
+      if (value.category_id == catId) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  static int cBasedCompletdTaskCount(int catId) {
+    int count = 0;
+    for (var value in taskModelList) {
+      if (value.category_id == catId && value.isCompleted == 1) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+   static int get totalTaskCount {
+    int counter = 0;
+    for (var listval in taskModelList) {
+      if (listval.user_id == Repository.currentUserID) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
+  static int get completedCount {
+    int counter = 0;
+    for (var element in taskModelList) {
+      if (element.isCompleted == 1 &&
+          element.user_id == Repository.currentUserID) {
+        counter++;
+      }
+    }
+    return counter;
+  }
+
   static updateTaskValue(
       int taskIndex, bool taskValue, int categoryIndex) async {
     //call db function to update
-    final output = await TaskRepository.updateCompletedStatus(
-        taskIndex, categoryIndex, Repository.currentUserID, taskValue);
   }
 }

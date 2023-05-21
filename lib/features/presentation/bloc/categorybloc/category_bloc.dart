@@ -26,6 +26,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
             errormsg: "Oh Snap! Looks like category already exist!"));
       } else {
         emit(CategCreateState());
+        
       }
     });
 

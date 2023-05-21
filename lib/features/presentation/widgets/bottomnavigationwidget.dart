@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 

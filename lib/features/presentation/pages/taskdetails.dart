@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
@@ -8,6 +9,8 @@ import 'package:todoapp/features/data/models/categorymodel.dart';
 
 import 'package:todoapp/features/presentation/widgets/search.dart';
 
+import '../bloc/categorybloc/category_bloc.dart';
+import '../bloc/categorybloc/category_event.dart';
 import '../constants/colorconstants.dart';
 import '../constants/iconlist.dart';
 import '../../data/datasources/dbfunctions/categorydbrepo.dart';
@@ -194,7 +197,9 @@ class _ScreenTasksState extends State<ScreenTasks> {
                                     selected: chosenValue ==
                                         snapshot.data![index].category_name,
                                     onSelected: (bool selected) async {
-                                      await viewModel.addToCategList();
+                                      BlocProvider.of<CategoryBloc>(
+                                                      context)
+                                                  .add(LoadCategoryEvent());
                                       String value = selected
                                           ? snapshot.data![index].category_name
                                           : '';

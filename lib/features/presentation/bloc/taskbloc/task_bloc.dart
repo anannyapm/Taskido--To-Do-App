@@ -9,17 +9,17 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   List<TaskModel> taskModelList = <TaskModel>[];
 
   TaskBloc() : super(TaskInitialState()) {
-    on<LoadTaskEvent>((event, emit) {
-      final taskData = TaskFunctionRepo.getTaskList();
+    on<LoadTaskEvent>((event, emit) async {
+      final taskData = await TaskFunctionRepo.getTaskList();
       if (taskData == null) {
         emit(TaskErrorState(errormsg: "Data Fetch Error"));
       } else {
         emit(TaskLoadingState(
-            taskList: taskData, pendingList: TaskFunctionRepo.pendingList));
+            taskList: taskData, pendingList: TaskFunctionRepo.pendingList,completedCount: TaskFunctionRepo.completedCount,totalTaskCount: TaskFunctionRepo.totalTaskCount));
       }
     });
     on<AddTaskEvent>((event, emit) async {
-      final output = await TaskFunctionRepo.addTask(
+      bool output = await TaskFunctionRepo.addTask(
           event.taskname, event.categId, event.date, event.time);
       if (output != true) {
         emit(TaskErrorState(

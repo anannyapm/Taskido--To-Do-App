@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:provider/provider.dart';
+import 'package:todoapp/features/data/repositories/categoryfunctions.dart';
+import 'package:todoapp/features/presentation/bloc/categorybloc/category_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/categorybloc/category_event.dart';
+import 'package:todoapp/features/presentation/bloc/categorybloc/category_state.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/taskdbrepo.dart';
@@ -16,7 +21,7 @@ import '../widgets/bottomsheets/tasksheet.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({super.key});
- 
+
   @override
   State<ScreenHome> createState() => _ScreenHomeState();
 }
@@ -28,7 +33,6 @@ class _ScreenHomeState extends State<ScreenHome> {
 
   @override
   void initState() {
-  
     initdb();
 
     super.initState();
@@ -63,47 +67,66 @@ class _ScreenHomeState extends State<ScreenHome> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
-              floatingActionButton: SpeedDial(
-                elevation: 8,
-                icon: Icons.add,
-                activeIcon: Icons.close,
-                openCloseDial: isDialOpen,
-                backgroundColor: primaryclr1,
-                children: [
-                  SpeedDialChild(
-                      backgroundColor: primaryclr1,
-                      onTap: () {
-                        viewModel.bottomSheetBuilder(
-                            const CategorySheetWidget(), context);
-                      },
-                      child: Icon(
-                        Icons.category,
-                        color: primaryclr4,
-                      ),
-                      label: 'Add Category'),
-                  SpeedDialChild(
-                      backgroundColor: primaryclr1,
-                      onTap: () {
-                        //await viewModel.addToCategList();
-                        if (viewModel.categoryCount == 0) {
-                          snackBarWidget(
-                              context,
-                              'Oops!Please add a category to start adding tasks!!',
-                             dangerColor);
-                          
-                        } else {
+              floatingActionButton: //BlocListener<CategoryBloc, CategoryState>(
+                /* listener: (context, state) {
+                  if (state is CategLoadingState) {
+                    if (state.categCount == 0) {
+                      snackBarWidget(
+                          context,
+                          'Oops!Please add a category to start adding tasks!!',
+                          dangerColor);
+                    } else {
+                      viewModel.bottomSheetBuilder(
+                          const TaskSheetWidget(), context);
+                    }
+                  }
+                }, */
+                //child: 
+                SpeedDial(
+                  elevation: 8,
+                  icon: Icons.add,
+                  activeIcon: Icons.close,
+                  openCloseDial: isDialOpen,
+                  backgroundColor: primaryclr1,
+                  children: [
+                    SpeedDialChild(
+                        backgroundColor: primaryclr1,
+                        onTap: () {
                           viewModel.bottomSheetBuilder(
-                              const TaskSheetWidget(), context);
-                        }
-                      },
-                      child: Icon(
-                        Icons.add_task,
-                        color: primaryclr4,
-                      ),
-                      label: 'Add Tasks'),
-                  
-                ],
-              )),
+                              const CategorySheetWidget(), context);
+                        },
+                        child: Icon(
+                          Icons.category,
+                          color: primaryclr4,
+                        ),
+                        label: 'Add Category'),
+                    SpeedDialChild(
+                        backgroundColor: primaryclr1,
+                        onTap: () {
+                         /*  BlocProvider.of<CategoryBloc>(context)
+                              .add(LoadCategoryEvent()); */
+                          //await viewModel.addToCategList();
+                          if (CategoryFunctionRepo.categoryCount == 0) {
+                            snackBarWidget(
+                                context,
+                                'Oops!Please add a category to start adding tasks!!',
+                                dangerColor);
+                          } else {
+                            viewModel.bottomSheetBuilder(
+                                const TaskSheetWidget(), context);
+                          } 
+
+                          
+                        },
+                        child: Icon(
+                          Icons.add_task,
+                          color: primaryclr4,
+                        ),
+                        label: 'Add Tasks'),
+                  ],
+                ),
+            //  )
+              ),
         ),
       );
     });

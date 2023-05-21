@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+
+import 'package:todoapp/features/data/repositories/categoryfunctions.dart';
+
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/taskbloc/task_state.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
 import 'package:todoapp/features/data/models/taskmodel.dart';
 
-import '../../../../viewmodel/appviewmodel.dart';
-
+import '../../bloc/taskbloc/task_event.dart';
 
 class UpcomingTasksCard extends StatefulWidget {
   const UpcomingTasksCard({super.key});
@@ -18,33 +22,39 @@ class UpcomingTasksCard extends StatefulWidget {
 class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(builder: (context, viewModel, child) {
-      return SizedBox(
+    //return Consumer<AppViewModel>(builder: (context, viewModel, child) {
+
+    return SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.only(left: 25, right: 25, top: 20),
-                child: const Text(
-                  'Today\'s Pending Tasks',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
-                ),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: const EdgeInsets.only(left: 25, right: 25, top: 20),
+              child: const Text(
+                'Today\'s Pending Tasks',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
               ),
             ),
-            viewModel.pendingList.isNotEmpty
-                ? Container(
+          ),
+          BlocBuilder<TaskBloc, TaskState>(
+            builder: (context, state) {
+              if(state is TaskCreateState){
+                BlocProvider.of<TaskBloc>(context)
+                                .add(LoadTaskEvent());
+              }
+              if (state is TaskLoadingState) {
+                if (state.pendingList.isNotEmpty) {
+                  return Container(
                     margin: const EdgeInsets.only(left: 20),
                     height: 145,
-                    
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        TaskModel item = viewModel.pendingList[index];
+                        TaskModel item = state.pendingList[index];
                         String categoryName = "";
-                        for (var element in viewModel.categModelList) {
+                        for (var element
+                            in CategoryFunctionRepo.categModelList) {
                           if (element.cid == item.category_id) {
                             categoryName = element.category_name;
                             break;
@@ -79,8 +89,8 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                                             Color.fromARGB(255, 131, 130, 130)),
                                   ),
                                   Text(item.task_name.toTitleCase(),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
                                       style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w800,
@@ -91,7 +101,7 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                                           size: 10,
                                           color: (item.task_date_time
                                                   .isBefore(DateTime.now()))
-                                              ?dangerColor
+                                              ? dangerColor
                                               : successColor),
                                       const SizedBox(
                                         width: 5,
@@ -110,25 +120,31 @@ class _UpcomingTasksCardState extends State<UpcomingTasksCard> {
                           ),
                         );
                       },
-                      itemCount: viewModel.pendingList.length,
+                      itemCount: state.pendingList.length,
                     ),
-                  )
-                : Align(
+                  );
+                } else {
+                  return Align(
                     alignment: Alignment.center,
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: 60,
                       child: Center(
-                              child: Text(
-                            'Yay! No PendingTasks',
-                            style: TextStyle(color: primaryclr1,fontSize: 16),
-                          )),
-                      
+                          child: Text(
+                        'Yay! No PendingTasks',
+                        style: TextStyle(color: primaryclr1, fontSize: 16),
+                      )),
                     ),
-                  )
-          ],
-        ),
-      );
-    });
+                  );
+                }
+              } else {
+                 return const Column(
+                  children: [Text('Please Wait'), CircularProgressIndicator()],
+                );
+              }
+            },
+          ),
+        ]));
+    //});
   }
 }

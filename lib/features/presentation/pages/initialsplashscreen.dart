@@ -1,13 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/features/presentation/pages/home.dart';
 import 'package:todoapp/features/presentation/pages/splashscreen.dart';
-import '../bloc/categorybloc/category_bloc.dart';
-import '../bloc/categorybloc/category_event.dart';
 import '../constants/colorconstants.dart';
 import '../../data/datasources/dbfunctions/categorydbrepo.dart';
 import '../../data/datasources/dbfunctions/repository.dart';
@@ -99,7 +96,7 @@ class _ScreenInitialSplashState extends State<ScreenInitialSplash> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
    
 
-        Provider.of<AppViewModel>(context, listen: false).addToCategList();
+       // Provider.of<AppViewModel>(context, listen: false).addToCategList();
         Provider.of<AppViewModel>(context, listen: false).addToTaskList();
       });
 

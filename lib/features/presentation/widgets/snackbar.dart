@@ -9,7 +9,8 @@ dynamic snackBarWidget(BuildContext ctx,String message,Color colorVal){
           style: TextStyle(color: primaryclr4),
         ),
         backgroundColor: colorVal,
-        padding: const EdgeInsets.all(20),
+        showCloseIcon: true,
+        closeIconColor: Colors.white,
         duration: const Duration(seconds: 2),
         behavior: SnackBarBehavior.floating,
       );

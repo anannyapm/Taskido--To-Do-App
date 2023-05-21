@@ -1,8 +1,6 @@
 import 'package:todoapp/features/data/models/taskmodel.dart';
 
 abstract class TaskState {
-  
-
   TaskState();
 }
 
@@ -13,7 +11,10 @@ class TaskInitialState extends TaskState {
 class TaskLoadingState extends TaskState {
   List<TaskModel> taskList = [];
   List<TaskModel> pendingList = <TaskModel>[];
-  TaskLoadingState({required this.taskList, required this.pendingList})
+  int totalTaskCount;
+  int completedCount;
+
+  TaskLoadingState({required this.taskList, required this.pendingList,required this.completedCount,required this.totalTaskCount})
       : super();
 }
 /* class LoadPendingTaskState extends TaskState{
@@ -21,14 +22,12 @@ class TaskLoadingState extends TaskState {
 } */
 
 class TaskCreateState extends TaskState {
-  TaskCreateState()
-      : super();
+  TaskCreateState() : super();
 }
 
 class TaskErrorState extends TaskState {
   final String errormsg;
-  TaskErrorState({required this.errormsg})
-      : super();
+  TaskErrorState({required this.errormsg}) : super();
 }
 /* 
 //in search we will be getting searchout list passed here.

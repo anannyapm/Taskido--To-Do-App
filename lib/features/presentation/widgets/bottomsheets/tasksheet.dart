@@ -16,7 +16,6 @@ import '../../../data/datasources/dbfunctions/categorydbrepo.dart';
 
 import '../../../data/models/categorymodel.dart';
 
-
 class TaskSheetWidget extends StatefulWidget {
   const TaskSheetWidget({super.key});
 
@@ -36,8 +35,7 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppViewModel>(
-      builder: (context, viewModel, child) {
+
         return Padding(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -75,6 +73,8 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
                                 taskname: _inputController.text,
                                 date: date!,
                                 time: time!));
+
+                            
                             /* await addTasktoModel(context);
 
                             viewModel.addToTaskList();
@@ -283,11 +283,10 @@ class _TaskSheetWidgetState extends State<TaskSheetWidget> {
             ),
           ),
         );
-      },
-    );
+      
   }
 
- /*  Future<TaskModel> addTasktoModel(BuildContext ctx) async {
+  /*  Future<TaskModel> addTasktoModel(BuildContext ctx) async {
     final taskname =
         _inputController.text.trim().replaceAll(RegExp(r"\s+"), " ");
     final cidOut = await CategRepository.fetchFirstCid();

@@ -39,7 +39,7 @@ class Repository {
       user.uid = await dbClient.rawInsert(
           'INSERT INTO ${userInstance.tableName}(${userInstance.colTwo}, ${userInstance.colThree}, ${userInstance.colFour}) VALUES(?, ?, ?)',
           [user.name, user.email, user.photo]);
-      getAllUser();
+     // getAllUser();
 
       return true;
     } else {
@@ -49,7 +49,7 @@ class Repository {
     // return user;
   }
 
-  static Future<void> getAllUser() async {
+  /* static Future<void> getAllUser() async {
     //get data form database
     //rawQuery will return list of map value
     var dbClient = await database;
@@ -58,7 +58,7 @@ class Repository {
         await dbClient.rawQuery('select * from ${userInstance.tableName}');
 
   
-  }
+  } */
 
   static Future<List<Map<String, dynamic>>> fetchData(String email) async {
     var dbClient = await database;

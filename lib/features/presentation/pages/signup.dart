@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todoapp/features/data/datasources/dbfunctions/repository.dart';
-import 'package:todoapp/features/data/models/usermodel.dart';
+import 'package:todoapp/features/presentation/bloc/categorybloc/category_bloc.dart';
+import 'package:todoapp/features/presentation/bloc/categorybloc/category_event.dart';
 import 'package:todoapp/features/presentation/bloc/userbloc/user_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/userbloc/user_event.dart';
 import 'package:todoapp/features/presentation/pages/home.dart';
@@ -15,7 +14,6 @@ import 'package:todoapp/features/presentation/widgets/gradientbox.dart';
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 import '../bloc/userbloc/user_state.dart';
 import '../constants/colorconstants.dart';
-import '../../../main.dart';
 import '../../../viewmodel/appviewmodel.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
@@ -259,7 +257,10 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                                                       email: email,
                                                       photo: viewModel
                                                           .profilePhoto));
-                                              await viewModel.addToCategList();
+                                              BlocProvider.of<CategoryBloc>(
+                                                      context)
+                                                  .add(LoadCategoryEvent());
+                                              // await viewModel.addToCategList();
                                               await viewModel.addToTaskList();
                                               _usernameController.text = '';
                                               _emailController.text = '';

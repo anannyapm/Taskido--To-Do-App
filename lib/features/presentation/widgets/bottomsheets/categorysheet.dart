@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:provider/provider.dart';
-import 'package:todoapp/features/data/datasources/dbfunctions/categorydbrepo.dart';
-import 'package:todoapp/features/data/datasources/dbfunctions/repository.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_event.dart';
 import 'package:todoapp/viewmodel/appviewmodel.dart';
-import 'package:todoapp/features/data/models/categorymodel.dart';
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
 import '../../bloc/categorybloc/category_bloc.dart';
@@ -67,6 +64,9 @@ class _CategorySheetWidgetState extends State<CategorySheetWidget> {
                               AddCategoryEvent(
                                   categId: defaultChoiceIndex,
                                   categname: _inputController.text));
+                            BlocProvider.of<CategoryBloc>(
+                                                      context)
+                                                  .add(LoadCategoryEvent());
                           /* await addCategorytoModel(defaultChoiceIndex, context);
 
                           viewModel.addToCategList();
