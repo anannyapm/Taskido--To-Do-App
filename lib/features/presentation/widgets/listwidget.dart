@@ -144,14 +144,14 @@ class _ListWidgetState extends State<ListWidget> {
           BlocProvider.of<TaskBloc>(context).add(SearchFilterTaskEvent(
          
           queryval: widget.query,
-        ));
+        )); 
         return const CircularProgressIndicator();
         }
       },
     );
   }
 
-  Future<void> deleteTask(
+ /*  Future<void> deleteTask(
       String taskname, int categid, BuildContext ctx) async {
     TaskRepository.deleteData(taskname, Repository.currentUserID, categid)
         .then((value) {
@@ -160,5 +160,5 @@ class _ListWidgetState extends State<ListWidget> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
     });
-  }
+  } */
 }

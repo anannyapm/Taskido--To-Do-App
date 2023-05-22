@@ -51,16 +51,11 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
         margin: const EdgeInsets.all(10),
         child: BlocListener<TaskBloc, TaskState>(
           listener: (context, state) {
-            if(state is TaskUpdateState){
-      snackBarWidget(context, 'Update Success!', successColor);
-       Navigator.pop(context);
-
-            }
-            else{
-      snackBarWidget(context, 'Oh Snap!Something Went Wrong!', dangerColor);
-       Navigator.pop(context);
-
-
+            if (state is TaskUpdateState) {
+              snackBarWidget(context, 'Update Success!', successColor);
+            } else {
+              snackBarWidget(
+                  context, 'Oh Snap!Something Went Wrong!', dangerColor);
             }
           },
           child: Form(
@@ -83,21 +78,22 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
                                 _inputController.text.trim() ||
                             date != null ||
                             time != null) {
-                              BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(
-                                taskobject: widget.taskdata,
-                                taskName: _inputController.text,
-                                date: date!,
-                                time: time!));
-                              BlocProvider.of<TaskBloc>(context).add(LoadTaskEvent());
+                          BlocProvider.of<TaskBloc>(context).add(
+                              UpdateTaskEvent(
+                                  taskobject: widget.taskdata,
+                                  taskName: _inputController.text,
+                                  date: date,
+                                  time: time));
+                          /* BlocProvider.of<TaskBloc>(context).add(LoadTaskEvent());
+                                */
+                          Navigator.pop(context);
                           //await updateTasktoModel(context);
-                         // viewModel.addToTaskList();
+                          // viewModel.addToTaskList();
                         } else {
                           snackBarWidget(
                               context, 'No Edits Made', Colors.amber);
-                               Navigator.pop(context);
+                          Navigator.pop(context);
                         }
-
-                       
                       } else {
                         debugPrint('Empty fields found');
                       }

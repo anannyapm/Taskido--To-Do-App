@@ -40,6 +40,9 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
     return Tooltip(
       message: widget.data.task_name.toTitleCase(),
       child: BlocBuilder<TaskBloc, TaskState>(
+        buildWhen: (previous, current) =>
+            current is UpdateCompletionState &&
+            previous is UpdateCompletionState,
         builder: (context, state) {
           return ListTile(
               contentPadding: const EdgeInsets.all(0),
@@ -53,6 +56,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                       categoryIndex: widget.data.category_id,
                       taskIndex: widget.data.tid!,
                       taskValue: value!));
+                  BlocProvider.of<TaskBloc>(context).add(LoadTaskEvent());
                   /* viewModel.updateTaskValue(
                       widget.data.tid!, value!, widget.data.category_id);
                   viewModel.addToTaskList(); */

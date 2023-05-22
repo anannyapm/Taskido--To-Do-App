@@ -66,14 +66,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskErrorState(errormsg: "Oh Snap!Something Went Wrong!"));
       } else {
         emit(TaskUpdateState());
+        
       }
     });
     on<UpdateCompletionEvent>(
-      (event, emit) {
-        TaskFunctionRepo.updateCompletionStatus(
+      (event, emit) async {
+        await TaskFunctionRepo.updateCompletionStatus(
             event.taskIndex, event.taskValue, event.categoryIndex);
-        emit(TaskUpdateState());
-        
+
+        emit(UpdateCompletionState());
       },
     );
   }

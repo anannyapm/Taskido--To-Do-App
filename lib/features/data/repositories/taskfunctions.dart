@@ -62,9 +62,10 @@ class TaskFunctionRepo {
   static updateCompletionStatus(
       int taskIndex, bool taskValue, int categoryIndex) async {
     //call db function to update
-    await TaskRepository.updateCompletedStatus(
+    final out = await TaskRepository.updateCompletedStatus(
         taskIndex, categoryIndex, Repository.currentUserID, taskValue);
-   
+    print(out);
+    return out;
   }
 
   static Future<dynamic> getTaskList() async {

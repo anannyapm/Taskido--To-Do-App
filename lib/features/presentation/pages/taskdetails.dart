@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:todoapp/features/data/repositories/categoryfunctions.dart';
+import 'package:todoapp/features/presentation/bloc/categorybloc/category_state.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
 import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
 
@@ -17,7 +18,6 @@ import '../constants/colorconstants.dart';
 import '../constants/iconlist.dart';
 import '../../data/datasources/dbfunctions/categorydbrepo.dart';
 import '../../data/models/taskmodel.dart';
-
 
 import '../widgets/taskdetailwidgets/showtaskdetails.dart';
 
@@ -146,118 +146,129 @@ class _ScreenTasksState extends State<ScreenTasks> {
                   ),
 
                   //choicechip
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                    height: 50,
-                    child: FutureBuilder(
-                        future: CategRepository.getAllData(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<List<CategoryModel>> snapshot) {
-                          if (snapshot.hasData) {
-                            //set list to be used for chip
+                  BlocBuilder<CategoryBloc, CategoryState>(
+                    buildWhen: (previous, current) {
+                      print(previous);
+                      print(current);
+                      return previous is CategCreateState || current is CategCreateState;
+                    },
+                    builder: (context, state) {
+                      return Container(
+                        margin: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                        height: 50,
+                        child: FutureBuilder(
+                            future: CategRepository.getAllData(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<CategoryModel>> snapshot) {
+                              if (snapshot.hasData) {
+                                //set list to be used for chip
 
-                            //initial chip configuration
-                            List<Widget> initialchip = [
-                              ChoiceChip(
-                                label: const Text('All Tasks'),
-                                labelStyle: TextStyle(
-                                    color: chosenValue == ''
-                                        ? primaryclr3
-                                        : primaryclr4),
-                                selected: chosenValue == '',
-                                shape: StadiumBorder(
-                                    side: BorderSide(color: primaryclr4)),
-                                backgroundColor: primaryclr1,
-                                selectedColor: primaryclr4,
-                                elevation: 0,
-                                onSelected: (bool selected) async {
-                                  //await viewModel.addToTaskList();
+                                //initial chip configuration
+                                List<Widget> initialchip = [
+                                  ChoiceChip(
+                                    label: const Text('All Tasks'),
+                                    labelStyle: TextStyle(
+                                        color: chosenValue == ''
+                                            ? primaryclr3
+                                            : primaryclr4),
+                                    selected: chosenValue == '',
+                                    shape: StadiumBorder(
+                                        side: BorderSide(color: primaryclr4)),
+                                    backgroundColor: primaryclr1,
+                                    selectedColor: primaryclr4,
+                                    elevation: 0,
+                                    onSelected: (bool selected) async {
+                                      //await viewModel.addToTaskList();
 
-                                  //for all task selection
-                                  BlocProvider.of<TaskBloc>(context)
-                                      .add(LoadTaskEvent());
+                                      //for all task selection
+                                      BlocProvider.of<TaskBloc>(context)
+                                          .add(LoadTaskEvent());
 
-                                  setState(() {
-                                    chosenValue = '';
-                                  });
-                                },
-                              )
-                            ];
-                            List<Widget> chipList = List<Widget>.generate(
-                              snapshot.data!.length,
-                              (int index) {
-                                return ChoiceChip(
-                                  shape: StadiumBorder(
-                                      side: BorderSide(color: primaryclr4)),
-                                  backgroundColor: primaryclr1,
-                                  selectedColor: primaryclr4,
-                                  elevation: 0,
-                                  padding: const EdgeInsets.all(5),
-                                  label: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconList.iconValueList[snapshot
-                                          .data![index].category_logo_value],
-                                      const SizedBox(
-                                        width: 5,
+                                      setState(() {
+                                        chosenValue = '';
+                                      });
+                                    },
+                                  )
+                                ];
+                                List<Widget> chipList = List<Widget>.generate(
+                                  snapshot.data!.length,
+                                  (int index) {
+                                    return ChoiceChip(
+                                      shape: StadiumBorder(
+                                          side: BorderSide(color: primaryclr4)),
+                                      backgroundColor: primaryclr1,
+                                      selectedColor: primaryclr4,
+                                      elevation: 0,
+                                      padding: const EdgeInsets.all(5),
+                                      label: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconList.iconValueList[snapshot
+                                              .data![index]
+                                              .category_logo_value],
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            snapshot.data![index].category_name
+                                                .toTitleCase(),
+                                          )
+                                        ],
                                       ),
-                                      Text(
-                                        snapshot.data![index].category_name
-                                            .toTitleCase(),
-                                      )
-                                    ],
-                                  ),
-                                  labelStyle: TextStyle(
-                                      color: chosenValue ==
-                                              snapshot
-                                                  .data![index].category_name
-                                          ? primaryclr3
-                                          : primaryclr4),
-                                  selected: chosenValue ==
-                                      snapshot.data![index].category_name,
-                                  onSelected: (bool selected) async {
-                                    BlocProvider.of<CategoryBloc>(context)
-                                        .add(LoadCategoryEvent());
-                                    String value = selected
-                                        ? snapshot.data![index].category_name
-                                        : '';
-                                    chosenID =
-                                        CategoryFunctionRepo.getCategoryId(
-                                            value);
-                                    
-                                    BlocProvider.of<TaskBloc>(context).add(
-                                        SearchFilterTaskEvent(
-                                            chosedId: chosenID));
+                                      labelStyle: TextStyle(
+                                          color: chosenValue ==
+                                                  snapshot.data![index]
+                                                      .category_name
+                                              ? primaryclr3
+                                              : primaryclr4),
+                                      selected: chosenValue ==
+                                          snapshot.data![index].category_name,
+                                      onSelected: (bool selected) async {
+                                        BlocProvider.of<CategoryBloc>(context)
+                                            .add(LoadCategoryEvent());
+                                        String value = selected
+                                            ? snapshot
+                                                .data![index].category_name
+                                            : '';
+                                        chosenID =
+                                            CategoryFunctionRepo.getCategoryId(
+                                                value);
 
-                                    setState(() {
-                                      chosenValue = value;
-                                    });
+                                        BlocProvider.of<TaskBloc>(context).add(
+                                            SearchFilterTaskEvent(
+                                                chosedId: chosenID));
+
+                                        setState(() {
+                                          chosenValue = value;
+                                        });
+                                      },
+                                    );
                                   },
+                                ).toList();
+
+                                List<Widget> finalChoiceList = [
+                                  ...initialchip,
+                                  ...chipList
+                                ];
+
+                                return Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Wrap(
+                                      spacing: 5,
+                                      direction: Axis.horizontal,
+                                      children: finalChoiceList,
+                                    ),
+                                  ),
                                 );
-                              },
-                            ).toList();
-
-                            List<Widget> finalChoiceList = [
-                              ...initialchip,
-                              ...chipList
-                            ];
-
-                            return Align(
-                              alignment: Alignment.centerLeft,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Wrap(
-                                  spacing: 5,
-                                  direction: Axis.horizontal,
-                                  children: finalChoiceList,
-                                ),
-                              ),
-                            );
-                          } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
-                        }),
+                              } else {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            }),
+                      );
+                    },
                   ),
                 ]),
               ),
