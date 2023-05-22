@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -148,8 +150,7 @@ class _ScreenTasksState extends State<ScreenTasks> {
                   //choicechip
                   BlocBuilder<CategoryBloc, CategoryState>(
                     buildWhen: (previous, current) {
-                      print(previous);
-                      print(current);
+                    
                       return previous is CategCreateState || current is CategCreateState;
                     },
                     builder: (context, state) {

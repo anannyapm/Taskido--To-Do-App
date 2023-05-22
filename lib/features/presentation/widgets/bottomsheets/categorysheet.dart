@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_event.dart';
-import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
 import '../../bloc/categorybloc/category_bloc.dart';

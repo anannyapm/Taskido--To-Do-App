@@ -1,12 +1,10 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/repository.dart';
 import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
 
-import '../../../../viewmodel/appviewmodel.dart';
 import '../../pages/profilehome.dart';
 
 

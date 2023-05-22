@@ -23,7 +23,7 @@ class ShowTaskDetail extends StatefulWidget {
 class _ShowTaskDetailState extends State<ShowTaskDetail> {
   @override
   void initState() {
-    
+   // BlocProvider.of<TaskBloc>(context).add(LoadTaskEvent());
     super.initState();
   }
 
@@ -33,8 +33,14 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
     int completedTaskCount = 0;
     return BlocBuilder<TaskBloc, TaskState>(
       builder: (context, state) {
+        if(state is TaskCreateState){
+           BlocProvider.of<TaskBloc>(context).add(SearchFilterTaskEvent(
+            chosedId: widget.chosenId,
+            queryval: widget.queryval,
+          ));
+        }
         if (state is SearchFilterTaskState) {
-          print(state);
+         // print(state);
           totalCount = state.filterTotalCount;
           completedTaskCount = state.filterCompletedCount;
 
@@ -150,7 +156,6 @@ class _ShowTaskDetailState extends State<ShowTaskDetail> {
                 ),
               ));
         } else {
-          
           BlocProvider.of<TaskBloc>(context).add(SearchFilterTaskEvent(
             chosedId: widget.chosenId,
             queryval: widget.queryval,

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
+
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_event.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_state.dart';
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';
-import 'package:todoapp/viewmodel/appviewmodel.dart';
+
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
-import '../../../data/datasources/dbfunctions/taskdbrepo.dart';
+
 import '../../../data/models/taskmodel.dart';
 
 class UpdateTaskSheetWidget extends StatefulWidget {
@@ -51,11 +51,13 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
         margin: const EdgeInsets.all(10),
         child: BlocListener<TaskBloc, TaskState>(
           listener: (context, state) {
-            if (state is TaskUpdateState) {
-              snackBarWidget(context, 'Update Success!', successColor);
-            } else {
+            debugPrint("State in update $state");
+            if (state is TaskErrorState) {
               snackBarWidget(
                   context, 'Oh Snap!Something Went Wrong!', dangerColor);
+            } else {
+              snackBarWidget(context, 'Update Success!', successColor);
+              
             }
           },
           child: Form(
@@ -236,10 +238,9 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
     );
     /*   },
     ) */
-    ;
   }
 
-  Future<void> updateTasktoModel(BuildContext ctx) async {
+  /*  Future<void> updateTasktoModel(BuildContext ctx) async {
     final taskname =
         _inputController.text.trim().replaceAll(RegExp(r"\s+"), " ");
 
@@ -270,5 +271,5 @@ class _UpdateTaskSheetWidgetState extends State<UpdateTaskSheetWidget> {
     } else {
       snackBarWidget(ctx, 'Update Success!', successColor);
     }
-  }
+  } */
 }

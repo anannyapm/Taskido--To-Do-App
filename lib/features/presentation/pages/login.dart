@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_event.dart';
 
 import 'package:todoapp/features/presentation/bloc/userbloc/user_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/userbloc/user_event.dart';
 import 'package:todoapp/features/presentation/bloc/userbloc/user_state.dart';
-import 'package:todoapp/viewmodel/appviewmodel.dart';
 import 'package:todoapp/features/presentation/pages/home.dart';
 import 'package:todoapp/features/presentation/pages/signup.dart';
 import 'package:todoapp/features/presentation/widgets/gradientbox.dart';

@@ -37,6 +37,10 @@ class TaskUpdateState extends TaskState {
   TaskUpdateState() : super();
 }
 
+class TaskDeleteState extends TaskState {
+  TaskDeleteState() : super();
+}
+
 class UpdateCompletionState extends TaskState {
   UpdateCompletionState() : super();
 }

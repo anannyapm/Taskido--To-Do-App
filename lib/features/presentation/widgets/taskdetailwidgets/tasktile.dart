@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_event.dart';
 import 'package:todoapp/features/presentation/bloc/taskbloc/task_state.dart';
@@ -9,10 +8,7 @@ import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
-import '../../../data/datasources/dbfunctions/repository.dart';
-import '../../../data/datasources/dbfunctions/taskdbrepo.dart';
 import '../../../data/models/taskmodel.dart';
-import '../../../../viewmodel/appviewmodel.dart';
 import '../bottomsheetbuilder.dart';
 import '../bottomsheets/updatetasksheet.dart';
 import '../popupdialogue.dart';
@@ -137,20 +133,38 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
                         : primaryclr1,
                     iconSize: 22,
                   ),
-                  IconButton(
-                    onPressed: () {
-                      popupDialogueBox(() async {
-                        await deleteTask(widget.data.task_name,
-                            widget.data.category_id, context);
-                        BlocProvider.of<TaskBloc>(context).add(LoadTaskEvent());
-                      }, context,
-                          'Do you want to delete ${widget.data.task_name} category?');
+                  BlocListener<TaskBloc, TaskState>(
+                    listenWhen: (previous, current) => previous is TaskDeleteState || current is TaskDeleteState,
+                    listener: (context, state) {
+                    //  print('det $state');
+                      if (state is TaskErrorState) {
+                        snackBarWidget(
+                            context, 'OOPs!!Something Went Wrong', primaryclr3);
+                      } else {
+                        snackBarWidget(context, 'Deleted Task', dangerColor);
+                      }
                     },
-                    icon: Icon(
-                      Icons.delete_outline,
-                      color: dangerColor,
+                    child: IconButton(
+                      onPressed: () {
+                        popupDialogueBox(() async {
+                          /* await deleteTask(widget.data.task_name,
+                                              widget.data.category_id, context); */
+                          BlocProvider.of<TaskBloc>(context).add(
+                              DeleteTaskEvent(
+                                  taskname: widget.data.task_name,
+                                  catId: widget.data.category_id));
+
+                          BlocProvider.of<TaskBloc>(context)
+                              .add(LoadTaskEvent());
+                        }, context,
+                            'Do you want to delete ${widget.data.task_name} category?');
+                      },
+                      icon: Icon(
+                        Icons.delete_outline,
+                        color: dangerColor,
+                      ),
+                      iconSize: 25,
                     ),
-                    iconSize: 25,
                   )
                 ],
               ));
@@ -160,7 +174,7 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
     //});
   }
 
-  Future<void> deleteTask(
+/*   Future<void> deleteTask(
       String taskname, int categid, BuildContext ctx) async {
     TaskRepository.deleteData(taskname, Repository.currentUserID, categid)
         .then((value) {
@@ -168,5 +182,5 @@ class _TaskTileWidgetState extends State<TaskTileWidget> {
     }).catchError((e) {
       snackBarWidget(context, 'OOPs!!Something Went Wrong', primaryclr3);
     });
-  }
+  } */
 }

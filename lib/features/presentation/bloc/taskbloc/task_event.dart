@@ -39,7 +39,11 @@ class UpdateCompletionEvent extends TaskEvent {
       required this.taskValue});
 }
 
-class DeleteTaskEvent extends TaskEvent {}
+class DeleteTaskEvent extends TaskEvent {
+  String taskname;
+  int catId;
+  DeleteTaskEvent({required this.taskname, required this.catId});
+}
 
 class SearchFilterTaskEvent extends TaskEvent {
   String queryval;

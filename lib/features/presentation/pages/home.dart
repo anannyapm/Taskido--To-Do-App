@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/data/repositories/categoryfunctions.dart';
 import 'package:todoapp/features/presentation/bloc/pagenavbloc/pagenav_bloc.dart';
-import 'package:todoapp/features/presentation/bloc/pagenavbloc/pagenav_event.dart';
 import 'package:todoapp/features/presentation/bloc/pagenavbloc/pagenav_state.dart';
 
 import 'package:todoapp/features/presentation/constants/colorconstants.dart';

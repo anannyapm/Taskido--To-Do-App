@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_bloc.dart';
 import 'package:todoapp/features/presentation/bloc/categorybloc/category_event.dart';
 import 'package:todoapp/features/presentation/bloc/photobloc/photo_bloc.dart';
@@ -19,7 +18,6 @@ import 'package:todoapp/features/presentation/widgets/gradientbox.dart';
 import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 import '../bloc/userbloc/user_state.dart';
 import '../constants/colorconstants.dart';
-import '../../../viewmodel/appviewmodel.dart';
 import '../widgets/loginwidgets/bottombarwidget.dart';
 import '../widgets/loginwidgets/headingmessage.dart';
 import '../widgets/loginwidgets/textfieldwidget.dart';
@@ -35,7 +33,13 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
-  String photo = "assets/images/stacked-steps-haikei.png'";
+  String photo = "assets/images/stacked-steps-haikei.png";
+
+  @override
+  void initState() {
+    BlocProvider.of<PhotoBloc>(context).add(PhotoSelectedEvent(photo: photo));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +99,8 @@ class _ScreenSignUpState extends State<ScreenSignUp> {
                               child: Align(
                                 child: BlocConsumer<PhotoBloc, PhotoState>(
                                   listener: (context, state) {
+                                    //print("photo $state");
+
                                     if (state is PhotoLoaded) {
                                       photo = state.photo == ""
                                           ? 'assets/images/stacked-steps-haikei.png'

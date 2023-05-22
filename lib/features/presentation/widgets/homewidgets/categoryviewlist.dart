@@ -10,6 +10,7 @@ import 'package:todoapp/features/presentation/constants/colorconstants.dart';
 import 'package:todoapp/features/data/datasources/dbfunctions/categorydbrepo.dart';
 import 'package:todoapp/features/presentation/extensions/string_extensions.dart';
 import 'package:todoapp/features/data/models/categorymodel.dart';
+import 'package:todoapp/features/presentation/widgets/snackbar.dart';
 
 import '../../bloc/categorybloc/category_bloc.dart';
 import '../../bloc/categorybloc/category_event.dart';
@@ -31,7 +32,7 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
     // return Consumer<AppViewModel>(builder: (context, viewModel, child) {
     return BlocBuilder<CategoryBloc, CategoryState>(
       builder: (context, state) {
-        print(state);
+        //print(state);
 
         return Container(
           margin: const EdgeInsets.only(left: 25, right: 25, top: 25),
@@ -101,10 +102,12 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
                                         popupDialogueBox(() async {
                                           await deleteCategory(
                                               catItem.category_name, context);
+                                          // ignore: use_build_context_synchronously
                                           BlocProvider.of<CategoryBloc>(context)
                                               .add(LoadCategoryEvent());
                                           //await viewModel.addToCategList();
                                           //await viewModel.addToTaskList();
+                                          // ignore: use_build_context_synchronously
                                           BlocProvider.of<TaskBloc>(context)
                                               .add(LoadTaskEvent());
                                         }, context,
@@ -133,17 +136,8 @@ class _CategoryViewWidgetState extends State<CategoryViewWidget> {
 
   Future<void> deleteCategory(String categoryname, BuildContext ctx) async {
     CategRepository.deleteData(categoryname).then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-          'Deleted Category',
-          style: TextStyle(color: primaryclr4),
-        ),
-        backgroundColor: dangerColor,
-        padding: const EdgeInsets.all(20),
-      ));
-    }).catchError((e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+      snackBarWidget(ctx, 'Deleted Category', dangerColor);
+      
     });
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class TaskModel {
   int? tid;
   final String task_name;

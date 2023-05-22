@@ -28,6 +28,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskErrorState(
             errormsg: "Oh Snap! Looks like task already exist!"));
       } else {
+        add(LoadTaskEvent());
         emit(TaskCreateState());
       }
     });
@@ -65,14 +66,30 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       if (output.isNotEmpty) {
         emit(TaskErrorState(errormsg: "Oh Snap!Something Went Wrong!"));
       } else {
+       // add(LoadTaskEvent());
+
         emit(TaskUpdateState());
-        
+      }
+    });
+
+    on<DeleteTaskEvent>((event, emit) async {
+      final output =
+          await TaskFunctionRepo.deleteTask(event.taskname, event.catId);
+      if (output == false) {
+        emit(TaskErrorState(errormsg: "Oh Snap!Something Went Wrong!"));
+      } else {
+
+       // add(LoadTaskEvent());
+        emit(TaskDeleteState());
+
+
       }
     });
     on<UpdateCompletionEvent>(
       (event, emit) async {
         await TaskFunctionRepo.updateCompletionStatus(
             event.taskIndex, event.taskValue, event.categoryIndex);
+        //add(LoadTaskEvent());
 
         emit(UpdateCompletionState());
       },

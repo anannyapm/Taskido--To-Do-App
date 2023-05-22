@@ -67,7 +67,7 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
               ),
               BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
-                  print("in profile + $state");
+                //  print("in profile + $state");
                   if (state is CategCreateState) {
                     BlocProvider.of<CategoryBloc>(context)
                         .add(LoadCategoryEvent());
@@ -92,12 +92,12 @@ class _ScreenProfileHomeState extends State<ScreenProfileHome> {
                         ]),
                       );
                     } else {
-                      return CategoryViewWidget();
+                      return const CategoryViewWidget();
                     }
                   } else if (state is CategErrorState) {
-                    return Text("Error");
+                    return const Text("Error");
                   } else {
-                    return Column(
+                    return const Column(
                       children: [
                         Text("cat loading"),
                         CircularProgressIndicator()

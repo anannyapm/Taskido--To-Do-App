@@ -64,8 +64,18 @@ class TaskFunctionRepo {
     //call db function to update
     final out = await TaskRepository.updateCompletedStatus(
         taskIndex, categoryIndex, Repository.currentUserID, taskValue);
-    print(out);
+
     return out;
+  }
+
+  static Future<bool> deleteTask(String taskname, int categid) async {
+    final List out = await TaskRepository.deleteData(
+        taskname, Repository.currentUserID, categid);
+
+    if (out.isEmpty) {
+      return true;
+    }
+    return false;
   }
 
   static Future<dynamic> getTaskList() async {
@@ -303,6 +313,8 @@ class TaskFunctionRepo {
 
   //set values to total and completed count values based on different conditions
   static Map<String, int> setCountValues(int chosenid) {
+   /*  print("filtered $filteredList");
+    print(taskModelList); */
     Map<String, int> result;
     if (filterSelection == "") {
       if (chosenid == 0) {
@@ -320,7 +332,7 @@ class TaskFunctionRepo {
       };
     }
 
-    print(result);
+    //print(result);
     return result;
   }
 
